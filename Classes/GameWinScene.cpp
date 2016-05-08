@@ -38,7 +38,7 @@ bool GameWinScene::init()
 		return false;
 	}
 
-	auto rootNode = CSLoader::createNode("GameWin.csb");
+	auto rootNode = CSLoader::createNode("Cocos_Scenes/GameWin.csb");
 	addChild(rootNode);
 
 	auto winSize = Director::getInstance()->getVisibleSize();
@@ -80,24 +80,17 @@ bool GameWinScene::init()
 	
 	if (GameManager::sharedGameManager()->getIsGameMuted() == true)
 	{
-		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("MutePressed.png"));
+		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_UI/Button_Mute_On.png"));
 	}
 	else
 	{
-		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("MuteUnPressedGO.png"));
+		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_UI/Button_Mute_Off.png"));
 	}
+
 	_muteButton->setPosition(Vec2(winSize.width*0.05f, winSize.height*0.95f));
 
-	//BACKGROUND (Taken from Menu.cpp)
-	//_background = (Sprite*)rootNode->getChildByName("Background");
-	_background = Sprite::create("Test.png");
-	_background->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.5f));
-	_background->setScaleX(winSize.width / _background->getContentSize().width);
-	_background->setScaleY(winSize.height / _background->getContentSize().height);
-	_background->setLocalZOrder(-1);
-
 	for (int i = 0; i < 100; i++) {
-		_stars.push_back(Sprite::create("SpaceStar.png"));
+		_stars.push_back(Sprite::create("Art/Scene_Main_Menu/Space_Star.png"));
 
 		int randomWidth = cocos2d::RandomHelper::random_real(0.0f, winSize.width);
 		int randomHeight = cocos2d::RandomHelper::random_real(0.0f, winSize.height);
@@ -109,11 +102,11 @@ bool GameWinScene::init()
 	}
 
 	// Rating
-	_rating = Sprite::create("Rating.png");
+	_rating = Sprite::create("Art/Scene_Game_Win/Rating.png");
 	_rating->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.95f));
 
 	// Rating
-	_time = Sprite::create("Time.png");
+	_time = Sprite::create("Art/Scene_Game_Win/Time.png");
 	_time->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.45f));
 
 	int mil = GameManager::sharedGameManager()->getMil();
@@ -129,43 +122,43 @@ bool GameWinScene::init()
 	int awardedStars = ScoreManager::sharedScoreManager()->getDefaultStarRating(GameManager::sharedGameManager()->getCurrentLevel());
 
 	if (awardedStars == 3) {
-		_star1 = Sprite::create("Star.png");
+		_star1 = Sprite::create("Art/Scene_Game_Win/Star_On.png");
 		_star1->setPosition(Vec2(winSize.width*0.15f, winSize.height*0.70f));
 
-		_star2 = Sprite::create("Star.png");
+		_star2 = Sprite::create("Art/Scene_Game_Win/Star_On.png");
 		_star2->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.70f));
 
-		_star3 = Sprite::create("Star.png");
+		_star3 = Sprite::create("Art/Scene_Game_Win/Star_On.png");
 		_star3->setPosition(Vec2(winSize.width*0.85f, winSize.height*0.70f));
 	}
 	else if (awardedStars == 2) {
-		_star1 = Sprite::create("Star.png");
+		_star1 = Sprite::create("Art/Scene_Game_Win/Star_On.png");
 		_star1->setPosition(Vec2(winSize.width*0.15f, winSize.height*0.70f));
 
-		_star2 = Sprite::create("Star.png");
+		_star2 = Sprite::create("Art/Scene_Game_Win/Star_On.png");
 		_star2->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.70f));
 
-		_star3 = Sprite::create("Star Dis Trans.png");
+		_star3 = Sprite::create("Art/Scene_Game_Win/Star_Off_Trans.png");
 		_star3->setPosition(Vec2(winSize.width*0.85f, winSize.height*0.70f));
 	}
 	else if (awardedStars == 1) {
-		_star1 = Sprite::create("Star.png");
+		_star1 = Sprite::create("Art/Scene_Game_Win/Star_On.png");
 		_star1->setPosition(Vec2(winSize.width*0.15f, winSize.height*0.70f));
 
-		_star2 = Sprite::create("Star Dis Trans.png");
+		_star2 = Sprite::create("Art/Scene_Game_Win/Star_Off_Trans.png");
 		_star2->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.70f));
 
-		_star3 = Sprite::create("Star Dis Trans.png");
+		_star3 = Sprite::create("Art/Scene_Game_Win/Star_Off_Trans.png");
 		_star3->setPosition(Vec2(winSize.width*0.85f, winSize.height*0.70f));
 	}
 	else if (awardedStars == 0) {
-		_star1 = Sprite::create("Star Dis Trans.png");
+		_star1 = Sprite::create("Art/Scene_Game_Win/Star_Off_Trans.png");
 		_star1->setPosition(Vec2(winSize.width*0.15f, winSize.height*0.70f));
 
-		_star2 = Sprite::create("Star Dis Trans.png");
+		_star2 = Sprite::create("Art/Scene_Game_Win/Star_Off_Trans.png");
 		_star2->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.70f));
 
-		_star3 = Sprite::create("Star Dis Trans.png");
+		_star3 = Sprite::create("Art/Scene_Game_Win/Star_Off_Trans.png");
 		_star3->setPosition(Vec2(winSize.width*0.85f, winSize.height*0.70f));
 	}
 
@@ -176,7 +169,6 @@ bool GameWinScene::init()
 	this->addChild(_star2);
 	this->addChild(_star3);
 	//this->addChild(_starDis);
-	//this->addChild(_background);
 
 	return true;
 }
@@ -242,14 +234,14 @@ void GameWinScene::MainMenuButtonPressed(Ref *sender, cocos2d::ui::Widget::Touch
 void GameWinScene::MuteButtonPressed()
 {
 	if (GameManager::sharedGameManager()->getIsGameMuted() == false) {
-		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("MutePressed.png"));
+		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_UI/Button_Mute_On.png"));
 
 		auEngine->PauseBackgroundMusic();
 		auEngine->PauseAllEffects();
 		GameManager::sharedGameManager()->setIsGameMuted(true);
 	}
 	else {
-		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("MuteUnPressedGO.png"));
+		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_UI/Button_Mute_Off.png"));
 
 		auEngine->ResumeBackgroundMusic();
 		auEngine->ResumeAllEffects();

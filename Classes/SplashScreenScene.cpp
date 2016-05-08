@@ -46,56 +46,56 @@ bool SplashScreenScene::init()
 	auto winSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
 
-	auto rootNode = CSLoader::createNode("SplashScreen.csb");
+	auto rootNode = CSLoader::createNode("Cocos_Scenes/SplashScreen.csb");
 
 	addChild(rootNode);
 
 	this->scheduleUpdate();
 
 	// SPRITE SETUP
-	_vikingLogo = Sprite::create("SplashScreen/VikingLogo.png");
+	_vikingLogo = Sprite::create("Art/Scene_Splash_Screen/VikingLogo.png");
 	_vikingLogo->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.5f));
 	_vikingLogo->setScaleX((winSize.width / _vikingLogo->getContentSize().width) * 0.9);
 	_vikingLogo->setScaleY(_vikingLogo->getScaleX());
 	_vikingLogo->setOpacity(0);
 
 	// DAVE SETUP
-	_david = Sprite::create("SplashScreen/David.png");
+	_david = Sprite::create("Art/Scene_Splash_Screen/David.png");
 	_david->setPosition(Vec2(winSize.width*0.35f, winSize.height*0.45f));
 	_david->setScaleX((winSize.width / _vikingLogo->getContentSize().width));
 	_david->setScaleY(_vikingLogo->getScaleX());
 	_david->setOpacity(0);
 
 	// ASH SETUP
-	_ash = Sprite::create("SplashScreen/Ash.png");
+	_ash = Sprite::create("Art/Scene_Splash_Screen/Ash.png");
 	_ash->setPosition(Vec2(winSize.width*0.45f, winSize.height*0.45f));
 	_ash->setScaleX((winSize.width / _vikingLogo->getContentSize().width));
 	_ash->setScaleY(_vikingLogo->getScaleX());
 	_ash->setOpacity(0);
 
 	// ALEX SETUP
-	_alex = Sprite::create("SplashScreen/Alex.png");
+	_alex = Sprite::create("Art/Scene_Splash_Screen/Alex.png");
 	_alex->setPosition(Vec2(winSize.width*0.55f, winSize.height*0.45f));
 	_alex->setScaleX((winSize.width / _vikingLogo->getContentSize().width));
 	_alex->setScaleY(_vikingLogo->getScaleX());
 	_alex->setOpacity(0);
 
 	// JOSH SETUP
-	_josh = Sprite::create("SplashScreen/Josh.png");
+	_josh = Sprite::create("Art/Scene_Splash_Screen/Josh.png");
 	_josh->setPosition(Vec2(winSize.width*0.65f, winSize.height*0.45f));
 	_josh->setScaleX((winSize.width / _vikingLogo->getContentSize().width));
 	_josh->setScaleY(_vikingLogo->getScaleX());
 	_josh->setOpacity(0);
 
 	// JAMES SETUP
-	_james = Sprite::create("SplashScreen/James.png");
+	_james = Sprite::create("Art/Scene_Splash_Screen/James.png");
 	_james->setPosition(Vec2(winSize.width*0.75f, winSize.height*0.45f));
 	_james->setScaleX((winSize.width / _vikingLogo->getContentSize().width));
 	_james->setScaleY(_vikingLogo->getScaleX());
 	_james->setOpacity(0);
 
 	// MATT SETUP
-	_matt = Sprite::create("SplashScreen/Matt.png");
+	_matt = Sprite::create("Art/Scene_Splash_Screen/Matt.png");
 	_matt->setPosition(Vec2(winSize.width*0.85f, winSize.height*0.45f));
 	_matt->setScaleX((winSize.width / _vikingLogo->getContentSize().width));
 	_matt->setScaleY(_vikingLogo->getScaleX());

@@ -45,7 +45,7 @@ Wall::~Wall()
 
 void Wall::setZoneSprite()
 {
-	_touchZone = Sprite::create("Wall.jpg");
+	_touchZone = Sprite::create("Art/Level_Main_Assets/Platforms/Wall_1.png");
 	this->addChild(_touchZone);
 	_touchZone->setPosition(_movingPlat->getPosition());
 	_touchZone->setScaleX(_movingPlat->getScaleX() * 3.5);

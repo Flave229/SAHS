@@ -23,7 +23,7 @@ bool CreditsScene::init()
 		return false;
 	}
 
-	auto rootNode = CSLoader::createNode("Credits.csb");
+	auto rootNode = CSLoader::createNode("Cocos_Scenes/Credits.csb");
 	addChild(rootNode);
 
 	this->scheduleUpdate();
@@ -47,18 +47,18 @@ bool CreditsScene::init()
 	_returnButton->setCascadeOpacityEnabled(true);
 
 
-	_logo = Sprite::create("Logo.png");
+	_logo = Sprite::create("Art/Scene_Main_Menu/Logo.png");
 	_logo->setPosition(Vec2(winSize.width*0.60f, winSize.height*0.75f));
 	_logo->setScale(0.75f);
 
 	this->addChild(_logo);
 
-	_planet = Sprite::create("Planet.png");
+	_planet = Sprite::create("Art/Scene_Main_Menu/Planet.png");
 	_planet->setPosition(Vec2(0.0f, 0.0f - (_planet->getContentSize().height / 8)));
 	//_planet->setScale(8.0f);
 	this->addChild(_planet);
 
-	_ship = Sprite::create("HuskySpaceShipDamage.png");
+	_ship = Sprite::create("Art/Scene_Main_Menu/Space_Ship_Damage.png");
 	_ship->setPosition(Vec2(winSize.width*0.3f, winSize.height*0.55f));
 	_ship->setScale(0.25f);
 	_ship->setRotation(30);
@@ -66,7 +66,7 @@ bool CreditsScene::init()
 	this->addChild(_ship);
 
 	for (int i = 0; i < 100; i++) {
-		_stars.push_back(Sprite::create("SpaceStar.png"));
+		_stars.push_back(Sprite::create("Art/Scene_Main_Menu/Space_Star.png"));
 
 		int randomWidth = cocos2d::RandomHelper::random_real(0.0f, winSize.width);
 		int randomHeight = cocos2d::RandomHelper::random_real(0.0f, winSize.height);
@@ -78,7 +78,7 @@ bool CreditsScene::init()
 	}
 
 
-	_creditsBG = Sprite::create("CreditsScreen.png");
+	_creditsBG = Sprite::create("Art/Scene_Backgrounds/CreditsScreen.png");
 	_creditsBG->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.37f));
 	_creditsBG->setScaleX(1.5f);
 	_creditsBG->setScaleY(1.89);

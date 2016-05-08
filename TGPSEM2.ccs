@@ -3,184 +3,265 @@
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
-        <Image Name="HelloWorld.png" />
-        <Project Name="MainScene.csd" Type="Scene" />
-        <Project Name="MenuScene.csd" Type="Scene" />
-        <Image Name="MutePressed.png" />
-        <Image Name="MuteUnPressed.png" />
-        <Image Name="Platform.jpg" />
-        <Image Name="MainMenuBackground.png" />
-        <Image Name="transparent.png" />
-        <Image Name="BG1.png" />
-        <Image Name="Wall.jpg" />
-        <Image Name="Start.png" />
-        <Image Name="WBoxSpawn.png" />
-        <Image Name="MBoxSpawn.png" />
-        <Project Name="GameOver.csd" Type="Scene" />
         <PlistInfo Name="Exits.csi" Type="Plist" />
-        <Project Name="SplashScreen.csd" Type="Scene" />
-        <Image Name="MuteUnPressedGO.png" />
-        <Image Name="highlight.png" />
-        <Folder Name="Levels">
-          <Project Name="Scene1.csd" Type="Scene" />
-          <Project Name="Sceneold3.csd" Type="Scene" />
-          <Project Name="Sceneold2.csd" Type="Scene" />
-          <Project Name="SceneTest.csd" Type="Scene" />
-          <Project Name="Scene8.csd" Type="Scene" />
-          <Project Name="Scene3.csd" Type="Scene" />
-          <Project Name="Scene4.csd" Type="Scene" />
-          <Project Name="Scene2.csd" Type="Scene" />
-        </Folder>
-        <Folder Name="Main Objects">
-          <Image Name="Button_Down_Pressed.png" />
-          <Image Name="Button_Down_Unpressed.png" />
-          <Image Name="Button_Left_Pressed.png" />
-          <Image Name="Button_Left_Unpressed.png" />
-          <Image Name="Button_Right_Pressed.png" />
-          <Image Name="Button_Right_Unpressed.png" />
-          <Image Name="Button_Up_Pressed.png" />
-          <Image Name="Button_Up_Unpressed.png" />
-          <Image Name="Crate.png" />
-          <Image Name="Exit 2.png" />
-          <Image Name="Exit 3.png" />
-          <Image Name="Exit 4.png" />
-          <Image Name="Exit 5.png" />
-          <Image Name="Exit 6.png" />
-          <Image Name="Exit 7.png" />
-          <Image Name="Exit Dis.png" />
-          <Image Name="Exit.png" />
-          <Image Name="Hardlight_Door.png" />
-          <Image Name="Husky.png" />
-          <Image Name="MetalCrate.png" />
-          <Image Name="Platform 2.png" />
-          <Image Name="Platform holder.png" />
-          <Image Name="Solid_Door.png" />
-          <Image Name="Switch_Down_Off.png" />
-          <Image Name="Switch_Down_On.png" />
-          <Image Name="Switch_Left_Off.png" />
-          <Image Name="Switch_Left_On.png" />
-          <Image Name="Switch_Right_Off.png" />
-          <Image Name="Switch_Right_On.png" />
-          <Image Name="Switch_Up_Off.png" />
-          <Image Name="Switch_Up_On.png" />
-          <Image Name="Test.png" />
-          <Image Name="Wall 2.png" />
-          <Image Name="Temp_Art.png" />
-          <Image Name="Husky_Run_1.png" />
-          <Image Name="Husky_Run_2.png" />
-          <Image Name="Husky_Run_3.png" />
-          <Image Name="Husky_Run_4.png" />
-          <Image Name="Husky_Run_5.png" />
-          <Image Name="Husky_Run_6.png" />
-        </Folder>
-        <Folder Name="Level Backgrounds">
-          <Image Name="Main BG.png" />
-          <Image Name="Platform 2.png" />
-          <Image Name="Second BG.png" />
-          <Image Name="HuskySpaceShipDamage.png" />
-          <Image Name="Planet.png" />
-          <Image Name="SpaceStar.png" />
-          <Image Name="Logo.png" />
-        </Folder>
-        <Image Name="Hardlight_Hatch.png" />
-        <Image Name="CreditsButton.png" />
-        <Image Name="ExitButton.png" />
-        <Image Name="StartButton.png" />
-        <Project Name="Credits.csd" Type="Scene" />
-        <Image Name="CreditsScreen.png" />
-        <Image Name="ButtonFrame.png" />
-        <Image Name="CreditsNoFrame.png" />
-        <Image Name="ExitNoFrame.png" />
-        <Image Name="StartNoFrame.png" />
-        <Image Name="NextButton.png" />
-        <Image Name="RetryButton.png" />
-        <Image Name="MenuButton.png" />
-        <Project Name="GameWin.csd" Type="Scene" />
-        <Image Name="Husky Base.png" />
         <Folder Name="Art">
-          <Image Name="Cabinet.png" />
-          <Image Name="Detail.png" />
-          <Image Name="Door.png" />
-          <Image Name="Husky Base.png" />
-          <Image Name="Light 2.png" />
-          <Image Name="Light.png" />
-          <Image Name="One.png" />
-          <Image Name="Panel 1.png" />
-          <Image Name="Panel 10.png" />
-          <Image Name="Panel 11.png" />
-          <Image Name="Panel 12.png" />
-          <Image Name="Panel 13.png" />
-          <Image Name="Panel 2.png" />
-          <Image Name="Panel 3.png" />
-          <Image Name="Panel 4.png" />
-          <Image Name="Panel 5.png" />
-          <Image Name="Panel 6.png" />
-          <Image Name="Panel 7.png" />
-          <Image Name="Panel 8.png" />
-          <Image Name="Panel 9.png" />
-          <Image Name="Panel.png" />
-          <Image Name="Side Panel 1.png" />
-          <Image Name="Space Port (Small).png" />
-          <Image Name="Two.png" />
-          <Image Name="Window Large.png" />
-          <Image Name="Wires.png" />
-          <Image Name="Zero.png" />
-          <Image Name="Detail 2.png" />
-          <Image Name="Detail 3.png" />
-          <Image Name="Ladder Med.png" />
-          <Image Name="Space Port (Large).png" />
-          <Image Name="Most Wanted (Josh).png" />
-          <Image Name="Drill.png" />
-          <Image Name="Hammer.png" />
-          <Image Name="Phone.png" />
-          <Image Name="Small Locked Box.png" />
-          <Image Name="Wrench.png" />
-          <Image Name="Locker.png" />
-          <Image Name="Locked Locker.png" />
-          <Image Name="Clone.png" />
-          <Image Name="Sector.png" />
-          <Image Name="eq.png" />
-          <Image Name="Computers.png" />
-          <Image Name="Window Small.png" />
-          <Image Name="WE.png" />
-          <Image Name="NT.png" />
-          <Image Name="Chair.png" />
-          <Image Name="Table.png" />
-          <Image Name="RedWire.png" />
-          <Image Name="Blue m.png" />
-          <Image Name="Blue.png" />
-          <Image Name="Green.png" />
-          <Image Name="Yellow m.png" />
-          <Image Name="Yellow.png" />
-          <Image Name="RedWire M.png" />
-          <Image Name="Blue s.png" />
-          <Image Name="RedWire S.png" />
-          <Image Name="Green M.png" />
-          <Image Name="Green S.png" />
-          <Image Name="Purple M.png" />
-          <Image Name="Purple S.png" />
-          <Image Name="Purple.png" />
-          <Image Name="Rifle.png" />
-          <Image Name="Power.png" />
-          <Image Name="Bg 1.png" />
-          <Image Name="Vent 2.png" />
-          <Image Name="Eyes.png" />
-          <Image Name="Daisy.png" />
-          <Image Name="Level 1 screen.png" />
-          <Image Name="Screen Level 3.png" />
-          <Image Name="FR.png" />
-          <Image Name="L1.png" />
-          <Image Name="Stacked Crate.png" />
-          <Image Name="Stacked Crates.png" />
-          <Image Name="Vent.png" />
-          <Image Name="Danger.png" />
-          <Image Name="Pipe.png" />
-          <Image Name="Holo.png" />
-          <Image Name="Wires 2.png" />
+          <Folder Name="Level_Background_Assets">
+            <Image Name="Cabinet.png" />
+            <Image Name="Chair.png" />
+            <Image Name="Clone.png" />
+            <Image Name="Danger.png" />
+            <Image Name="Computers.png" />
+            <Image Name="Daisy.png" />
+            <Image Name="Detail_2.png" />
+            <Image Name="Detail_3.png" />
+            <Image Name="Detail_1.png" />
+            <Image Name="Door.png" />
+            <Image Name="Eyes.png" />
+            <Image Name="Hammer.png" />
+            <Image Name="Holo.png" />
+            <Image Name="L_1.png" />
+            <Image Name="Ladder_Med.png" />
+            <Image Name="Light_2.png" />
+            <Image Name="Light_1.png" />
+            <Image Name="Locked_Locker.png" />
+            <Image Name="Locker.png" />
+            <Image Name="Most_Wanted_Josh.png" />
+            <Image Name="Panel_1.png" />
+            <Image Name="Panel_10.png" />
+            <Image Name="Panel_11.png" />
+            <Image Name="Panel_12.png" />
+            <Image Name="Panel_13.png" />
+            <Image Name="Panel_2.png" />
+            <Image Name="Panel_3.png" />
+            <Image Name="Panel_4.png" />
+            <Image Name="Panel_5.png" />
+            <Image Name="Panel_6.png" />
+            <Image Name="Panel_7.png" />
+            <Image Name="Panel_8.png" />
+            <Image Name="Panel_9.png" />
+            <Image Name="Depth_Panel_1.png" />
+            <Image Name="Pipe.png" />
+            <Image Name="Power.png" />
+            <Image Name="Rifle.png" />
+            <Image Name="Side_Panel_1.png" />
+            <Image Name="Small_Locked_Box.png" />
+            <Image Name="Space_Port_Large.png" />
+            <Image Name="Space_Port_Small.png" />
+            <Image Name="Stacked_Crate.png" />
+            <Image Name="Stacked_Crates.png" />
+            <Image Name="Table.png" />
+            <Image Name="Vent_2.png" />
+            <Image Name="Vent_1.png" />
+            <Image Name="Window_l.png" />
+            <Image Name="Window_s.png" />
+            <Image Name="Wires_2.png" />
+            <Image Name="Wires_1.png" />
+            <Image Name="Wrench.png" />
+            <Image Name="Drill.png" />
+            <Image Name="Phone.png" />
+          </Folder>
+          <Folder Name="Scene_Backgrounds">
+            <Image Name="Bg_1_s.png" />
+            <Image Name="Bg_1_l.png" />
+            <Image Name="Bg_2.png" />
+            <Image Name="Bg_3.png" />
+            <Image Name="CreditsScreen.png" />
+            <Image Name="Transparent.png" />
+            <Image Name="Bg_4.png" />
+            <Image Name="Bg_5.png" />
+            <Image Name="Bg_6.png" />
+            <Image Name="Bg_7.png" />
+          </Folder>
+          <Folder Name="Level_Letter">
+            <Image Name="EQ.png" />
+            <Image Name="FR.png" />
+            <Image Name="NT.png" />
+            <Image Name="WE.png" />
+          </Folder>
+          <Folder Name="Level_Wire">
+            <Image Name="Blue_l.png" />
+            <Image Name="Blue_m.png" />
+            <Image Name="Blue_s.png" />
+            <Image Name="Green_m.png" />
+            <Image Name="Green_s.png" />
+            <Image Name="Green_l.png" />
+            <Image Name="Red_l.png" />
+            <Image Name="Red_m.png" />
+            <Image Name="Red_s.png" />
+            <Image Name="Purple_l.png" />
+            <Image Name="Purple_m.png" />
+            <Image Name="Purple_s.png" />
+            <Image Name="Yellow_l.png" />
+            <Image Name="Yellow_m.png" />
+          </Folder>
+          <Folder Name="Level_Words">
+            <Image Name="Sector.png" />
+          </Folder>
+          <Folder Name="Level_Number">
+            <Image Name="One.png" />
+            <Image Name="Two.png" />
+            <Image Name="Zero.png" />
+          </Folder>
+          <Folder Name="Level_Tutorial_Screens">
+            <Image Name="Tutorial_Level_1.png" />
+            <Image Name="Tutorial_Level_3.png" />
+          </Folder>
+          <Folder Name="Scene_Main_Menu">
+            <Image Name="Space_Ship_Damage.png" />
+            <Image Name="Logo.png" />
+            <Image Name="Planet.png" />
+            <Image Name="Space_Star.png" />
+          </Folder>
+          <Folder Name="Level_Main_Assets">
+            <Folder Name="Button">
+              <Image Name="Button_Down_Pressed.png" />
+              <Image Name="Button_Down_Unpressed.png" />
+              <Image Name="Button_Left_Pressed.png" />
+              <Image Name="Button_Left_Unpressed.png" />
+              <Image Name="Button_Right_Pressed.png" />
+              <Image Name="Button_Right_Unpressed.png" />
+              <Image Name="Button_Up_Pressed.png" />
+              <Image Name="Button_Up_Unpressed.png" />
+            </Folder>
+            <Folder Name="Exit">
+              <Image Name="Exit_0.png" />
+              <Image Name="Exit_1.png" />
+              <Image Name="Exit_2.png" />
+              <Image Name="Exit_3.png" />
+              <Image Name="Exit_4.png" />
+              <Image Name="Exit_5.png" />
+              <Image Name="Exit_6.png" />
+              <Image Name="Exit_7.png" />
+            </Folder>
+            <Folder Name="Crates">
+              <Image Name="Crate_Wooden.png" />
+              <Image Name="Crate_Metal.png" />
+            </Folder>
+            <Folder Name="Husky">
+              <Image Name="Husky_Stand.png" />
+              <Image Name="Husky_Run_1.png" />
+              <Image Name="Husky_Run_2.png" />
+              <Image Name="Husky_Run_3.png" />
+              <Image Name="Husky_Run_4.png" />
+              <Image Name="Husky_Run_5.png" />
+              <Image Name="Husky_Run_6.png" />
+            </Folder>
+            <Folder Name="Switches">
+              <Image Name="Switch_Down_Off.png" />
+              <Image Name="Switch_Down_On.png" />
+              <Image Name="Switch_Left_Off.png" />
+              <Image Name="Switch_Left_On.png" />
+              <Image Name="Switch_Right_Off.png" />
+              <Image Name="Switch_Right_On.png" />
+              <Image Name="Switch_Up_Off.png" />
+              <Image Name="Switch_Up_On.png" />
+              <Image Name="Switch_Clock.png" />
+            </Folder>
+            <Folder Name="Doors">
+              <Image Name="Door_Hardlight.png" />
+              <Image Name="Door_Solid.png" />
+              <Image Name="Hatch_Hardlight.png" />
+            </Folder>
+            <Folder Name="Platforms">
+              <Image Name="Platform_1.png" />
+              <Image Name="Platform_Holder.png" />
+              <Image Name="Platform_Cup.png" />
+              <Image Name="Wall_1.png" />
+            </Folder>
+          </Folder>
+          <Folder Name="Level_UI">
+            <Image Name="Highlight.png" />
+            <Image Name="Button_Retry_On.png" />
+            <Image Name="Button_Retry_Off.png" />
+            <Image Name="Button_Back_Off.png" />
+            <Image Name="Button_Back_On.png" />
+            <Image Name="Button_Mute_Go.png" />
+            <Image Name="Button_Mute_Off.png" />
+            <Image Name="Button_Mute_On.png" />
+          </Folder>
+          <Folder Name="Scene_Buttons">
+            <Image Name="Button_Credits_Frame.png" />
+            <Image Name="Button_Credits_NoFrame.png" />
+            <Image Name="Button_Exit_Frame.png" />
+            <Image Name="Button_Exit_NoFrame.png" />
+            <Image Name="Button_Menu_Frame.png" />
+            <Image Name="Button_Next_Frame.png" />
+            <Image Name="Button_Start_Frame.png" />
+            <Image Name="Button_Start_NoFrame.png" />
+            <Image Name="Button_Frame.png" />
+            <Image Name="Button_Retry_Frame.png" />
+          </Folder>
+          <Folder Name="z_Old">
+            <Image Name="MBoxSpawn.png" />
+            <Image Name="WBoxSpawn.png" />
+            <Image Name="Start.png" />
+          </Folder>
+          <Folder Name="Scene_Splash_Screen">
+            <Image Name="Alex.png" />
+            <Image Name="Ash.png" />
+            <Image Name="David.png" />
+            <Image Name="James.png" />
+            <Image Name="Josh.png" />
+            <Image Name="Matt.png" />
+            <Image Name="VikingLogo.png" />
+            <Image Name="HVLone.png" />
+          </Folder>
+          <Folder Name="Scene_Game_Win">
+            <Image Name="Rating.png" />
+            <Image Name="Star_On.png" />
+            <Image Name="Time.png" />
+            <Image Name="Star_Off.png" />
+            <Image Name="Star_Off_Trans.png" />
+          </Folder>
+          <Folder Name="Scene_Game_Over">
+            <Image Name="Game_Over.png" />
+          </Folder>
+          <Folder Name="Scene_Level_Select">
+            <Image Name="Button_Play_On.png" />
+            <Image Name="Button_Play_Off.png" />
+            <Image Name="World_1_On.png" />
+            <Image Name="World_1_Off.png" />
+            <Image Name="World_2_On.png" />
+            <Image Name="World_2_Off.png" />
+            <Image Name="World_3_On.png" />
+            <Image Name="World_3_Off.png" />
+            <Image Name="Info_Box.png" />
+            <Image Name="Left_Off.png" />
+            <Image Name="Left_On.png" />
+            <Image Name="Right_Off.png" />
+            <Image Name="Right_On.png" />
+            <Image Name="Temp_Info_Box.png" />
+            <Image Name="Preview_Level_1.png" />
+            <Image Name="Preview_Level_2.png" />
+            <Image Name="Preview_Level_3.png" />
+            <Image Name="Preview_Level_4.png" />
+          </Folder>
         </Folder>
-        <Image Name="Tutorial1.png" />
-        <Image Name="BackButtonPressed.png" />
-        <Image Name="BackButtonUnPressed.png" />
+        <Folder Name="Cocos_Scenes">
+          <Folder Name="Levels">
+            <Project Name="Scene1.csd" Type="Scene" />
+            <Project Name="SceneTest.csd" Type="Scene" />
+            <Project Name="Scene8.csd" Type="Scene" />
+            <Project Name="Scene3.csd" Type="Scene" />
+            <Project Name="Scene4.csd" Type="Scene" />
+            <Project Name="Scene2.csd" Type="Scene" />
+          </Folder>
+          <Project Name="Credits.csd" Type="Scene" />
+          <Project Name="GameOver.csd" Type="Scene" />
+          <Project Name="GameWin.csd" Type="Scene" />
+          <Project Name="MainScene.csd" Type="Scene" />
+          <Project Name="MenuScene.csd" Type="Scene" />
+          <Project Name="SplashScreen.csd" Type="Scene" />
+        </Folder>
+        <Folder Name="Sound">
+          <Folder Name="Sound_Effects">
+            <Audio Name="Ticking_Clock.wav" />
+          </Folder>
+          <Folder Name="Music">
+            <Audio Name="Menu.mp3" />
+            <Audio Name="Testing.mp3" />
+          </Folder>
+        </Folder>
       </RootFolder>
     </Group>
   </SolutionFolder>

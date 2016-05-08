@@ -41,7 +41,7 @@ bool SceneManager::init()
 	auto winSize = Director::getInstance()->getVisibleSize(); //Gets the size of the screen
 	Vec2 origin = Director::getInstance()->getVisibleOrigin(); //Gets the origin of the screen
 
-	rootNode = CSLoader::createNode("Levels/Scene" + StringUtils::format("%d", _level) + ".csb");
+	rootNode = CSLoader::createNode("Cocos_Scenes/Levels/Scene" + StringUtils::format("%d", _level) + ".csb");
 
 	exists = CheckNode();
 
@@ -149,7 +149,7 @@ void SceneManager::SetupAudio(Node* root)
 {
 	// Check if the game is muted before playing background music
 	if (GameManager::sharedGameManager()->getIsGameMuted() == false) {
-		auEngine->PlayBackgroundMusic("testing.mp3", true);
+		auEngine->PlayBackgroundMusic("Sound/Music/Testing.mp3", true);
 	}
 }
 
@@ -161,7 +161,7 @@ void SceneManager::SetupButtons(Node* root)
 
 	// START BUTTON
 	// Note: This is a debug button that may need removing for the final version
-	_startGame = ui::Button::create("StartButton.png", "StartButton.png", "StartButton.png");
+	_startGame = ui::Button::create("Art/Scene_Buttons/Button_Start_Frame.png", "Art/Scene_Buttons/Button_Start_Frame.png", "Art/Scene_Buttons/Button_Start_Frame.png");
 	_startGame->addTouchEventListener(CC_CALLBACK_2(SceneManager::StartButtonPressed, this));
 	_startGame->setPosition(Vec2(winSize.width*0.5, winSize.height*0.5));
 	_startGame->setGlobalZOrder(10);
@@ -169,9 +169,9 @@ void SceneManager::SetupButtons(Node* root)
 
 	// Retry Button
 	_retryButton = ui::Button::create();
-	_retryButton->loadTextureNormal("RetryButtonUnPressed.png");
-	_retryButton->loadTexturePressed("RetryButtonPressed.png");
-	_retryButton->loadTextureDisabled("RetryButtonUnPressed.png");
+	_retryButton->loadTextureNormal("Art/Level_UI/Button_Retry_Off.png");
+	_retryButton->loadTexturePressed("Art/Level_UI/Button_Retry_On.png");
+	_retryButton->loadTextureDisabled("Art/Level_UI/Button_Retry_On.png");
 	_retryButton->addTouchEventListener(CC_CALLBACK_2(SceneManager::RetryButtonPressed, this));
 	_retryButton->setPosition(Vec2(winSize.width - (_retryButton->getSize().width / 2), winSize.height - (_retryButton->getSize().height / 2)));
 
@@ -179,9 +179,9 @@ void SceneManager::SetupButtons(Node* root)
 
 	// Back Button
 	_backButton = ui::Button::create();
-	_backButton->loadTextureNormal("BackButtonUnPressed.png");
-	_backButton->loadTexturePressed("BackButtonPressed.png");
-	_backButton->loadTextureDisabled("BackButtonUnPressed.png");
+	_backButton->loadTextureNormal("Art/Level_UI/Button_Back_Off.png");
+	_backButton->loadTexturePressed("Art/Level_UI/Button_Back_On.png");
+	_backButton->loadTextureDisabled("Art/Level_UI/Button_Back_On.png");
 	_backButton->addTouchEventListener(CC_CALLBACK_2(SceneManager::BackButtonPressed, this));
 	_backButton->setPosition(Vec2(0.0f + (_backButton->getSize().width / 2), winSize.height - (_backButton->getSize().height / 2)));
 
@@ -447,31 +447,31 @@ void SceneManager::SetupBackground(Node* root)
 	// Get screen size
 	auto winSize = Director::getInstance()->getVisibleSize();
 
-	_background1 = Sprite::create("BG1.png");
+	_background1 = Sprite::create("Art/Scene_Backgrounds/Bg_3.png");
 	_background1->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.5f));
 	_background1->setScaleX(winSize.width / _background1->getContentSize().width);
 	_background1->setScaleY(winSize.height / _background1->getContentSize().height);
 	_background1->setLocalZOrder(-3);
 
-	_background2 = Sprite::create("BG2.png");
+	_background2 = Sprite::create("Art/Scene_Backgrounds/Bg_4.png");
 	_background2->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.5f));
 	_background2->setScaleX(winSize.width / _background2->getContentSize().width);
 	_background2->setScaleY(winSize.height / _background2->getContentSize().height);
 	_background2->setLocalZOrder(-1);
 
-	_background3 = Sprite::create("BG3.png");
+	_background3 = Sprite::create("Art/Scene_Backgrounds/Bg_5.png");
 	_background3->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.5f));
 	_background3->setScaleX(winSize.width / _background3->getContentSize().width);
 	_background3->setScaleY(winSize.height / _background3->getContentSize().height);
 	_background3->setLocalZOrder(-2);
 
-	_background4 = Sprite::create("BG4.png");
+	_background4 = Sprite::create("Art/Scene_Backgrounds/Bg_6.png");
 	_background4->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.5f));
 	_background4->setScaleX(winSize.width / _background4->getContentSize().width);
 	_background4->setScaleY(winSize.height / _background4->getContentSize().height);
 	_background4->setLocalZOrder(-2);
 
-	_blackTransparency = Sprite::create("Black Screen.png");
+	_blackTransparency = Sprite::create("Art/Scene_Backgrounds/Bg_7.png");
 	_blackTransparency->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.5f));
 	_blackTransparency->setScaleX(winSize.width / _blackTransparency->getContentSize().width);
 	_blackTransparency->setScaleY(winSize.height / _blackTransparency->getContentSize().height);
@@ -491,27 +491,27 @@ void SceneManager::SetupHighlights(Node* root)
 	auto winSize = Director::getInstance()->getVisibleSize();
 
 	// SETUP SPRITES
-	_topHighlight = Sprite::create("highlight.png");
+	_topHighlight = Sprite::create("Art/Level_UI/Highlight.png");
 	_topHighlight->setPosition(Vec2(winSize.width*0.5f, winSize.height - (_topHighlight->getContentSize().height / 2)));
 	_topHighlight->setScaleX(winSize.width);
 	_topHighlight->setOpacity(0);
 	_topHighlight->setLocalZOrder(3);
 
-	_rightHighlight = Sprite::create("highlight.png");
+	_rightHighlight = Sprite::create("Art/Level_UI/Highlight.png");
 	_rightHighlight->setPosition(Vec2(winSize.width - (_rightHighlight->getContentSize().height / 2), winSize.height * 0.5f));
 	_rightHighlight->setRotation(90.0f);
 	_rightHighlight->setScaleX(winSize.height);
 	_rightHighlight->setOpacity(0);
 	_rightHighlight->setLocalZOrder(3);
 
-	_bottomHighlight = Sprite::create("highlight.png");
+	_bottomHighlight = Sprite::create("Art/Level_UI/Highlight.png");
 	_bottomHighlight->setPosition(Vec2(winSize.width*0.5f, 0.0f + (_topHighlight->getContentSize().height / 2)));
 	_bottomHighlight->setRotation(180.0f);
 	_bottomHighlight->setScaleX(winSize.width);
 	_bottomHighlight->setOpacity(0);
 	_bottomHighlight->setLocalZOrder(3);
 
-	_leftHighlight = Sprite::create("highlight.png");
+	_leftHighlight = Sprite::create("Art/Level_UI/Highlight.png");
 	_leftHighlight->setPosition(Vec2(0.0f + (_rightHighlight->getContentSize().height / 2), winSize.height * 0.5f));
 	_leftHighlight->setRotation(270.0f);
 	_leftHighlight->setScaleX(winSize.height);

@@ -84,7 +84,7 @@ void Player::update(float delta)
 	}
 
 	if (GameManager::sharedGameManager()->getIsGamePaused()) {
-		GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Husky.png"));
+		GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_Main_Assets/Husky/Husky_Stand.png"));
 	}
 	else {
 		if (_orientationVertical) {
@@ -94,7 +94,7 @@ void Player::update(float delta)
 				if (!_running) {
 					_running = true;
 					_frame = 1;
-					GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Husky_Run_" + StringUtils::format("%d", _frame) + ".png"));
+					GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_Main_Assets/Husky/Husky_Run_" + StringUtils::format("%d", _frame) + ".png"));
 				}
 
 				if (_spriteTimer <= 0.0f) {
@@ -105,7 +105,7 @@ void Player::update(float delta)
 						_frame = 1;
 					}
 
-					GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Husky_Run_" + StringUtils::format("%d", _frame) + ".png"));
+					GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_Main_Assets/Husky/Husky_Run_" + StringUtils::format("%d", _frame) + ".png"));
 				}
 			}
 			else {
@@ -115,7 +115,7 @@ void Player::update(float delta)
 				if (_running) {
 					_running = false;
 
-					GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Husky.png"));
+					GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_Main_Assets/Husky/Husky_Stand.png"));
 				}
 			}
 		}
@@ -132,7 +132,7 @@ void Player::update(float delta)
 						_frame = 1;
 					}
 
-					GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Husky_Run_" + StringUtils::format("%d", _frame) + ".png"));
+					GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_Main_Assets/Husky/Husky_Run_" + StringUtils::format("%d", _frame) + ".png"));
 				}
 			}
 			else {
@@ -142,7 +142,7 @@ void Player::update(float delta)
 				if (_running) {
 					_running = false;
 
-					GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Husky.png"));
+					GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_Main_Assets/Husky/Husky_Stand.png"));
 				}
 			}
 		}

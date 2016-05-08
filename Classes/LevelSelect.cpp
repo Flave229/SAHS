@@ -31,7 +31,7 @@ bool LevelSelect::init()
 	srand(time(NULL));
 
 	auto winSize = Director::getInstance()->getVisibleSize();
-	auto rootNode = CSLoader::createNode("MainScene.csb");
+	auto rootNode = CSLoader::createNode("Cocos_Scenes/MainScene.csb");
 
 	addChild(rootNode);
 
@@ -53,12 +53,12 @@ bool LevelSelect::init()
 	this->schedule(schedule_selector(LevelSelect::UpdateTimer), 1.0f);
 
 
-	_planet = Sprite::create("Planet.png");
+	_planet = Sprite::create("Art/Scene_Main_Menu/Planet.png");
 	_planet->setPosition(Vec2(0.0f, 0.0f - (_planet->getContentSize().height / 8)));
 	//_planet->setScale(8.0f);
 	this->addChild(_planet);
 
-	_ship = Sprite::create("HuskySpaceShipDamage.png");
+	_ship = Sprite::create("Art/Scene_Main_Menu/Space_Ship_Damage.png");
 	_ship->setPosition(Vec2(winSize.width*0.3f, winSize.height*0.55f));
 	_ship->setScale(0.25f);
 	_ship->setRotation(30);
@@ -66,7 +66,7 @@ bool LevelSelect::init()
 	this->addChild(_ship);
 
 	for (int i = 0; i < 100; i++) {
-		_stars.push_back(Sprite::create("SpaceStar.png"));
+		_stars.push_back(Sprite::create("Art/Scene_Main_Menu/Space_Star.png"));
 
 		int randomWidth = cocos2d::RandomHelper::random_real(0.0f, winSize.width);
 		int randomHeight = cocos2d::RandomHelper::random_real(0.0f, winSize.height);
@@ -86,9 +86,9 @@ bool LevelSelect::init()
 
 	// Back Button
 	_backButton = ui::Button::create();
-	_backButton->loadTextureNormal("BackButtonUnPressed.png");
-	_backButton->loadTexturePressed("BackButtonPressed.png");
-	_backButton->loadTextureDisabled("BackButtonUnPressed.png");
+	_backButton->loadTextureNormal("Art/Level_UI/Back_Button_On.png");
+	_backButton->loadTexturePressed("Art/Level_UI/Back_Button_On.png");
+	_backButton->loadTextureDisabled("Art/Level_UI/Back_Button_Off.png");
 	_backButton->addTouchEventListener(CC_CALLBACK_2(LevelSelect::BackButtonPressed, this));
 	_backButton->setPosition(Vec2(0.0f + (_backButton->getSize().width / 2), winSize.height - (_backButton->getSize().height / 2)));
 
@@ -105,7 +105,7 @@ bool LevelSelect::init()
 		temp._ID = i+1;
 		temp._CustomLevelName = "-";
 		temp._Scale = Vec3(100, 80, 60);
-		temp._Sprite = Sprite3D::create("cube.obj", "Level1Preview.png");
+		temp._Sprite = Sprite3D::create("Art/Scene_Level_Select/cube.obj", "Art/Scene_Level_Select/Preview_Level_1.png");
 		temp._Sprite->setGlobalZOrder(i+40);
 		temp._Sprite->setScale(temp._Scale.z);
 		temp._Sprite->setPosition3D(_LevelPositions[i]);
@@ -132,7 +132,7 @@ bool LevelSelect::init()
 		addChild(_AllLevels[i]._Sprite);
 	}
 
-	_InfoBox = Sprite::create("TempInfoBox.png");
+	_InfoBox = Sprite::create("Art/Scene_Level_Select/Temp_Info_Box.png");
 	_InfoBox->setPosition(Vec2(screenSizeX / 2, screenSizeY - 100));
 	_InfoBox->setScale(0.75f,0.5f);
 	_InfoBox->setGlobalZOrder(1);
@@ -156,11 +156,11 @@ bool LevelSelect::init()
 	addChild(labelTouchInfo);
 
 
-	auto leftItem = MenuItemImage::create("Left.png", "Left2.png", CC_CALLBACK_1(LevelSelect::LevelLeft, this));
+	auto leftItem = MenuItemImage::create("Art/Scene_Level_Select/Left_Off.png", "Art/Scene_Level_Select/Left_On.png", CC_CALLBACK_1(LevelSelect::LevelLeft, this));
 	leftItem->setScaleY(2);
 	leftItem->setPosition(Vec2(-750, 0));
 
-	auto rightItem = MenuItemImage::create("Right.png", "Right2.png", CC_CALLBACK_1(LevelSelect::LevelRight, this));
+	auto rightItem = MenuItemImage::create("Art/Scene_Level_Select/Right_Off.png", "Art/Scene_Level_Select/Right_On.png", CC_CALLBACK_1(LevelSelect::LevelRight, this));
 	rightItem->setPosition(Vec2(750, 0));
 	rightItem->setScaleY(2);
 	auto menu = Menu::create(leftItem,rightItem,NULL);
@@ -260,26 +260,26 @@ void LevelSelect::LevelMovement()
 			_AllLevels[i]._IsFocused = true;
 			if (i == 0)
 			{
-				_AllLevels[i]._Sprite->setTexture("LevelSelect/Level1Preview.png");
+				_AllLevels[i]._Sprite->setTexture("Art/Scene_Level_Select/Preview_Level_1.png");
 			}
 			else if (i == 1)
 			{
-				_AllLevels[i]._Sprite->setTexture("LevelSelect/Level2Preview.png");
+				_AllLevels[i]._Sprite->setTexture("Art/Scene_Level_Select/Preview_Level_2.png");
 			}
 			else if (i == 2)
 			{
-				_AllLevels[i]._Sprite->setTexture("LevelSelect/Level3Preview.png");
+				_AllLevels[i]._Sprite->setTexture("Art/Scene_Level_Select/Preview_Level_3.png");
 			}
 			else if (i == 3)
 			{
-				_AllLevels[i]._Sprite->setTexture("LevelSelect/Level4Preview.png");
+				_AllLevels[i]._Sprite->setTexture("Art/Scene_Level_Select/Preview_Level_4.png");
 			}
 			
 		}
 		else
 		{
 			_AllLevels[i]._IsFocused = false;
-			_AllLevels[i]._Sprite->setTexture("World1.png");
+			_AllLevels[i]._Sprite->setTexture("Art/Scene_Level_Select/World_1_Off.png");
 		}
 	}
 	

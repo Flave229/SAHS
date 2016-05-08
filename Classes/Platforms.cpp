@@ -46,7 +46,7 @@ Platforms::~Platforms()
 
 void Platforms::setZoneSprite()
 {
-	_touchZone = Sprite::create("Platform.jpg");
+	_touchZone = Sprite::create("Art/Level_Main_Assets/Platforms/Platform_1.png");
 	this->addChild(_touchZone);
 	_touchZone->setPosition(_movingPlat->getPosition());
 	_touchZone->setScaleX(_movingPlat->getScaleX() * 1.2);

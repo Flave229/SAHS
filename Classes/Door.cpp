@@ -56,7 +56,7 @@ bool Door::Open(float delta)
 {
 	_open = true;
 
-	GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("transparent.png"));
+	GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Scene_Backgrounds/Transparent.png"));
 
 	return true;
 }
@@ -66,10 +66,10 @@ bool Door::Close(float delta)
 	_open = false;
 
 	if (getName().find("Hatch")) {
-		GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Hardlight_Hatch.png"));
+		GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_Main_Assets/Doors/Hatch_Hardlight.png"));
 	}
 	else {
-		GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Hardlight_Door.png"));
+		GetSprite()->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_Main_Assets/Doors/Door_Hardlight.png"));
 	}
 
 	return true;

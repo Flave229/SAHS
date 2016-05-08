@@ -31,7 +31,7 @@ bool MenuScene::init()
 		return false;
 	}
 
-	auto rootNode = CSLoader::createNode("MenuScene.csb");
+	auto rootNode = CSLoader::createNode("Cocos_Scenes/MenuScene.csb");
 	addChild(rootNode);
 
 	this->scheduleUpdate();
@@ -59,7 +59,7 @@ bool MenuScene::init()
 	_startButton->setScale(1.5f);
 	_startButton->setCascadeOpacityEnabled(true);
 
-	_startButtonFrame = Sprite::create("ButtonFrame.png");
+	_startButtonFrame = Sprite::create("Art/Scene_Buttons/Button_Frame.png");
 	_startButtonFrame->setPosition(Vec2(winSize.width*0.75f, winSize.height*0.45f));
 	_startButtonFrame->setGlobalZOrder(10);
 	_startButtonFrame->setScale(1.5f);
@@ -74,7 +74,7 @@ bool MenuScene::init()
 	_creditsButton->setScale(1.5f);
 	_creditsButton->setCascadeOpacityEnabled(true);
 
-	_creditsButtonFrame = Sprite::create("ButtonFrame.png");
+	_creditsButtonFrame = Sprite::create("Art/Scene_Buttons/Button_Frame.png");
 	_creditsButtonFrame->setPosition(Vec2(winSize.width*0.75f, winSize.height*0.30f));
 	_creditsButtonFrame->setGlobalZOrder(10);
 	_creditsButtonFrame->setScale(1.5f);
@@ -88,7 +88,7 @@ bool MenuScene::init()
 	_exitButton->setScale(1.5f);
 	_exitButton->setCascadeOpacityEnabled(true);
 
-	_exitButtonFrame = Sprite::create("ButtonFrame.png");
+	_exitButtonFrame = Sprite::create("Art/Scene_Buttons/Button_Frame.png");
 	_exitButtonFrame->setPosition(Vec2(winSize.width*0.75f, winSize.height*0.15f));
 	_exitButtonFrame->setGlobalZOrder(10);
 	_exitButtonFrame->setScale(1.5f);
@@ -100,11 +100,11 @@ bool MenuScene::init()
 	
 	if (GameManager::sharedGameManager()->getIsGameMuted() == true)
 	{
-		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("MutePressed.png"));
+		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_UI/Button_Mute_On.png"));
 	}
 	else
 	{
-		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("MuteUnPressed.png"));
+		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_UI/Button_Mute_Off.png"));
 	}
 
 	_muteButton->setPosition(Vec2(winSize.width*0.05f, winSize.height*0.95f));
@@ -117,18 +117,18 @@ bool MenuScene::init()
 	_background->setScaleY(winSize.height / _background->getContentSize().height);
 	_background->setLocalZOrder(-1);*/
 
-	_logo = Sprite::create("Logo.png");
+	_logo = Sprite::create("Art/Scene_Main_Menu/Logo.png");
 	_logo->setPosition(Vec2(winSize.width*0.60f, winSize.height*0.75f));
 	_logo->setScale(0.75f);
 
 	this->addChild(_logo);
 
-	_planet = Sprite::create("Planet.png");
+	_planet = Sprite::create("Art/Scene_Main_Menu/Planet.png");
 	_planet->setPosition(Vec2(0.0f, 0.0f - (_planet->getContentSize().height / 8)));
 	//_planet->setScale(8.0f);
 	this->addChild(_planet);
 
-	_ship = Sprite::create("HuskySpaceShipDamage.png");
+	_ship = Sprite::create("Art/Scene_Main_Menu/Space_Ship_Damage.png");
 	_ship->setPosition(Vec2(winSize.width*0.3f, winSize.height*0.55f));
 	_ship->setScale(0.25f);
 	_ship->setRotation(30);
@@ -136,7 +136,7 @@ bool MenuScene::init()
 	this->addChild(_ship);
 
 	for (int i = 0; i < 100; i++) {
-		_stars.push_back(Sprite::create("SpaceStar.png"));
+		_stars.push_back(Sprite::create("Art/Scene_Main_Menu/Space_Star.png"));
 
 		int randomWidth = cocos2d::RandomHelper::random_real(0.0f, winSize.width);
 		int randomHeight = cocos2d::RandomHelper::random_real(0.0f, winSize.height);
@@ -165,7 +165,7 @@ bool MenuScene::init()
 
 	if (GameManager::sharedGameManager()->getIsGameMuted() == false)
 	{	
-		auEngine->PlayBackgroundMusic("menu.mp3", true);
+		auEngine->PlayBackgroundMusic("Sound/Music/Menu.mp3", true);
 	}
 
 	return true;

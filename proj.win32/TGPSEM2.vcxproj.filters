@@ -2,58 +2,157 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\AudioEngine.cpp" />
-    <ClCompile Include="..\Classes\Box.cpp" />
-    <ClCompile Include="..\Classes\Exit.cpp" />
-    <ClCompile Include="..\Classes\GameManager.cpp" />
-    <ClCompile Include="..\Classes\GameOverScene.cpp" />
-    <ClCompile Include="..\Classes\GameWinScene.cpp" />
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
-    <ClCompile Include="..\Classes\LevelSelect.cpp" />
-    <ClCompile Include="..\Classes\MenuScene.cpp" />
-    <ClCompile Include="..\Classes\Platforms.cpp" />
-    <ClCompile Include="..\Classes\ScalingObject.cpp" />
-    <ClCompile Include="..\Classes\Player.cpp" />
-    <ClCompile Include="..\Classes\SceneManager.cpp" />
-    <ClCompile Include="..\Classes\ScoreManager.cpp" />
-    <ClCompile Include="..\Classes\SplashScreenScene.cpp" />
-    <ClCompile Include="..\Classes\Switch.cpp" />
-    <ClCompile Include="..\Classes\TouchManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="..\Classes\FloorButton.cpp" />
-    <ClCompile Include="..\Classes\Door.cpp" />
-    <ClCompile Include="..\Classes\Wall.cpp" />
-    <ClCompile Include="..\Classes\SwitchTimer.cpp" />
-    <ClCompile Include="..\Classes\CreditsScene.cpp" />
+    <ClCompile Include="..\Classes\CreditsScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameOverScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameWinScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Door.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Box.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Exit.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\FloorButton.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Platforms.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ScalingObject.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MenuScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SwitchTimer.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Switch.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Wall.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LevelSelect.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SceneManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ScoreManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SplashScreenScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TouchManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AudioEngine.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\AudioEngine.h" />
-    <ClInclude Include="..\Classes\Box.h" />
-    <ClInclude Include="..\Classes\Exit.h" />
-    <ClInclude Include="..\Classes\GameManager.h" />
-    <ClInclude Include="..\Classes\GameOverScene.h" />
-    <ClInclude Include="..\Classes\GameWinScene.h" />
-    <ClInclude Include="..\Classes\HelloWorldScene.h" />
-    <ClInclude Include="..\Classes\LevelSelect.h" />
-    <ClInclude Include="..\Classes\MenuScene.h" />
-    <ClInclude Include="..\Classes\Platforms.h" />
-    <ClInclude Include="..\Classes\ScalingObject.h" />
-    <ClInclude Include="..\Classes\Player.h" />
-    <ClInclude Include="..\Classes\SceneManager.h" />
-    <ClInclude Include="..\Classes\ScoreManager.h" />
-    <ClInclude Include="..\Classes\SplashScreenScene.h" />
-    <ClInclude Include="..\Classes\Switch.h" />
-    <ClInclude Include="..\Classes\TouchManager.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="..\Classes\FloorButton.h" />
-    <ClInclude Include="..\Classes\Door.h" />
-    <ClInclude Include="..\Classes\Wall.h" />
-    <ClInclude Include="..\Classes\SwitchTimer.h" />
-    <ClInclude Include="..\Classes\CreditsScene.h" />
+    <ClInclude Include="..\Classes\CreditsScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameOverScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameWinScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelloWorldScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Door.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Exit.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\FloorButton.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Platforms.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ScalingObject.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MenuScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SwitchTimer.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Switch.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Wall.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LevelSelect.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SceneManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ScoreManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SplashScreenScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TouchManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AudioEngine.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{45429c1c-2f43-4a6f-b178-eda75b3cc2dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{c8a9b6fa-92d9-4722-b179-575b8945d86e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{d44086bf-bb76-41c4-8eb8-321e44bdaba6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
