@@ -32,13 +32,8 @@
       <Value ctype="TabsInfo">
         <OpenedDocuments>
           <FilePathData Path="Cocos_Scenes/Levels/Scene3.csd" />
-          <FilePathData Path="Cocos_Scenes/Levels/Scene2.csd" />
-          <FilePathData Path="Cocos_Scenes/Levels/Scene4.csd" />
-          <FilePathData Path="Cocos_Scenes/Levels/SceneTest.csd" />
-          <FilePathData Path="Cocos_Scenes/Levels/Scene1.csd" />
-          <FilePathData Path="Cocos_Scenes/MenuScene.csd" />
         </OpenedDocuments>
-        <ActiveDocument Path="Cocos_Scenes/Levels/Scene4.csd" />
+        <ActiveDocument Path="Cocos_Scenes/Levels/Scene3.csd" />
       </Value>
     </Item>
   </Properties>

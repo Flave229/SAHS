@@ -198,7 +198,7 @@ void SceneManager::SetupSprites(Node* root)
 	// PLATFORMS
 	while ((tempSprite = (Sprite*)root->getChildByName("Platform_" + StringUtils::format("%d", i))) != nullptr)
 	{
-		_platforms.push_back(tempSprite);
+		_platformSprites.push_back(tempSprite);
 		i++;
 	}
 
@@ -540,19 +540,23 @@ void SceneManager::SetupHighlights(Node* root)
 void SceneManager::SetupClasses(Node* root)
 {
 	// PLAYER
-	_player = Player::create();
-	_player->SetSprite(_playerSprite, _playerSpawn);
+	ParticleModel* particle = new ParticleModel();
+	particle->SetMass(20.0f);
+	particle->AddForce("Gravity", Vec2(0.0f, -9.81f));
+
+	_player = new Player(particle);
+	_player->SetSprite(_playerSprite);
 	_player->setName("Player");
 	addChild(_player);
 
-	if (_player->GetSprite()->getPosition() != _player->GetSprite()->getPosition())
-	{
-		_player->GetSprite()->setPosition(_woodCrateSpawn[0]->getPosition());
-	}
-
 	// WOODEN CRATES
-	for (int i = 0; i < (int)_woodenSprites.size(); i++) {
-		Box* box = Box::create(1, 1.0f, -3.81f);
+	for (int i = 0; i < (int)_woodenSprites.size(); i++) 
+	{
+		ParticleModel* particle = new ParticleModel();
+		particle->SetMass(20.0f);
+		particle->AddForce("Gravity", Vec2(0.0f, -9.81f));
+
+		Box* box = new Box(particle, 1.0f);
 		box->setName("Crate_Wooden_" + StringUtils::format("%d", i + 1));
 		box->SetSprite(_woodenSprites[i]);
 
@@ -561,19 +565,14 @@ void SceneManager::SetupClasses(Node* root)
 		addChild(box);
 	}
 
-	for (int i = 0; i < _woodBoxes.size(); i++)
-	{
-		if (_woodBoxes[i]->GetSprite()->getPosition() != _woodBoxes[i]->GetSprite()->getPosition())
-		{
-			_woodBoxes[i]->GetSprite()->setPosition(_woodCrateSpawn[0]->getPosition());
-		}
-
-		_woodBoxes[i]->SetGravity(-3.81f);
-	}
-
 	// METAL CRATES
-	for (int i = 0; i < (int)_metalSprites.size(); i++) {
-		Box* box = Box::create(2, 2.0f, -3.81f);
+	for (int i = 0; i < (int)_metalSprites.size(); i++) 
+	{
+		ParticleModel* particle = new ParticleModel();
+		particle->SetMass(40.0f);
+		particle->AddForce("Gravity", Vec2(0.0f, -9.81f));
+
+		Box* box = new Box(particle, 2.0f);
 		box->setName("Crate_Metal_" + StringUtils::format("%d", i + 1));
 		box->SetSprite(_metalSprites[i]);
 
@@ -582,19 +581,10 @@ void SceneManager::SetupClasses(Node* root)
 		addChild(box);
 	}
 
-	for (int i = 0; i < _metalBoxes.size(); i++)
-	{
-		if (_metalBoxes[i]->GetSprite()->getPosition() != _metalBoxes[i]->GetSprite()->getPosition())
-		{
-			_metalBoxes[i]->GetSprite()->setPosition(_woodCrateSpawn[0]->getPosition());
-		}
-
-		_metalBoxes[i]->SetGravity(-3.81f);
-	}
-
 	// SWITCHES
 	// Down
-	for (int i = 0; i < (int)_gravSwitchesDown.size(); i++) {
+	for (int i = 0; i < (int)_gravSwitchesDown.size(); i++) 
+	{
 		Switch* gravSwitch = Switch::create();
 		gravSwitch->setName("Switch_Down_" + StringUtils::format("%d", i + 1));
 		gravSwitch->SetSprite(_gravSwitchesDown[i]);
@@ -606,7 +596,8 @@ void SceneManager::SetupClasses(Node* root)
 	}
 
 	// Left
-	for (int i = 0; i < (int)_gravSwitchesLeft.size(); i++) {
+	for (int i = 0; i < (int)_gravSwitchesLeft.size(); i++) 
+	{
 		Switch* gravSwitch = Switch::create();
 		gravSwitch->setName("Switch_Left_" + StringUtils::format("%d", i + 1));
 		gravSwitch->SetSprite(_gravSwitchesLeft[i]);
@@ -618,7 +609,8 @@ void SceneManager::SetupClasses(Node* root)
 	}
 
 	// Up
-	for (int i = 0; i < (int)_gravSwitchesUp.size(); i++) {
+	for (int i = 0; i < (int)_gravSwitchesUp.size(); i++) 
+	{
 		Switch* gravSwitch = Switch::create();
 		gravSwitch->setName("Switch_Up_" + StringUtils::format("%d", i + 1));
 		gravSwitch->SetSprite(_gravSwitchesUp[i]);
@@ -630,7 +622,8 @@ void SceneManager::SetupClasses(Node* root)
 	}
 
 	// Right
-	for (int i = 0; i < (int)_gravSwitchesRight.size(); i++) {
+	for (int i = 0; i < (int)_gravSwitchesRight.size(); i++) 
+	{
 		Switch* gravSwitch = Switch::create();
 		gravSwitch->setName("Switch_Right_" + StringUtils::format("%d", i + 1));
 		gravSwitch->SetSprite(_gravSwitchesRight[i]);
@@ -641,13 +634,28 @@ void SceneManager::SetupClasses(Node* root)
 		addChild(gravSwitch);
 	}
 
+	// PLATFORMS
+	for (int i = 0; i < (int)_platformSprites.size(); i++)
+	{
+		ParticleModel* particle = new ParticleModel();
+		particle->SetMass(100.0f);
+
+		GameObject* platform = new GameObject(particle);
+		platform->setName("Platform_" + StringUtils::format("%d", i + 1));
+		platform->SetSprite(_platformSprites.at(i));
+
+		_platforms.push_back(platform);
+
+		addChild(platform);
+	}
 
 	// MOVING PLATFORMS - HORIZONTAL
 	for (int i = 0; i < (int)_movingPlatformHorizSprites.size(); i++)
 	{
-		Platforms* movingPlats = Platforms::create(_player, _woodBoxes, _metalBoxes);
+		ParticleModel* particle = new ParticleModel();
+		MovingPlatform* movingPlats = new MovingPlatform(particle, _player, _woodBoxes, _metalBoxes);
 		movingPlats->setName("MovingPlatform_" + StringUtils::format("%d", i + 1));
-		movingPlats->setSprite(_movingPlatformHorizSprites[i]);
+		movingPlats->SetSprite(_movingPlatformHorizSprites.at(i));
 		movingPlats->setZoneSprite();
 
 		_movingPlatformsHoriz.push_back(movingPlats);
@@ -658,9 +666,10 @@ void SceneManager::SetupClasses(Node* root)
 	// MOVING PLATFORMS - VERTICAL
 	for (int i = 0; i < (int)_movingPlatformVertSprites.size(); i++)
 	{
-		Platforms* movingPlats = Platforms::create(_player, _woodBoxes, _metalBoxes);
+		ParticleModel* particle = new ParticleModel();
+		MovingPlatform* movingPlats = new MovingPlatform(particle, _player, _woodBoxes, _metalBoxes);
 		movingPlats->setName("MovingPlatform_" + StringUtils::format("%d", i + 1));
-		movingPlats->setSprite(_movingPlatformVertSprites[i]);
+		movingPlats->SetSprite(_movingPlatformVertSprites.at(i));
 		movingPlats->setZoneSprite();
 
 		_movingPlatformsVert.push_back(movingPlats);
@@ -695,7 +704,8 @@ void SceneManager::SetupClasses(Node* root)
 	}
 
 	// FLOOR BUTTONS - DOWN
-	for (int i = 0; i < (int)_downButtons.size(); i++) {
+	for (int i = 0; i < (int)_downButtons.size(); i++) 
+	{
 		FloorButton* button = FloorButton::create(0);
 		button->setName("Button_Down_" + StringUtils::format("%d", i + 1));
 		button->SetSprite(_downButtons[i]);
@@ -707,7 +717,8 @@ void SceneManager::SetupClasses(Node* root)
 	}
 
 	// FLOOR BUTTONS - LEFT
-	for (int i = 0; i < (int)_leftButtons.size(); i++) {
+	for (int i = 0; i < (int)_leftButtons.size(); i++) 
+	{
 		FloorButton* button = FloorButton::create(1);
 		button->setName("Button_Left_" + StringUtils::format("%d", i + 1));
 		button->SetSprite(_leftButtons[i]);
@@ -719,7 +730,8 @@ void SceneManager::SetupClasses(Node* root)
 	}
 
 	// FLOOR BUTTONS - UP
-	for (int i = 0; i < (int)_upButtons.size(); i++) {
+	for (int i = 0; i < (int)_upButtons.size(); i++) 
+	{
 		FloorButton* button = FloorButton::create(2);
 		button->setName("Button_Up_" + StringUtils::format("%d", i + 1));
 		button->SetSprite(_upButtons[i]);
@@ -731,7 +743,8 @@ void SceneManager::SetupClasses(Node* root)
 	}
 
 	// FLOOR BUTTONS - RIGHT
-	for (int i = 0; i < (int)_rightButtons.size(); i++) {
+	for (int i = 0; i < (int)_rightButtons.size(); i++) 
+	{
 		FloorButton* button = FloorButton::create(3);
 		button->setName("Button_Right_" + StringUtils::format("%d", i + 1));
 		button->SetSprite(_rightButtons[i]);
@@ -743,7 +756,8 @@ void SceneManager::SetupClasses(Node* root)
 	}
 
 	// DOORS
-	for (int i = 0; i < (int)_doorSprites.size(); i++) {
+	for (int i = 0; i < (int)_doorSprites.size(); i++) 
+	{
 		Door* door = Door::create();
 		door->setName("Door_" + StringUtils::format("%d", i + 1));
 		door->SetSprite(_buttons, _doorSprites[i]);
@@ -754,7 +768,8 @@ void SceneManager::SetupClasses(Node* root)
 	}
 
 	// HATCHES
-	for (int i = 0; i < (int)_hatchSprites.size(); i++) {
+	for (int i = 0; i < (int)_hatchSprites.size(); i++) 
+	{
 		Door* hatch = Door::create();
 		hatch->setName("Hatch_" + StringUtils::format("%d", i + 1));
 		hatch->SetSprite(_buttons, _hatchSprites[i]);
@@ -765,7 +780,8 @@ void SceneManager::SetupClasses(Node* root)
 	}
 
 	//Timer Switches Down
-	for (int i = 0; i < (int)_timerSwitchesDown.size(); i++) {
+	for (int i = 0; i < (int)_timerSwitchesDown.size(); i++) 
+	{
 		SwitchTimer* gravSwitch = SwitchTimer::create();
 		gravSwitch->setName("SwitchTimer_Down_" + StringUtils::format("%d", i + 1));
 		gravSwitch->SetSprite(_timerSwitchesDown[i]);
@@ -775,8 +791,10 @@ void SceneManager::SetupClasses(Node* root)
 
 		addChild(gravSwitch);
 	}
+
 	//Timer Switches Left
-	for (int i = 0; i < (int)_timerSwitchesLeft.size(); i++) {
+	for (int i = 0; i < (int)_timerSwitchesLeft.size(); i++) 
+	{
 		SwitchTimer* gravSwitch = SwitchTimer::create();
 		gravSwitch->setName("SwitchTimer_Left_" + StringUtils::format("%d", i + 1));
 		gravSwitch->SetSprite(_timerSwitchesLeft[i]);
@@ -786,8 +804,10 @@ void SceneManager::SetupClasses(Node* root)
 
 		addChild(gravSwitch);
 	}
+
 	//Timer Switches Up
-	for (int i = 0; i < (int)_timerSwitchesUp.size(); i++) {
+	for (int i = 0; i < (int)_timerSwitchesUp.size(); i++) 
+	{
 		SwitchTimer* gravSwitch = SwitchTimer::create();
 		gravSwitch->setName("SwitchTimer_Up_" + StringUtils::format("%d", i + 1));
 		gravSwitch->SetSprite(_timerSwitchesUp[i]);
@@ -797,8 +817,10 @@ void SceneManager::SetupClasses(Node* root)
 
 		addChild(gravSwitch);
 	}
+
 	//Timer Switches Right
-	for (int i = 0; i < (int)_timerSwitchesRight.size(); i++) {
+	for (int i = 0; i < (int)_timerSwitchesRight.size(); i++) 
+	{
 		SwitchTimer* gravSwitch = SwitchTimer::create();
 		gravSwitch->setName("SwitchTimer_Right_" + StringUtils::format("%d", i + 1));
 		gravSwitch->SetSprite(_timerSwitchesRight[i]);
@@ -824,12 +846,33 @@ void SceneManager::update(float delta)
 	{
 		if (GameManager::sharedGameManager()->getIsGameLive())
 		{
-			if (_flipGravityCooldown > 0.0f) {
+			if (_flipGravityCooldown > 0.0f) 
+			{
 				_flipGravityCooldown -= delta;
 
-				if (_flipGravityCooldown < 0.0f) {
+				if (_flipGravityCooldown < 0.0f) 
+				{
 					_flipGravityCooldown = 0.0f;
 				}
+			}
+
+			_player->Update(delta);
+
+			for (int i = 0; i < _woodBoxes.size(); i++)
+			{
+				_woodBoxes.at(i)->Update(delta);
+			}
+			for (int i = 0; i < _metalBoxes.size(); i++)
+			{
+				_metalBoxes.at(i)->Update(delta);
+			}
+			for (int i = 0; i < _platforms.size(); i++)
+			{
+				_platforms.at(i)->Update(delta);
+			}
+			for (int i = 0; i < _movingPlatformsHoriz.size(); i++)
+			{
+				_movingPlatformsHoriz.at(i)->Update(delta);
 			}
 
 			_score = GameManager::sharedGameManager()->getTimer();
@@ -877,37 +920,41 @@ void SceneManager::CheckCollisions()
 {
 	// PLATFORM COLLISIONS
 	for (int i = 0; i < (int)_platforms.size(); i++) {
-		_player->CheckPlatformCollisions(_platforms[i]);
+		_player->CheckCollision(_platforms.at(i), 0.1, true, false);
 
 		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			_woodBoxes[i2]->CheckPlatformCollisions(_platforms[i]);
+			_woodBoxes.at(i2)->CheckCollision(_platforms.at(i), 0.6, true, false);
+			//_woodBoxes[i2]->CheckPlatformCollisions(_platforms[i]);
 		}
 
 		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			_metalBoxes[i2]->CheckPlatformCollisions(_platforms[i]);
+			_metalBoxes.at(i2)->CheckCollision(_platforms.at(i), 0.6, true, false);
+			//_metalBoxes[i2]->CheckPlatformCollisions(_platforms[i]);
 		}
 	}
 
 	// WALL COLLISIONS
 	for (int i = 0; i < (int)_walls.size(); i++) {
-		_player->CheckWallCollisions(_walls[i]);
+		//_player->CheckWallCollisions(_walls[i]);
 
 		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			_woodBoxes[i2]->CheckWallCollisions(_walls[i]);
+			//_woodBoxes.at(i2)->CheckCollision(_walls.at(i), true, false);
+			//_woodBoxes[i2]->CheckWallCollisions(_walls[i]);
 		}
 
 		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			_metalBoxes[i2]->CheckWallCollisions(_walls[i]);
+			//_metalBoxes.at(i2)->CheckCollision(_walls.at(i), true, false);
+			//_metalBoxes[i2]->CheckWallCollisions(_walls[i]);
 		}
 
 		for (int i2 = 0; i2 < (int)_movingPlatformsHoriz.size(); i2++)
 		{
-			_movingPlatformsHoriz[i2]->CheckWallCollisions(_walls[i]);
+			//_movingPlatformsHoriz[i2]->CheckCollision(_walls.at(i));
 		}
 
 		for (int i2 = 0; i2 < (int)_movingPlatformsVert.size(); i2++)
 		{
-			_movingPlatformsVert[i2]->CheckWallCollisions(_walls[i]);
+			//_movingPlatformsVert[i2]->CheckCollision(_walls.at(i));
 		}
 	}
 
@@ -915,14 +962,16 @@ void SceneManager::CheckCollisions()
 	for (int i = 0; i < (int)_doors.size(); i++) {
 		if (!_doors[i]->GetOpen()) {
 
-			_player->CheckWallCollisions(_doors[i]->GetSprite());
+			//_player->CheckWallCollisions(_doors[i]->GetSprite());
 
 			for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-				_woodBoxes[i2]->CheckWallCollisions(_doors[i]->GetSprite());
+				//_woodBoxes.at(i2)->CheckCollision(_doors.at(i)->GetParticleModel(), true, false);
+				//_woodBoxes[i2]->CheckWallCollisions(_doors[i]->GetSprite());
 			}
 
 			for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-				_metalBoxes[i2]->CheckWallCollisions(_doors[i]->GetSprite());
+				//_metalBoxes.at(i2)->CheckCollision(_doors.at(i)->GetParticleModel(), true, false);
+				//_metalBoxes[i2]->CheckWallCollisions(_doors[i]->GetSprite());
 			}
 		}
 
@@ -931,14 +980,16 @@ void SceneManager::CheckCollisions()
 	for (int i = 0; i < (int)_solidDoorSprites.size(); i++) {
 
 
-		_player->CheckWallCollisions(_solidDoorSprites[i]);
+		//_player->CheckWallCollisions(_solidDoorSprites[i]);
 
 		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			_woodBoxes[i2]->CheckWallCollisions(_solidDoorSprites[i]);
+			//_woodBoxes.at(i2)->CheckCollision(_solidDoorSprites.at(i)->GetParticleModel(), true, false);
+			//_woodBoxes[i2]->CheckWallCollisions(_solidDoorSprites[i]);
 		}
 
 		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			_metalBoxes[i2]->CheckWallCollisions(_solidDoorSprites[i]);
+			//_metalBoxes.at(i2)->CheckCollision(_solidDoorSprites.at(i)->GetParticleModel(), true, false);
+			//_metalBoxes[i2]->CheckWallCollisions(_solidDoorSprites[i]);
 		}
 
 
@@ -949,14 +1000,16 @@ void SceneManager::CheckCollisions()
 		if (!_hatches[i]->GetOpen()) {
 			if (getName().find("Hatch"))
 			{
-				_player->CheckPlatformCollisions(_hatches[i]->GetSprite());
+				//_player->CheckPlatformCollisions(_hatches[i]->GetSprite());
 
 				for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-					_woodBoxes[i2]->CheckPlatformCollisions(_hatches[i]->GetSprite());
+					//_woodBoxes.at(i2)->CheckCollision(_hatches.at(i)->GetParticleModel(), true, false);
+					//_woodBoxes[i2]->CheckPlatformCollisions(_hatches[i]->GetSprite());
 				}
 
 				for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-					_metalBoxes[i2]->CheckPlatformCollisions(_hatches[i]->GetSprite());
+					//_metalBoxes.at(i2)->CheckCollision(_hatches.at(i)->GetParticleModel(), true, false);
+					//_metalBoxes[i2]->CheckPlatformCollisions(_hatches[i]->GetSprite());
 				}
 			}
 		}
@@ -964,51 +1017,59 @@ void SceneManager::CheckCollisions()
 
 	// MOVING PLATFORM COLLISIONS
 	for (int i = 0; i < (int)_movingPlatformsHoriz.size(); i++) {
-		_player->CheckPlatformCollisions(_movingPlatformsHoriz[i]->getSprite());
+		//_player->CheckPlatformCollisions(_movingPlatformsHoriz[i]->GetSprite());
 
 		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			_woodBoxes[i2]->CheckPlatformCollisions(_movingPlatformsHoriz[i]->getSprite());
+			_woodBoxes.at(i2)->CheckCollision(_movingPlatformsHoriz.at(i), true, false);
+			//_woodBoxes[i2]->CheckPlatformCollisions(_movingPlatformsHoriz[i]->getSprite());
 		}
 
 		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			_metalBoxes[i2]->CheckPlatformCollisions(_movingPlatformsHoriz[i]->getSprite());
+			_metalBoxes.at(i2)->CheckCollision(_movingPlatformsHoriz.at(i), true, false);
+			//_metalBoxes[i2]->CheckPlatformCollisions(_movingPlatformsHoriz[i]->getSprite());
 		}
 	}
 
 	for (int i = 0; i < (int)_movingPlatformsVert.size(); i++) {
-		_player->CheckPlatformCollisions(_movingPlatformsVert[i]->getSprite());
+		//_player->CheckPlatformCollisions(_movingPlatformsVert[i]->GetSprite());
 
 		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			_woodBoxes[i2]->CheckPlatformCollisions(_movingPlatformsVert[i]->getSprite());
+			_woodBoxes.at(i2)->CheckCollision(_movingPlatformsVert.at(i), true, false);
+			//_woodBoxes[i2]->CheckPlatformCollisions(_movingPlatformsVert[i]->getSprite());
 		}
 
 		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			_metalBoxes[i2]->CheckPlatformCollisions(_movingPlatformsVert[i]->getSprite());
+			//_metalBoxes.at(i2)->CheckCollision(_movingPlatformsVert.at(i)->GetParticleModel(), true, false);
+			//_metalBoxes[i2]->CheckPlatformCollisions(_movingPlatformsVert[i]->getSprite());
 		}
 	}
 
 	// MOVING WALL COLLISIONS
 	for (int i = 0; i < (int)_movingWallsHoriz.size(); i++) {
-		_player->CheckWallCollisions(_movingWallsHoriz[i]->getSprite());
+		//_player->CheckWallCollisions(_movingWallsHoriz[i]->getSprite());
 
 		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			_woodBoxes[i2]->CheckWallCollisions(_movingWallsHoriz[i]->getSprite());
+			//_woodBoxes.at(i2)->CheckCollision(_movingWallsHoriz.at(i)->GetParticleModel(), true, false);
+			//_woodBoxes[i2]->CheckWallCollisions(_movingWallsHoriz[i]->getSprite());
 		}
 
 		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			_metalBoxes[i2]->CheckWallCollisions(_movingWallsHoriz[i]->getSprite());
+			//_metalBoxes.at(i2)->CheckCollision(_movingWallsHoriz.at(i)->GetParticleModel(), true, false);
+			//_metalBoxes[i2]->CheckWallCollisions(_movingWallsHoriz[i]->getSprite());
 		}
 	}
 
 	for (int i = 0; i < (int)_movingWallsVert.size(); i++) {
-		_player->CheckWallCollisions(_movingWallsVert[i]->getSprite());
+		//_player->CheckWallCollisions(_movingWallsVert[i]->getSprite());
 
 		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			_woodBoxes[i2]->CheckWallCollisions(_movingWallsVert[i]->getSprite());
+			//_woodBoxes.at(i2)->CheckCollision(_movingWallsVert.at(i)->GetParticleModel(), true, false);
+			//_woodBoxes[i2]->CheckWallCollisions(_movingWallsVert[i]->getSprite());
 		}
 
 		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			_metalBoxes[i2]->CheckWallCollisions(_movingWallsVert[i]->getSprite());
+			//_metalBoxes.at(i2)->CheckCollision(_movingWallsVert.at(i)->GetParticleModel(), true, false);
+			//_metalBoxes[i2]->CheckWallCollisions(_movingWallsVert[i]->getSprite());
 		}
 	}
 
@@ -1024,34 +1085,6 @@ void SceneManager::CheckCollisions()
 
 		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
 			_buttons.at(i)->CheckBoxCollisions(_metalBoxes.at(i2));
-		}
-	}
-
-	// Rail Start
-	for (int i = 0; i < (int)_railStart.size(); i++)
-	{
-		for (int i2 = 0; i2 < (int)_movingPlatformsHoriz.size(); i2++)
-		{
-			_movingPlatformsHoriz[i2]->CheckPlatformCollisions(_railStart[i]);
-		}
-
-		for (int i2 = 0; i2 < (int)_movingPlatformsVert.size(); i2++)
-		{
-			_movingPlatformsVert[i2]->CheckPlatformCollisions(_railStart[i]);
-		}
-	}
-
-	// Rail End
-	for (int i = 0; i < (int)_railEnd.size(); i++)
-	{
-		for (int i2 = 0; i2 < (int)_movingPlatformsHoriz.size(); i2++)
-		{
-			_movingPlatformsHoriz[i2]->CheckPlatformCollisions(_railEnd[i]);
-		}
-
-		for (int i2 = 0; i2 < (int)_movingPlatformsVert.size(); i2++)
-		{
-			_movingPlatformsVert[i2]->CheckPlatformCollisions(_railEnd[i]);
 		}
 	}
 }
@@ -1076,7 +1109,7 @@ bool SceneManager::onTouchBegan(Touch* touch, Event* event)
 		// Touch detection for horizontal moving platforms
 		for (int i = 0; i < (int)_movingPlatformsHoriz.size(); i++)
 		{
-			currPlatform = _movingPlatformsHoriz[i]->getSprite()->getBoundingBox();
+			currPlatform = _movingPlatformsHoriz[i]->GetSprite()->getBoundingBox();
 			currTouchZone = _movingPlatformsHoriz[i]->getTouchZone()->getBoundingBox();
 			if (currPlatform.containsPoint(_initialTouchPos) || currTouchZone.containsPoint(_initialTouchPos))
 			{
@@ -1091,7 +1124,7 @@ bool SceneManager::onTouchBegan(Touch* touch, Event* event)
 		// Touch detection for vertical moving platforms
 		for (int i = 0; i < (int)_movingPlatformsVert.size(); i++)
 		{
-			currPlatform = _movingPlatformsVert[i]->getSprite()->getBoundingBox();
+			currPlatform = _movingPlatformsVert[i]->GetSprite()->getBoundingBox();
 			currTouchZone = _movingPlatformsVert[i]->getTouchZone()->getBoundingBox();
 			if (currPlatform.containsPoint(_initialTouchPos) || currTouchZone.containsPoint(_initialTouchPos))
 			{
@@ -1372,10 +1405,9 @@ void SceneManager::StartButtonPressed(Ref* sender, cocos2d::ui::Widget::TouchEve
 
 		_gravityOrientation = 0;
 
-		_player->SetOrientationVertical(true);
-		_player->SetTarget(_player->GetSprite()->getPosition());
+		_player->SetTarget(_player->GetParticleModel()->GetDisplacement());
 
-		for (int i = 0; i < _woodBoxes.size(); i++)
+		/*for (int i = 0; i < _woodBoxes.size(); i++)
 		{
 			_woodBoxes[i]->SetOrientationVertical(true);
 		}
@@ -1388,7 +1420,7 @@ void SceneManager::StartButtonPressed(Ref* sender, cocos2d::ui::Widget::TouchEve
 		for (int i = 0; i < _metalBoxes.size(); i++)
 		{
 			_metalBoxes[i]->SetOrientationVertical(true);
-		}
+		}*/
 
 		GameManager::sharedGameManager()->setIsGamePaused(false);
 		_startGame->setVisible(false);
@@ -1404,10 +1436,10 @@ void SceneManager::CheckNear(float delta)
 		float scaledWidth = _switches.at(i)->GetSprite()->getContentSize().width * _switches.at(i)->GetSprite()->getScaleX();
 		float scaledHeight = _switches.at(i)->GetSprite()->getContentSize().height * _switches.at(i)->GetSprite()->getScaleY();
 
-		if (_player->GetSprite()->getPositionX() - (_player->GetSprite()->getContentSize().width / 2) < _switches.at(i)->GetSprite()->getPositionX() + (scaledWidth / 2) + (_player->GetSprite()->getContentSize().width / 2) + 20
-			&& _player->GetSprite()->getPositionX() + (_player->GetSprite()->getContentSize().width / 2) > _switches.at(i)->GetSprite()->getPositionX() - (scaledWidth / 2) - (_player->GetSprite()->getContentSize().width / 2) - 20
-			&& _player->GetSprite()->getPositionY() - (_player->GetSprite()->getContentSize().height / 2) < _switches.at(i)->GetSprite()->getPositionY() + (scaledHeight / 2) + (_player->GetSprite()->getContentSize().height / 2) + 20
-			&& _player->GetSprite()->getPositionY() + (_player->GetSprite()->getContentSize().height / 2) > _switches.at(i)->GetSprite()->getPositionY() - (scaledHeight / 2) - (_player->GetSprite()->getContentSize().height / 2) - 20)
+		if (_player->GetParticleModel()->GetDisplacementX() - (_player->GetSprite()->getContentSize().width / 2) < _switches.at(i)->GetSprite()->getPositionX() + (scaledWidth / 2) + (_player->GetSprite()->getContentSize().width / 2) + 20
+			&& _player->GetParticleModel()->GetDisplacementX() + (_player->GetSprite()->getContentSize().width / 2) > _switches.at(i)->GetSprite()->getPositionX() - (scaledWidth / 2) - (_player->GetSprite()->getContentSize().width / 2) - 20
+			&& _player->GetParticleModel()->GetDisplacementY() - (_player->GetSprite()->getContentSize().height / 2) < _switches.at(i)->GetSprite()->getPositionY() + (scaledHeight / 2) + (_player->GetSprite()->getContentSize().height / 2) + 20
+			&& _player->GetParticleModel()->GetDisplacementY() + (_player->GetSprite()->getContentSize().height / 2) > _switches.at(i)->GetSprite()->getPositionY() - (scaledHeight / 2) - (_player->GetSprite()->getContentSize().height / 2) - 20)
 		{
 			//_switches.at(i)->GetSprite()->setEnabled(true);
 			_switches.at(i)->GetSprite()->setEnabled(true);
@@ -1495,10 +1527,10 @@ void SceneManager::CheckNearTimer(float delta)
 		float scaledWidth = _tSwitches.at(i)->GetSprite()->getContentSize().width * _tSwitches.at(i)->GetSprite()->getScaleX();
 		float scaledHeight = _tSwitches.at(i)->GetSprite()->getContentSize().height * _tSwitches.at(i)->GetSprite()->getScaleY();
 
-		if (_player->GetSprite()->getPositionX() - (_player->GetSprite()->getContentSize().width / 2) < _tSwitches.at(i)->GetSprite()->getPositionX() + (scaledWidth / 2) + (_player->GetSprite()->getContentSize().width / 2) + 20
-			&& _player->GetSprite()->getPositionX() + (_player->GetSprite()->getContentSize().width / 2) > _tSwitches.at(i)->GetSprite()->getPositionX() - (scaledWidth / 2) - (_player->GetSprite()->getContentSize().width / 2) - 20
-			&& _player->GetSprite()->getPositionY() - (_player->GetSprite()->getContentSize().height / 2) < _tSwitches.at(i)->GetSprite()->getPositionY() + (scaledHeight / 2) + (_player->GetSprite()->getContentSize().height / 2) + 20
-			&& _player->GetSprite()->getPositionY() + (_player->GetSprite()->getContentSize().height / 2) > _tSwitches.at(i)->GetSprite()->getPositionY() - (scaledHeight / 2) - (_player->GetSprite()->getContentSize().height / 2) - 20)
+		if (_player->GetParticleModel()->GetDisplacementX() - (_player->GetSprite()->getContentSize().width / 2) < _tSwitches.at(i)->GetSprite()->getPositionX() + (scaledWidth / 2) + (_player->GetSprite()->getContentSize().width / 2) + 20
+			&& _player->GetParticleModel()->GetDisplacementX() + (_player->GetSprite()->getContentSize().width / 2) > _tSwitches.at(i)->GetSprite()->getPositionX() - (scaledWidth / 2) - (_player->GetSprite()->getContentSize().width / 2) - 20
+			&& _player->GetParticleModel()->GetDisplacementY() - (_player->GetSprite()->getContentSize().height / 2) < _tSwitches.at(i)->GetSprite()->getPositionY() + (scaledHeight / 2) + (_player->GetSprite()->getContentSize().height / 2) + 20
+			&& _player->GetParticleModel()->GetDisplacementY() + (_player->GetSprite()->getContentSize().height / 2) > _tSwitches.at(i)->GetSprite()->getPositionY() - (scaledHeight / 2) - (_player->GetSprite()->getContentSize().height / 2) - 20)
 		{
 			//_tSwitches.at(i)->GetSprite()->setEnabled(true);
 			_tSwitches.at(i)->GetSprite()->setEnabled(true);
@@ -1583,10 +1615,10 @@ void SceneManager::CheckNearDoor(float delta)
 		float scaledWidth = _exit[i]->getContentSize().width * _exit[i]->getScaleX();
 		float scaledHeight = _exit[i]->getContentSize().height * _exit[i]->getScaleY();
 
-		if (_player->GetSprite()->getPositionX() - (_player->GetSprite()->getContentSize().width / 2) < _exit[i]->getPositionX() + (scaledWidth / 2) + (_player->GetSprite()->getContentSize().width / 2) + 20
-			&& _player->GetSprite()->getPositionX() + (_player->GetSprite()->getContentSize().width / 2) > _exit[i]->getPositionX() - (scaledWidth / 2) - (_player->GetSprite()->getContentSize().width / 2) - 20
-			&& _player->GetSprite()->getPositionY() - (_player->GetSprite()->getContentSize().height / 2) < _exit[i]->getPositionY() + (scaledHeight / 2)
-			&& _player->GetSprite()->getPositionY() + (_player->GetSprite()->getContentSize().height / 2) > _exit[i]->getPositionY() - (scaledHeight / 2))
+		if (_player->GetParticleModel()->GetDisplacementX() - (_player->GetSprite()->getContentSize().width / 2) < _exit[i]->getPositionX() + (scaledWidth / 2) + (_player->GetSprite()->getContentSize().width / 2) + 20
+			&& _player->GetParticleModel()->GetDisplacementX() + (_player->GetSprite()->getContentSize().width / 2) > _exit[i]->getPositionX() - (scaledWidth / 2) - (_player->GetSprite()->getContentSize().width / 2) - 20
+			&& _player->GetParticleModel()->GetDisplacementY() - (_player->GetSprite()->getContentSize().height / 2) < _exit[i]->getPositionY() + (scaledHeight / 2)
+			&& _player->GetParticleModel()->GetDisplacementY() + (_player->GetSprite()->getContentSize().height / 2) > _exit[i]->getPositionY() - (scaledHeight / 2))
 		{
 			if (!_exit[i]->isEnabled()) {
 				_exit[i]->setEnabled(true);
@@ -1602,385 +1634,674 @@ void SceneManager::CheckNearDoor(float delta)
 
 void SceneManager::FlipGravity(int direction)
 {
-	_previousDirection = _gravityOrientation;
-	_gravityOrientation = direction;
-
-	// Handle DOWN gravity
-	if (_previousDirection == 0) {
-		if (direction == 1) { // Left
-			_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() + 0.5f);
-			_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() - 0.5f);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() + 0.5f);
-				_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() - 0.5f);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() + 0.5f);
-				_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() - 0.5f);
-			}
-
-			_player->SetGravity(-3.81f);
-			_player->SetFallingVertical(false);
-			_player->SetFallingHorizontal(true);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(-3.81f);
-				_woodBoxes[i]->SetFallingVertical(false);
-				_woodBoxes[i]->SetFallingHorizontal(true);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(-3.81f);
-				_metalBoxes[i]->SetFallingVertical(false);
-				_metalBoxes[i]->SetFallingHorizontal(true);
-			}
+	// Flip Player
+	if (_player->GetParticleModel()->GetForce("Gravity") != nullptr)
+	{
+		// Detach object from 'floor'
+		if (_player->GetParticleModel()->GetForce("Gravity")->GetForce().y < 0.0f)
+		{
+			// Gravity is acting downwards, detach by moving upwards
+			_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() + 2.5f);
 		}
-		else if (direction == 2) { // Up
-			_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() + 0.5f);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() + 0.5f);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() + 0.5f);
-			}
-
-			_player->SetGravity(3.81f);
-			_player->SetFallingVertical(true);
-			_player->SetFallingHorizontal(false);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(3.81f);
-				_woodBoxes[i]->SetFallingVertical(true);
-				_woodBoxes[i]->SetFallingHorizontal(false);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(3.81f);
-				_metalBoxes[i]->SetFallingVertical(true);
-				_metalBoxes[i]->SetFallingHorizontal(false);
-			}
+		else if (_player->GetParticleModel()->GetForce("Gravity")->GetForce().y > 0.0f)
+		{
+			// Gravity is acting upwards, detach by moving downwards
+			_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() - 2.5f);
 		}
-		else if (direction == 3) { // Right
-			_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() + 0.5f);
-			_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() + 0.5f);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() + 0.5f);
-				_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() + 0.5f);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() + 0.5f);
-				_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() + 0.5f);
-			}
-
-			_player->SetGravity(3.81f);
-			_player->SetFallingVertical(false);
-			_player->SetFallingHorizontal(true);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(3.81f);
-				_woodBoxes[i]->SetFallingVertical(false);
-				_woodBoxes[i]->SetFallingHorizontal(true);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(3.81f);
-				_metalBoxes[i]->SetFallingVertical(false);
-				_metalBoxes[i]->SetFallingHorizontal(true);
-			}
+		else if (_player->GetParticleModel()->GetForce("Gravity")->GetForce().x < 0.0f)
+		{
+			// Gravity is acting leftwards, detach by moving rightwards
+			_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() + 2.5f);
 		}
+		else if (_player->GetParticleModel()->GetForce("Gravity")->GetForce().x > 0.0f)
+		{
+			// Gravity is acting rightwards, detach by moving leftwards
+			_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() - 2.5f);
+		}
+
+		// Apply new force
+		if (direction == 0) // Down
+		{
+			_player->GetParticleModel()->GetForce("Gravity")->SetForce(0.0f, -9.81f);
+		}
+		else if (direction == 1) // Left
+		{
+			_player->GetParticleModel()->GetForce("Gravity")->SetForce(-9.81f, 0.0f);
+		}
+		else if (direction == 2) // Up
+		{
+			_player->GetParticleModel()->GetForce("Gravity")->SetForce(0.0f, 9.81f);
+		}
+		else if (direction == 3) // Right
+		{
+			_player->GetParticleModel()->GetForce("Gravity")->SetForce(9.81f, 0.0f);
+		}
+
+		_player->FlipSprite();
 	}
-	// Handle LEFT gravity
-	else if (_previousDirection == 1) {
-		if (direction == 0) { // Down
-			_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() - 0.5f);
-			_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() + 0.5f);
 
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() - 0.5f);
-				_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() + 0.5f);
+	// Flip Wooden Boxes
+	for (int i = 0; i < _woodBoxes.size(); i++)
+	{
+		if (_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity") != nullptr)
+		{
+			// Detach object from 'floor'
+			if (_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->GetForce().y < 0.0f)
+			{
+				// Gravity is acting downwards, detach by moving upwards
+				_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+			}
+			else if (_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->GetForce().y > 0.0f)
+			{
+				// Gravity is acting upwards, detach by moving downwards
+				_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+			}
+			else if (_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->GetForce().x < 0.0f)
+			{
+				// Gravity is acting leftwards, detach by moving rightwards
+				_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+			}
+			else if (_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->GetForce().x > 0.0f)
+			{
+				// Gravity is acting rightwards, detach by moving leftwards
+				_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
 			}
 
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() - 0.5f);
-				_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() + 0.5f);
+			// Apply new force
+			if (direction == 0) // Down
+			{
+				_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(0.0f, -9.81f);
+			}
+			else if (direction == 1) // Left
+			{
+				_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(-9.81f, 0.0f);
+			}
+			else if (direction == 2) // Up
+			{
+				_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(0.0f, 9.81f);
+			}
+			else if (direction == 3) // Right
+			{
+				_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(9.81f, 0.0f);
 			}
 
-			_player->SetGravity(-3.81f);
-			_player->SetFallingVertical(true);
-			_player->SetFallingHorizontal(false);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(-3.81f);
-				_woodBoxes[i]->SetFallingVertical(true);
-				_woodBoxes[i]->SetFallingHorizontal(false);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(-3.81f);
-				_metalBoxes[i]->SetFallingVertical(true);
-				_metalBoxes[i]->SetFallingHorizontal(false);
-			}
-		}
-		else if (direction == 2) { // Up
-			_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() + 0.5f);
-			_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() + 0.5f);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() + 0.5f);
-				_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() + 0.5f);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() + 0.5f);
-				_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() + 0.5f);
-			}
-
-			_player->SetGravity(3.81f);
-			_player->SetFallingVertical(true);
-			_player->SetFallingHorizontal(false);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(3.81f);
-				_woodBoxes[i]->SetFallingVertical(true);
-				_woodBoxes[i]->SetFallingHorizontal(false);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(3.81f);
-				_metalBoxes[i]->SetFallingVertical(true);
-				_metalBoxes[i]->SetFallingHorizontal(false);
-			}
-		}
-		else if (direction == 3) { // Right
-			_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() + 0.5f);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() + 0.5f);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() + 0.5f);
-			}
-
-			_player->SetGravity(3.81f);
-			_player->SetFallingVertical(false);
-			_player->SetFallingHorizontal(true);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(3.81f);
-				_woodBoxes[i]->SetFallingVertical(false);
-				_woodBoxes[i]->SetFallingHorizontal(true);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(3.81f);
-				_metalBoxes[i]->SetFallingVertical(false);
-				_metalBoxes[i]->SetFallingHorizontal(true);
-			}
-		}
-	}
-	// Handle UP gravity
-	else if (_previousDirection == 2) {
-		if (direction == 1) { // Left
-			_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() - 0.5f);
-			_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() - 0.5f);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() - 0.5f);
-				_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() - 0.5f);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() - 0.5f);
-				_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() - 0.5f);
-			}
-
-			_player->SetGravity(-3.81f);
-			_player->SetFallingVertical(false);
-			_player->SetFallingHorizontal(true);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(-3.81f);
-				_woodBoxes[i]->SetFallingVertical(false);
-				_woodBoxes[i]->SetFallingHorizontal(true);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(-3.81f);
-				_metalBoxes[i]->SetFallingVertical(false);
-				_metalBoxes[i]->SetFallingHorizontal(true);
-			}
-		}
-		else if (direction == 0) { // Down
-			_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() - 0.5f);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() - 0.5f);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() - 0.5f);
-			}
-
-			_player->SetGravity(-3.81f);
-			_player->SetFallingVertical(true);
-			_player->SetFallingHorizontal(false);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(-3.81f);
-				_woodBoxes[i]->SetFallingVertical(true);
-				_woodBoxes[i]->SetFallingHorizontal(false);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(-3.81f);
-				_metalBoxes[i]->SetFallingVertical(true);
-				_metalBoxes[i]->SetFallingHorizontal(false);
-			}
-		}
-		else if (direction == 3) { // Right
-			_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() - 0.5f);
-			_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() + 1.0f);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() - 0.5f);
-				_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() + 1.0f);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() - 0.5f);
-				_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() + 1.0f);
-			}
-
-			_player->SetGravity(3.81f);
-			_player->SetFallingVertical(false);
-			_player->SetFallingHorizontal(true);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(3.81f);
-				_woodBoxes[i]->SetFallingVertical(false);
-				_woodBoxes[i]->SetFallingHorizontal(true);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(3.81f);
-				_metalBoxes[i]->SetFallingVertical(false);
-				_metalBoxes[i]->SetFallingHorizontal(true);
-			}
-		}
-	}
-	// Handle RIGHT gravity
-	else if (_previousDirection == 3) {
-		if (direction == 0) { // Down
-			_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() - 0.5f);
-			_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() - 0.5f);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() - 0.5f);
-				_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() - 0.5f);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() - 0.5f);
-				_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() - 0.5f);
-			}
-
-			_player->SetGravity(-3.81f);
-			_player->SetFallingVertical(true);
-			_player->SetFallingHorizontal(false);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(-3.81f);
-				_woodBoxes[i]->SetFallingVertical(true);
-				_woodBoxes[i]->SetFallingHorizontal(false);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(-3.81f);
-				_metalBoxes[i]->SetFallingVertical(true);
-				_metalBoxes[i]->SetFallingHorizontal(false);
-			}
-		}
-		else if (direction == 2) { // Up
-			_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() + 0.5f);
-			_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() - 0.5f);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() + 0.5f);
-				_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() - 0.5f);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() + 0.5f);
-				_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() - 0.5f);
-			}
-
-			_player->SetGravity(3.81f);
-			_player->SetFallingVertical(true);
-			_player->SetFallingHorizontal(false);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(3.81f);
-				_woodBoxes[i]->SetFallingVertical(true);
-				_woodBoxes[i]->SetFallingHorizontal(false);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(3.81f);
-				_metalBoxes[i]->SetFallingVertical(true);
-				_metalBoxes[i]->SetFallingHorizontal(false);
-			}
-		}
-		else if (direction == 1) { // Left
-			_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() - 0.5f);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() - 0.5f);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() - 0.5f);
-			}
-
-			_player->SetGravity(-3.81f);
-			_player->SetFallingVertical(false);
-			_player->SetFallingHorizontal(true);
-
-			for (int i = 0; i < (int)_woodBoxes.size(); i++) {
-				_woodBoxes[i]->SetGravity(-3.81f);
-				_woodBoxes[i]->SetFallingVertical(false);
-				_woodBoxes[i]->SetFallingHorizontal(true);
-			}
-
-			for (int i = 0; i < (int)_metalBoxes.size(); i++) {
-				_metalBoxes[i]->SetGravity(-3.81f);
-				_metalBoxes[i]->SetFallingVertical(false);
-				_metalBoxes[i]->SetFallingHorizontal(true);
-			}
+			_woodBoxes.at(i)->FlipSprite();
 		}
 	}
 
+	// Flip Metal Boxes
+	for (int i = 0; i < _metalBoxes.size(); i++)
+	{
+		if (_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity") != nullptr)
+		{
+			// Detach object from 'floor'
+			if (_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->GetForce().y < 0.0f)
+			{
+				// Gravity is acting downwards, detach by moving upwards
+				_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+			}
+			else if (_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->GetForce().y > 0.0f)
+			{
+				// Gravity is acting upwards, detach by moving downwards
+				_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+			}
+			else if (_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->GetForce().x < 0.0f)
+			{
+				// Gravity is acting leftwards, detach by moving rightwards
+				_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+			}
+			else if (_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->GetForce().x > 0.0f)
+			{
+				// Gravity is acting rightwards, detach by moving leftwards
+				_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
+			}
+
+			// Apply new force
+			if (direction == 0) // Down
+			{
+				_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(0.0f, -9.81f);
+			}
+			else if (direction == 1) // Left
+			{
+				_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(-9.81f, 0.0f);
+			}
+			else if (direction == 2) // Up
+			{
+				_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(0.0f, 9.81f);
+			}
+			else if (direction == 3) // Right
+			{
+				_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(9.81f, 0.0f);
+			}
+
+			_metalBoxes.at(i)->FlipSprite();
+		}
+	}
+
+	//_previousDirection = _gravityOrientation;
+	//_gravityOrientation = direction;
+
+	//// Handle DOWN gravity
+	//if (_previousDirection == 0) {
+	//	if (direction == 1) { // Left
+	//		_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//		_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//		//_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() + 0.5f);
+	//		//_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() - 0.5f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() + 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() - 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() + 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() - 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(-9.81f, 0.0f));
+	//		/*_player->SetGravity(-3.81f);
+	//		_player->SetFallingVertical(false);
+	//		_player->SetFallingHorizontal(true);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(-9.81f, 0.0f));
+	//			/*_woodBoxes[i]->SetGravity(-3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(false);
+	//			_woodBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(-9.81f, 0.0f));
+	//			/*_metalBoxes[i]->SetGravity(-3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(false);
+	//			_metalBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+	//	}
+	//	else if (direction == 2) { // Up
+	//		_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() + 0.5f);
+	//		//_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() + 0.5f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() + 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() + 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, 9.81f));
+	//		/*_player->SetGravity(3.81f);
+	//		_player->SetFallingVertical(true);
+	//		_player->SetFallingHorizontal(false);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, 9.81f));
+	//			/*_woodBoxes[i]->SetGravity(3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(true);
+	//			_woodBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, 9.81f));
+	//			/*_metalBoxes[i]->SetGravity(3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(true);
+	//			_metalBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+	//	}
+	//	else if (direction == 3) { // Right
+	//		_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//		_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//		//_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() + 0.5f);
+	//		//_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() + 0.5f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() + 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() + 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() + 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() + 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(9.81f, 0.0f));
+	//		/*_player->SetGravity(3.81f);
+	//		_player->SetFallingVertical(false);
+	//		_player->SetFallingHorizontal(true);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(9.81f, 0.0f));
+	//			/*_woodBoxes[i]->SetGravity(3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(false);
+	//			_woodBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(9.81f, 0.0f));
+	//			/*_metalBoxes[i]->SetGravity(3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(false);
+	//			_metalBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+	//	}
+	//}
+	//// Handle LEFT gravity
+	//else if (_previousDirection == 1) {
+	//	if (direction == 0) { // Down
+	//		_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//		_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//		//_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() - 2.5f);
+	//		//_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() + 2.5f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() - 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() + 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() - 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() + 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, -9.81f));
+	//		/*_player->SetGravity(-3.81f);
+	//		_player->SetFallingVertical(true);
+	//		_player->SetFallingHorizontal(false);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, -9.81f));
+	//			/*_woodBoxes[i]->SetGravity(-3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(true);
+	//			_woodBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, -9.81f));
+	//			/*_metalBoxes[i]->SetGravity(-3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(true);
+	//			_metalBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+	//	}
+	//	else if (direction == 2) { // Up
+	//		_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//		_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//		//_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() + 0.5f);
+	//		//_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() + 0.5f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() + 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() + 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() + 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() + 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, 9.81f));
+	//		/*_player->SetGravity(3.81f);
+	//		_player->SetFallingVertical(true);
+	//		_player->SetFallingHorizontal(false);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, 9.81f));
+	//			/*_woodBoxes[i]->SetGravity(3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(true);
+	//			_woodBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, 9.81f));
+	//			/*_metalBoxes[i]->SetGravity(3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(true);
+	//			_metalBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+	//	}
+	//	else if (direction == 3) { // Right
+	//		_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//		//_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() + 0.5f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() + 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() + 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(9.81f, 0.0f));
+	//		/*_player->SetGravity(3.81f);
+	//		_player->SetFallingVertical(false);
+	//		_player->SetFallingHorizontal(true);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++)
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(9.81f, 0.0f));
+	//			/*_woodBoxes[i]->SetGravity(3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(false);
+	//			_woodBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++)
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(9.81f, 0.0f));
+	//			/*_metalBoxes[i]->SetGravity(3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(false);
+	//			_metalBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+	//	}
+	//}
+	//// Handle UP gravity
+	//else if (_previousDirection == 2) {
+	//	if (direction == 1) { // Left
+	//		_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//		_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//		//_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() - 0.5f);
+	//		//_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() - 0.5f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() - 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() - 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() - 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() - 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(-9.81f, 0.0f));
+	//		/*_player->SetGravity(-3.81f);
+	//		_player->SetFallingVertical(false);
+	//		_player->SetFallingHorizontal(true);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++)
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(-9.81f, 0.0f));
+	//			/*_woodBoxes[i]->SetGravity(-3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(false);
+	//			_woodBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++)
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(-9.81f, 0.0f));
+	//			/*_metalBoxes[i]->SetGravity(-3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(false);
+	//			_metalBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+	//	}
+	//	else if (direction == 0) { // Down
+	//		_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//		//_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() - 0.5f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() - 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() - 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, -9.81f));
+	//		/*_player->SetGravity(-3.81f);
+	//		_player->SetFallingVertical(true);
+	//		_player->SetFallingHorizontal(false);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++)
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, -9.81f));
+	//			/*_woodBoxes[i]->SetGravity(-3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(true);
+	//			_woodBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++)
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, -9.81f));
+	//			/*_metalBoxes[i]->SetGravity(-3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(true);
+	//			_metalBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+	//	}
+	//	else if (direction == 3) { // Right
+	//		_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//		_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//		//_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() - 0.5f);
+	//		//_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() + 1.0f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() - 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() + 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() + 2.5f);
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() - 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() + 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(9.81f, 0.0f));
+	//		/*_player->SetGravity(3.81f);
+	//		_player->SetFallingVertical(false);
+	//		_player->SetFallingHorizontal(true);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++)
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(9.81f, 0.0f));
+	//			/*_woodBoxes[i]->SetGravity(3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(false);
+	//			_woodBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++)
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(9.81f, 0.0f));
+	//			/*_metalBoxes[i]->SetGravity(3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(false);
+	//			_metalBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+	//	}
+	//}
+	//// Handle RIGHT gravity
+	//else if (_previousDirection == 3) {
+	//	if (direction == 0) { // Down
+	//		_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//		_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//		//_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() - 0.5f);
+	//		//_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() - 0.5f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() - 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() - 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() - 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() - 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() - 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, -9.81f));
+	//		/*_player->SetGravity(-3.81f);
+	//		_player->SetFallingVertical(true);
+	//		_player->SetFallingHorizontal(false);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++)
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, -9.81f));
+	//			/*_woodBoxes[i]->SetGravity(-3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(true);
+	//			_woodBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++)
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, -9.81f));
+	//			/*_metalBoxes[i]->SetGravity(-3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(true);
+	//			_metalBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+	//	}
+	//	else if (direction == 2) { // Up
+	//		_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//		_player->GetParticleModel()->SetDisplacementY(_player->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//		//_player->GetSprite()->setPositionY(_player->GetSprite()->getPositionY() + 0.5f);
+	//		//_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() - 0.5f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementY(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionY(_woodBoxes[i]->GetSprite()->getPositionY() + 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() - 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementY(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementY() + 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionY(_metalBoxes[i]->GetSprite()->getPositionY() + 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() - 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, 9.81f));
+	//		/*_player->SetGravity(3.81f);
+	//		_player->SetFallingVertical(true);
+	//		_player->SetFallingHorizontal(false);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++)
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, 9.81f));
+	//			/*_woodBoxes[i]->SetGravity(3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(true);
+	//			_woodBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++)
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(0.0f, 9.81f));
+	//			/*_metalBoxes[i]->SetGravity(3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(true);
+	//			_metalBoxes[i]->SetFallingHorizontal(false);*/
+	//		}
+	//	}
+	//	else if (direction == 1) { // Left
+	//		_player->GetParticleModel()->SetDisplacementX(_player->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//		_player->GetSprite()->setPositionX(_player->GetSprite()->getPositionX() - 2.5f);
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++) 
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->SetDisplacementX(_woodBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//			//_woodBoxes[i]->GetSprite()->setPositionX(_woodBoxes[i]->GetSprite()->getPositionX() - 2.5f);
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++) 
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->SetDisplacementX(_metalBoxes.at(i)->GetParticleModel()->GetDisplacementX() - 2.5f);
+	//			//_metalBoxes[i]->GetSprite()->setPositionX(_metalBoxes[i]->GetSprite()->getPositionX() - 2.5f);
+	//		}
+
+	//		_player->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(-9.81f, 0.0f));
+	//		/*_player->SetGravity(-3.81f);
+	//		_player->SetFallingVertical(false);
+	//		_player->SetFallingHorizontal(true);*/
+
+	//		for (int i = 0; i < (int)_woodBoxes.size(); i++)
+	//		{
+	//			_woodBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(-9.81f, 0.0f));
+	//			/*_woodBoxes[i]->SetGravity(-3.81f);
+	//			_woodBoxes[i]->SetFallingVertical(false);
+	//			_woodBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+
+	//		for (int i = 0; i < (int)_metalBoxes.size(); i++)
+	//		{
+	//			_metalBoxes.at(i)->GetParticleModel()->GetForce("Gravity")->SetForce(Vec2(-9.81f, 0.0f));
+	//			/*_metalBoxes[i]->SetGravity(-3.81f);
+	//			_metalBoxes[i]->SetFallingVertical(false);
+	//			_metalBoxes[i]->SetFallingHorizontal(true);*/
+	//		}
+	//	}
+	//}
+
+	//_player->FlipPlayer();
 }
 
 void SceneManager::IsPlayerInBounds()
 {
 	auto winSize = Director::getInstance()->getVisibleSize();
 	// Checks if the player has gone off the bottom of the screen
-	if (_player->GetSprite()->getPosition().y < (0.0f - _player->GetSprite()->getContentSize().height)
-		|| _player->GetSprite()->getPosition().x < (0.0f - _player->GetSprite()->getContentSize().width))
+	if (_player->GetParticleModel()->GetDisplacementY() < (0.0f - _player->GetSprite()->getContentSize().height)
+		|| _player->GetParticleModel()->GetDisplacementX() < (0.0f - _player->GetSprite()->getContentSize().width))
 	{
 		GameManager::sharedGameManager()->setIsGameLive(false);
 		//_player->GetSprite()->setPosition(_woodCrateSpawn[0]->getPosition());
 		
 	}
-	else if (_player->GetSprite()->getPosition().y > (winSize.height + _player->GetSprite()->getContentSize().height)
-		|| _player->GetSprite()->getPosition().x > (winSize.width + _player->GetSprite()->getContentSize().width))
+	else if (_player->GetParticleModel()->GetDisplacementY() > (winSize.height + _player->GetSprite()->getContentSize().height)
+		|| _player->GetParticleModel()->GetDisplacementX() > (winSize.width + _player->GetSprite()->getContentSize().width))
 	{
 		//_player->GetSprite()->setPosition(_woodCrateSpawn[0]->getPosition());
 		GameManager::sharedGameManager()->setIsGameLive(false);

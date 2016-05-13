@@ -27,9 +27,6 @@
     <ClCompile Include="..\Classes\FloorButton.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Platforms.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ScalingObject.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
@@ -69,6 +66,21 @@
     <ClCompile Include="..\Classes\AudioEngine.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\GameObject.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ParticleModel.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Force.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BoundingBox.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MovingPlatform.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
@@ -96,9 +108,6 @@
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\FloorButton.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Platforms.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ScalingObject.h">
@@ -140,6 +149,21 @@
     <ClInclude Include="..\Classes\AudioEngine.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\GameObject.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ParticleModel.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Force.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BoundingBox.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MovingPlatform.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
@@ -153,6 +177,9 @@
     </Filter>
     <Filter Include="Managers">
       <UniqueIdentifier>{d44086bf-bb76-41c4-8eb8-321e44bdaba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{9924b370-be0f-40b5-90ce-1013b411b462}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

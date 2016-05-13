@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -148,18 +148,22 @@ xcopy /Y /Q "$(COCOS_FRAMEWORKS)\cocos2d-x-3.9\prebuilt\win32\*.*" "$(OutDir)"
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\AudioEngine.cpp" />
+    <ClCompile Include="..\Classes\BoundingBox.cpp" />
     <ClCompile Include="..\Classes\Box.cpp" />
     <ClCompile Include="..\Classes\CreditsScene.cpp" />
     <ClCompile Include="..\Classes\Door.cpp" />
     <ClCompile Include="..\Classes\Exit.cpp" />
     <ClCompile Include="..\Classes\FloorButton.cpp" />
+    <ClCompile Include="..\Classes\Force.cpp" />
     <ClCompile Include="..\Classes\GameManager.cpp" />
+    <ClCompile Include="..\Classes\GameObject.cpp" />
     <ClCompile Include="..\Classes\GameOverScene.cpp" />
     <ClCompile Include="..\Classes\GameWinScene.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\LevelSelect.cpp" />
     <ClCompile Include="..\Classes\MenuScene.cpp" />
-    <ClCompile Include="..\Classes\Platforms.cpp" />
+    <ClCompile Include="..\Classes\ParticleModel.cpp" />
+    <ClCompile Include="..\Classes\MovingPlatform.cpp" />
     <ClCompile Include="..\Classes\ScalingObject.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\SceneManager.cpp" />
@@ -174,18 +178,22 @@ xcopy /Y /Q "$(COCOS_FRAMEWORKS)\cocos2d-x-3.9\prebuilt\win32\*.*" "$(OutDir)"
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\AudioEngine.h" />
+    <ClInclude Include="..\Classes\BoundingBox.h" />
     <ClInclude Include="..\Classes\Box.h" />
     <ClInclude Include="..\Classes\CreditsScene.h" />
     <ClInclude Include="..\Classes\Door.h" />
     <ClInclude Include="..\Classes\Exit.h" />
     <ClInclude Include="..\Classes\FloorButton.h" />
+    <ClInclude Include="..\Classes\Force.h" />
     <ClInclude Include="..\Classes\GameManager.h" />
+    <ClInclude Include="..\Classes\GameObject.h" />
     <ClInclude Include="..\Classes\GameOverScene.h" />
     <ClInclude Include="..\Classes\GameWinScene.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\LevelSelect.h" />
     <ClInclude Include="..\Classes\MenuScene.h" />
-    <ClInclude Include="..\Classes\Platforms.h" />
+    <ClInclude Include="..\Classes\ParticleModel.h" />
+    <ClInclude Include="..\Classes\MovingPlatform.h" />
     <ClInclude Include="..\Classes\ScalingObject.h" />
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\SceneManager.h" />

@@ -100,7 +100,7 @@ void Wall::MovePlatformVertical(cocos2d::Vec2 T)
 	float scaledPlayerWidth = _playerRef->GetSprite()->getContentSize().width * _playerRef->GetSprite()->getScaleX();
 	float scaledPlayerHeight = _playerRef->GetSprite()->getContentSize().height * _playerRef->GetSprite()->getScaleY();
 
-	if (_playerRef->GetOrientationHorizontal()) {
+	/*if (_playerRef->GetOrientationHorizontal()) {
 		if (_playerRef->GetSprite()->getPositionX() - (scaledPlayerHeight / 2) < getSprite()->getPositionX() + (scaledWidth / 2)
 			&& _playerRef->GetSprite()->getPositionX() + (scaledPlayerHeight / 2) > getSprite()->getPositionX() - (scaledWidth / 2)
 			&& _playerRef->GetSprite()->getPositionY() - (scaledPlayerWidth / 2) < getSprite()->getPositionY() + (scaledHeight / 2)
@@ -109,7 +109,7 @@ void Wall::MovePlatformVertical(cocos2d::Vec2 T)
 			_playerRef->GetSprite()->setPositionY(T.y);
 			_playerRef->SetTarget(T);
 		}
-	}
+	}*/
 
 	for (int i = 0; i < (int)_woodenRef.size(); i++) {
 		float scaledWidth = getSprite()->getContentSize().width * getSprite()->getScaleX();

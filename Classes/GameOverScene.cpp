@@ -34,7 +34,7 @@ bool GameOverScene::init()
 		return false;
 	}
 
-	auto rootNode = CSLoader::createNode("GameOver.csb");
+	auto rootNode = CSLoader::createNode("Cocos_Scenes/GameOver.csb");
 	addChild(rootNode);
 
 	auto winSize = Director::getInstance()->getVisibleSize();
@@ -55,12 +55,12 @@ bool GameOverScene::init()
 
 	//BUTTONS
 	//Start button
-	_retryButton = static_cast<ui::Button*>(rootNode->getChildByName("RetryButton"));
+	_retryButton = static_cast<ui::Button*>(rootNode->getChildByName("Art/Scene_Buttons/Button_Retry_Frame.png"));
 	_retryButton->addTouchEventListener(CC_CALLBACK_2(GameOverScene::RetryButtonPressed, this));
 	_retryButton->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.25f));
 
 	//Settings Button
-	_mainMenuButton = static_cast<ui::Button*>(rootNode->getChildByName("MainMenuButton"));
+	_mainMenuButton = static_cast<ui::Button*>(rootNode->getChildByName("Art/Scene_Buttons/Button_Menu_Frame.png"));
 	_mainMenuButton->addTouchEventListener(CC_CALLBACK_2(GameOverScene::MainMenuButtonPressed, this));
 	_mainMenuButton->setPosition(Vec2(winSize.width*0.5f, winSize.height*0.10f));
 
@@ -70,7 +70,7 @@ bool GameOverScene::init()
 
 
 	for (int i = 0; i < 100; i++) {
-		_stars.push_back(Sprite::create("SpaceStar.png"));
+		_stars.push_back(Sprite::create("Art/Scene_Main_Menu/Space_Star.png"));
 
 		int randomWidth = cocos2d::RandomHelper::random_real(0.0f, winSize.width);
 		int randomHeight = cocos2d::RandomHelper::random_real(0.0f, winSize.height);
@@ -83,11 +83,11 @@ bool GameOverScene::init()
 
 	if (GameManager::sharedGameManager()->getIsGameMuted() == true)
 	{
-		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("MutePressed.png"));
+		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_UI/Button_Mute_Off.png"));
 	}
 	else
 	{
-		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("MuteUnPressedGO.png"));
+		_muteButton->setTexture(Director::getInstance()->getTextureCache()->addImage("Art/Level_UI/Button_Mute_On.png"));
 	}
 	_muteButton->setPosition(Vec2(winSize.width*0.05f, winSize.height*0.95f));
 
