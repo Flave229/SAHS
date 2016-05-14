@@ -6,46 +6,59 @@ using namespace cocostudio::timeline;
 
 Player::Player() : GameObject(new ParticleModel())
 {
-	_speed = 250.0f;
+	// Sprite
 	_frame = 1;
-	_running = false;
+	_spriteTimerDefault = 1.0f / 12.0f;
 	_spriteTimer = _spriteTimerDefault;
+	_running = false;
+
+	// Move To
+	_targetPos = Vec2(0.0f, 0.0f);
+	_speed = 250.0f;
 }
 
 Player::Player(ParticleModel* particle) : GameObject(particle)
 {
-	_speed = 250.0f;
+	// Sprite
 	_frame = 1;
-	_running = false;
+	_spriteTimerDefault = 1.0f / 12.0f;
 	_spriteTimer = _spriteTimerDefault;
+	_running = false;
+
+	// Move To
+	_targetPos = Vec2(0.0f, 0.0f);
+	_speed = 250.0f;
 }
 
 Player::~Player()
 {
 }
 
-bool Player::init()
-{
-	if (!Node::init())
-	{
-		return false;
-	}
-
-	this->scheduleUpdate();
-
-	// Init member level variables
-	_speed = 250;
-
-	return true;
-}
-
 void Player::Update(float delta) 
 {
 	if (!GameManager::sharedGameManager()->getIsGamePaused())
 	{
-		if (_targetPos.x != GetParticleModel()->GetDisplacementX() || _targetPos.y != GetParticleModel()->GetDisplacementY())
+		if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().y != 0.0f)
 		{
-			MoveToTarget(delta);
+			if (GetParticleModel()->GetDisplacementX() <= _targetPos.x - 2.0f || GetParticleModel()->GetDisplacementX() >= _targetPos.x + 2.0f)
+			{
+				MoveToTarget(delta);
+			}
+			else
+			{
+				GetParticleModel()->SetVelocityX(0.0f);
+			}
+		}
+		else if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().x != 0.0f)
+		{
+			if (GetParticleModel()->GetDisplacementY() <= _targetPos.y - 2.0f || GetParticleModel()->GetDisplacementY() >= _targetPos.y + 2.0f)
+			{
+				MoveToTarget(delta);
+			}
+			else
+			{
+				GetParticleModel()->SetVelocityY(0.0f);
+			}
 		}
 	}
 
@@ -134,118 +147,6 @@ void Player::Update(float delta)
 	GameObject::Update(delta);
 }
 
-//void Player::CheckPlatformCollisions(cocos2d::Sprite* collider)
-//{
-//	auto winSize = Director::getInstance()->getVisibleSize();
-//
-//	float scaledWidth = collider->getContentSize().width * collider->getScaleX();
-//	float scaledHeight = collider->getContentSize().height * collider->getScaleY();
-//	float scaledPlayerWidth = GetSprite()->getContentSize().width * GetSprite()->getScaleX();
-//	float scaledPlayerHeight = GetSprite()->getContentSize().height * GetSprite()->getScaleY();
-//
-//	if (_orientationVertical) {
-//		scaledPlayerWidth *= 0.77;
-//
-//		if (_gravity < 0.0f) {
-//			if (GetSprite()->getPositionX() - (scaledPlayerWidth / 2) < collider->getPositionX() + (scaledWidth / 2)
-//				&& GetSprite()->getPositionX() + (scaledPlayerWidth / 2) > collider->getPositionX() - (scaledWidth / 2)
-//				&& GetSprite()->getPositionY() - (scaledPlayerHeight / 2) < collider->getPositionY() + (scaledHeight / 2)
-//				&& GetSprite()->getPositionY() - (scaledPlayerHeight / 8) > collider->getPositionY() - (scaledHeight / 2))
-//			{
-//				Land(collider);
-//			}
-//			else {
-//				_fallingVertical = true;
-//			}
-//		}
-//		else {
-//			if (GetSprite()->getPositionX() - (scaledPlayerWidth / 2) < collider->getPositionX() + (scaledWidth / 2)
-//				&& GetSprite()->getPositionX() + (scaledPlayerWidth / 2) > collider->getPositionX() - (scaledWidth / 2)
-//				&& GetSprite()->getPositionY() + (scaledPlayerHeight / 8) < collider->getPositionY() + (scaledHeight / 2)
-//				&& GetSprite()->getPositionY() + (scaledPlayerHeight / 2) > collider->getPositionY() - (scaledHeight / 2))
-//			{
-//				Land(collider);
-//			}
-//			else {
-//				_fallingVertical = true;
-//			}
-//		}
-//	}
-//	else if (_orientationHorizontal) {
-//		if (GetSprite()->getPositionX() - (scaledPlayerHeight / 2) < collider->getPositionX() + (scaledWidth / 2)
-//			&& GetSprite()->getPositionX() + (scaledPlayerHeight / 2) > collider->getPositionX() - (scaledWidth / 2)
-//			&& GetSprite()->getPositionY() - (scaledPlayerWidth / 2) < collider->getPositionY() + (scaledHeight / 2)
-//			&& GetSprite()->getPositionY() + (scaledPlayerWidth / 2) > collider->getPositionY() - (scaledHeight / 2))
-//		{
-//			if (GetSprite()->getPositionY() < collider->getPositionY()) {
-//				GetSprite()->setPositionY(collider->getPositionY() - (scaledHeight / 2) - (scaledPlayerWidth / 2));
-//				SetTarget(Vec2(_targetPos.x, GetSprite()->getPositionY()));
-//			}
-//			else {
-//				GetSprite()->setPositionY(collider->getPositionY() + (scaledHeight / 2) + (scaledPlayerWidth / 2));
-//				SetTarget(Vec2(_targetPos.x, GetSprite()->getPositionY()));
-//			}
-//
-//		}
-//	}
-//}
-//
-//void Player::CheckWallCollisions(cocos2d::Sprite* collider)
-//{
-//	auto winSize = Director::getInstance()->getVisibleSize();
-//
-//	float scaledWidth = collider->getContentSize().width * collider->getScaleX();
-//	float scaledHeight = collider->getContentSize().height * collider->getScaleY();
-//	float scaledPlayerWidth = GetSprite()->getContentSize().width * GetSprite()->getScaleX();
-//	float scaledPlayerHeight = GetSprite()->getContentSize().height * GetSprite()->getScaleY();
-//
-//	if (_orientationVertical) {
-//		if (GetSprite()->getPositionX() - (scaledPlayerWidth / 2) < collider->getPositionX() + (scaledWidth / 2)
-//			&& GetSprite()->getPositionX() + (scaledPlayerWidth / 2) > collider->getPositionX() - (scaledWidth / 2)
-//			&& GetSprite()->getPositionY() - (scaledPlayerHeight / 2) < collider->getPositionY() + (scaledHeight / 2)
-//			&& GetSprite()->getPositionY() + (scaledPlayerHeight / 2) > collider->getPositionY() - (scaledHeight / 2))
-//		{
-//			if (GetSprite()->getPositionX() < collider->getPositionX()) {
-//				GetSprite()->setPositionX(collider->getPositionX() - (scaledWidth / 2) - (scaledPlayerWidth / 2));
-//				SetTarget(Vec2(GetSprite()->getPositionX(), _targetPos.y));
-//			}
-//			else {
-//				GetSprite()->setPositionX(collider->getPositionX() + (scaledWidth / 2) + (scaledPlayerWidth / 2));
-//				SetTarget(Vec2(GetSprite()->getPositionX(), _targetPos.y));
-//			}
-//
-//		}
-//	}
-//	else if (_orientationHorizontal) {
-//		scaledPlayerWidth *= 0.77;
-//
-//		if (_gravity < 0.0f) {
-//			if (GetSprite()->getPositionX() - (scaledPlayerHeight / 2) < collider->getPositionX() + (scaledWidth / 2)
-//				&& GetSprite()->getPositionX() - (scaledPlayerHeight / 8) > collider->getPositionX() - (scaledWidth / 2)
-//				&& GetSprite()->getPositionY() - (scaledPlayerWidth / 2) < collider->getPositionY() + (scaledHeight / 2)
-//				&& GetSprite()->getPositionY() + (scaledPlayerWidth / 2) > collider->getPositionY() - (scaledHeight / 2))
-//			{
-//				Land(collider);
-//			}
-//			else {
-//				_fallingHorizontal = true;
-//			}
-//		}
-//		else {
-//			if (GetSprite()->getPositionX() + (scaledPlayerHeight / 8) < collider->getPositionX() + (scaledWidth / 2)
-//				&& GetSprite()->getPositionX() + (scaledPlayerHeight / 2) > collider->getPositionX() - (scaledWidth / 2)
-//				&& GetSprite()->getPositionY() - (scaledPlayerWidth / 2) < collider->getPositionY() + (scaledHeight / 2)
-//				&& GetSprite()->getPositionY() + (scaledPlayerWidth / 2) > collider->getPositionY() - (scaledHeight / 2))
-//			{
-//				Land(collider);
-//			}
-//			else {
-//				_fallingHorizontal = true;
-//			}
-//		}
-//	}
-//}
-
 void Player::SetTarget(Vec2 target)
 {
 	// Vertical Gravity
@@ -320,42 +221,50 @@ void Player::MoveToTarget(float delta)
 	{
 		if (GetParticleModel()->GetDisplacementX() > _targetPos.x)
 		{
-			GetParticleModel()->SetDisplacementX(GetParticleModel()->GetDisplacementX() - (_speed * delta));
+			GetParticleModel()->SetVelocityX(-1 * _speed);
 
-			if (GetParticleModel()->GetDisplacementX() < _targetPos.x)
+			if (GetParticleModel()->GetDisplacementX() <= _targetPos.x)
 			{
-				GetParticleModel()->SetDisplacementX(_targetPos.x);
+				GetParticleModel()->SetVelocityX(0.0f);
 			}
 		}
 		else if (GetParticleModel()->GetDisplacementX() < _targetPos.x)
 		{
-			GetParticleModel()->SetDisplacementX(GetParticleModel()->GetDisplacementX() + (_speed * delta));
+			GetParticleModel()->SetVelocityX(_speed);
 
-			if (GetParticleModel()->GetDisplacementX() > _targetPos.x)
+			if (GetParticleModel()->GetDisplacementX() >= _targetPos.x)
 			{
-				GetParticleModel()->SetDisplacementX(_targetPos.x);
+				GetParticleModel()->SetVelocityX(0.0f);
 			}
+		}
+		else
+		{
+			GetParticleModel()->SetVelocityX(0.0f);
 		}
 	}
 	if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().x != 0.0f)
 	{
 		if (GetParticleModel()->GetDisplacementY() > _targetPos.y) 
 		{
-			GetParticleModel()->SetDisplacementY(GetParticleModel()->GetDisplacementY() - (_speed * delta));
+			GetParticleModel()->SetVelocityY(-1 * _speed);
 
-			if (GetParticleModel()->GetDisplacementY() < _targetPos.y) 
+			if (GetParticleModel()->GetDisplacementY() <= _targetPos.y) 
 			{
-				GetParticleModel()->SetDisplacementY(_targetPos.y);
+				GetParticleModel()->SetVelocityY(0.0f);
 			}
 		}
 		else if (GetParticleModel()->GetDisplacementY() < _targetPos.y) 
 		{
-			GetParticleModel()->SetDisplacementY(GetParticleModel()->GetDisplacementY() + (_speed * delta));
+			GetParticleModel()->SetVelocityY(_speed);
 
-			if (GetParticleModel()->GetDisplacementY() > _targetPos.y) 
+			if (GetParticleModel()->GetDisplacementY() >= _targetPos.y) 
 			{
-				GetParticleModel()->SetDisplacementY(_targetPos.y);
+				GetParticleModel()->SetVelocityY(0.0f);
 			}
+		}
+		else
+		{
+			GetParticleModel()->SetVelocityY(0.0f);
 		}
 	}
 }

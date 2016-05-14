@@ -62,7 +62,7 @@ void GameObject::FlipSprite()
 	}
 }
 
-void GameObject::CheckCollision(GameObject* collider, float cR, bool moveThis, bool moveCollider)
+bool GameObject::CheckCollision(GameObject* collider, float cR, bool moveThis, bool moveCollider)
 {
 	// Need to get the midpoint of the current and previous position, as boundingbox is calculated from this
 	cocos2d::Vec2 midpointThis = Vec2((GetParticleModel()->GetDisplacement().x + GetParticleModel()->GetFutureDisplacement().x) / 2,
@@ -91,32 +91,62 @@ void GameObject::CheckCollision(GameObject* collider, float cR, bool moveThis, b
 	{
 		FixCollision(collider);
 		DealWithCollision(collider, cR, moveThis, moveCollider);
+
+		return true;
 	}
+
+	return false;
 }
 
 void GameObject::FixCollision(GameObject* collider)
 {
-	// Check which way velocity is going
-	if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().x > 0.0f)
-	{
-		// Object is traveling right
-		GetParticleModel()->SetDisplacementX(collider->GetParticleModel()->GetDisplacementX() + collider->GetParticleModel()->GetBoundingBox()->GetMinX() - GetParticleModel()->GetBoundingBox()->GetMaxX());
-	}
-	else if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().x < 0.0f)
-	{
-		// Object is traveling left
-		GetParticleModel()->SetDisplacementX(collider->GetParticleModel()->GetDisplacementX() + collider->GetParticleModel()->GetBoundingBox()->GetMaxX() - GetParticleModel()->GetBoundingBox()->GetMinX());
-	}
-	else if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().y > 0.0f)
-	{
-		// Object is traveling up
-		GetParticleModel()->SetDisplacementY(collider->GetParticleModel()->GetDisplacementY() + collider->GetParticleModel()->GetBoundingBox()->GetMinY() + GetParticleModel()->GetBoundingBox()->GetMinY());
-	}
-	else if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().y < 0.0f)
-	{
-		// Object is traveling down
-		GetParticleModel()->SetDisplacementY(collider->GetParticleModel()->GetDisplacementY() + collider->GetParticleModel()->GetBoundingBox()->GetMaxY() - GetParticleModel()->GetBoundingBox()->GetMinY());
-	}
+	//// Get the difference in between current and future displacement
+	//float diffX = GetParticleModel()->GetFutureDisplacementX() - GetParticleModel()->GetDisplacementX();
+	//float diffY = GetParticleModel()->GetFutureDisplacementY() - GetParticleModel()->GetDisplacementY();
+
+	//// Get distance between current position and collision object
+	//float toColliderX = collider->GetParticleModel()->GetDisplacementX() - GetParticleModel()->GetDisplacementX();
+	//float toColliderY = collider->GetParticleModel()->GetDisplacementY() - GetParticleModel()->GetDisplacementY();
+
+
+
+	//// Check which way gravity is going
+	//if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().x > 0.0f)
+	//{
+	//	// Object is traveling right
+	//	// Check that object lies to the left of the collider
+	//	if (GetParticleModel()->GetDisplacementX() <= collider->GetParticleModel()->GetDisplacementX())
+	//	{
+	//		GetParticleModel()->SetDisplacementX(collider->GetParticleModel()->GetDisplacementX() + collider->GetParticleModel()->GetBoundingBox()->GetMinX() + GetParticleModel()->GetBoundingBox()->GetMinX());
+	//	}
+	//}
+	//else if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().x < 0.0f)
+	//{
+	//	// Object is traveling left
+	//	// Check that object lies to the right of the collider
+	//	if (GetParticleModel()->GetDisplacementX() >= collider->GetParticleModel()->GetDisplacementX())
+	//	{
+	//		GetParticleModel()->SetDisplacementX(collider->GetParticleModel()->GetDisplacementX() + collider->GetParticleModel()->GetBoundingBox()->GetMaxX() - GetParticleModel()->GetBoundingBox()->GetMinX());
+	//	}
+	//}
+	//else if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().y > 0.0f)
+	//{
+	//	// Object is traveling up
+	//	// Check that object lies down compared to the collider
+	//	if (GetParticleModel()->GetDisplacementY() <= collider->GetParticleModel()->GetDisplacementY())
+	//	{
+	//		GetParticleModel()->SetDisplacementY(collider->GetParticleModel()->GetDisplacementY() + collider->GetParticleModel()->GetBoundingBox()->GetMinY() + GetParticleModel()->GetBoundingBox()->GetMinY());
+	//	}
+	//}
+	//else if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().y < 0.0f)
+	//{
+	//	// Object is traveling down
+	//	// Check that object lies up compared to the collider
+	//	if (GetParticleModel()->GetDisplacementY() >= collider->GetParticleModel()->GetDisplacementY())
+	//	{
+	//		GetParticleModel()->SetDisplacementY(collider->GetParticleModel()->GetDisplacementY() + collider->GetParticleModel()->GetBoundingBox()->GetMaxY() - GetParticleModel()->GetBoundingBox()->GetMinY());
+	//	}
+	//}
 }
 
 void GameObject::DealWithCollision(GameObject* collider, float cR, bool moveThis, bool moveCollider)
@@ -135,8 +165,8 @@ void GameObject::DealWithCollision(GameObject* collider, float cR, bool moveThis
 
 	if (moveCollider)
 	{
-		newVelocityCollider.x = (newVelocityCollider.x * (collider->GetParticleModel()->GetMass() - GetParticleModel()->GetMass()) + (2 * (GetParticleModel()->GetMass() * GetParticleModel()->GetVelocity().x))) / (GetParticleModel()->GetMass() + GetParticleModel()->GetMass());
-		newVelocityCollider.y = (newVelocityCollider.y * (collider->GetParticleModel()->GetMass() - GetParticleModel()->GetMass()) + (2 * (GetParticleModel()->GetMass() * GetParticleModel()->GetVelocity().y))) / (GetParticleModel()->GetMass() + GetParticleModel()->GetMass());
+		newVelocityCollider.x = ((newVelocityCollider.x * (collider->GetParticleModel()->GetMass() - GetParticleModel()->GetMass()) + (2 * (GetParticleModel()->GetMass() * GetParticleModel()->GetVelocity().x))) * cR) / (GetParticleModel()->GetMass() + GetParticleModel()->GetMass());
+		newVelocityCollider.y = ((newVelocityCollider.y * (collider->GetParticleModel()->GetMass() - GetParticleModel()->GetMass()) + (2 * (GetParticleModel()->GetMass() * GetParticleModel()->GetVelocity().y))) * cR) / (GetParticleModel()->GetMass() + GetParticleModel()->GetMass());
 		//newVelocityCollider.x = (((collider->GetParticleModel()->GetMass() * collider->GetParticleModel()->GetVelocity().x) + (GetParticleModel()->GetMass() * GetParticleModel()->GetVelocity().x) + (GetParticleModel()->GetMass() * cR * (GetParticleModel()->GetVelocity().x - collider->GetParticleModel()->GetVelocity().x))) / (GetParticleModel()->GetMass() + collider->GetParticleModel()->GetMass()));
 		//newVelocityCollider.y = (((collider->GetParticleModel()->GetMass() * collider->GetParticleModel()->GetVelocity().y) + (GetParticleModel()->GetMass() * GetParticleModel()->GetVelocity().y) + (GetParticleModel()->GetMass() * cR * (GetParticleModel()->GetVelocity().y - collider->GetParticleModel()->GetVelocity().y))) / (GetParticleModel()->GetMass() + collider->GetParticleModel()->GetMass()));
 	}

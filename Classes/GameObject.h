@@ -31,7 +31,7 @@ public:
 
 	void FlipSprite();
 
-	void CheckCollision(GameObject* collider, float cR, bool moveThis = true, bool moveCollider = true);
+	bool CheckCollision(GameObject* collider, float cR, bool moveThis = true, bool moveCollider = true);
 	void FixCollision(GameObject* collider);
 	void DealWithCollision(GameObject* collider, float cR, bool moveThis = true, bool moveCollider = true);
 };

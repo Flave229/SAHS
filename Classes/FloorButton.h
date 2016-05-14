@@ -11,12 +11,9 @@
 
 USING_NS_CC;
 
-class FloorButton : public Node
+class FloorButton : public GameObject
 {
 private:
-	Sprite* _buttonSprite;
-	cocos2d::ui::CheckBox* _gravSwitch;
-
 	bool _activated;
 	float _timer;
 
@@ -24,25 +21,22 @@ private:
 	int _orientation;
 public:
 	FloorButton(int direction);
+	FloorButton(ParticleModel* particle, int direction);
 	~FloorButton();
-	static FloorButton* create(int direction);
 
-	virtual bool init() override;
-
+	// Button Orientation
 	void SetOrientation(int orientation) { _orientation = orientation; };
 	int GetOrientation() { return _orientation; };
+
+	// Collisions
+	bool CheckCollision(GameObject* collider, float cR, bool moveThis = true, bool moveCollider = true);
+
+	// Sprite
+	void SetSprite(Sprite* newSprite);
 
 	// Active
 	void SetActive(bool activeState);
 	bool GetActive() { return _activated; };
-
-	// Collisions
-	void CheckPlayerCollisions(Player* collider);
-	void CheckBoxCollisions(Box* collider);
-
-	//Sprite
-	Sprite* GetSprite() { return _buttonSprite; };
-	void SetSprite(Sprite* newSprite);
 
 	// Timer
 	float GetTimer() { return _timer; };

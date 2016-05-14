@@ -42,9 +42,6 @@
     <ClCompile Include="..\Classes\Switch.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Wall.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\LevelSelect.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
@@ -78,7 +75,10 @@
     <ClCompile Include="..\Classes\BoundingBox.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MovingPlatform.cpp">
+    <ClCompile Include="..\Classes\MovableWall.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MovablePlatform.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,9 +125,6 @@
     <ClInclude Include="..\Classes\Switch.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Wall.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\LevelSelect.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -161,7 +158,10 @@
     <ClInclude Include="..\Classes\BoundingBox.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\MovingPlatform.h">
+    <ClInclude Include="..\Classes\MovableWall.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MovablePlatform.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

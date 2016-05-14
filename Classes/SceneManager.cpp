@@ -238,7 +238,7 @@ void SceneManager::SetupSprites(Node* root)
 	i = 1;
 	while ((tempSprite = (Sprite*)root->getChildByName("Wall_" + StringUtils::format("%d", i))) != nullptr)
 	{
-		_walls.push_back(tempSprite);
+		_wallSprites.push_back(tempSprite);
 		i++;
 	}
 
@@ -649,14 +649,31 @@ void SceneManager::SetupClasses(Node* root)
 		addChild(platform);
 	}
 
+	// WALLS
+	for (int i = 0; i < (int)_wallSprites.size(); i++)
+	{
+		ParticleModel* particle = new ParticleModel();
+		particle->SetMass(100.0f);
+
+		GameObject* wall = new GameObject(particle);
+		wall->setName("Wall_" + StringUtils::format("%d", i + 1));
+		wall->SetSprite(_wallSprites.at(i));
+
+		_walls.push_back(wall);
+
+		addChild(wall);
+	}
+
 	// MOVING PLATFORMS - HORIZONTAL
 	for (int i = 0; i < (int)_movingPlatformHorizSprites.size(); i++)
 	{
 		ParticleModel* particle = new ParticleModel();
-		MovingPlatform* movingPlats = new MovingPlatform(particle, _player, _woodBoxes, _metalBoxes);
+		particle->SetMass(100.0f);
+
+		MovablePlatform* movingPlats = new MovablePlatform(particle, _player, _woodBoxes, _metalBoxes);
 		movingPlats->setName("MovingPlatform_" + StringUtils::format("%d", i + 1));
 		movingPlats->SetSprite(_movingPlatformHorizSprites.at(i));
-		movingPlats->setZoneSprite();
+		movingPlats->SetZoneSprite();
 
 		_movingPlatformsHoriz.push_back(movingPlats);
 
@@ -667,10 +684,12 @@ void SceneManager::SetupClasses(Node* root)
 	for (int i = 0; i < (int)_movingPlatformVertSprites.size(); i++)
 	{
 		ParticleModel* particle = new ParticleModel();
-		MovingPlatform* movingPlats = new MovingPlatform(particle, _player, _woodBoxes, _metalBoxes);
+		particle->SetMass(100.0f);
+
+		MovablePlatform* movingPlats = new MovablePlatform(particle, _player, _woodBoxes, _metalBoxes);
 		movingPlats->setName("MovingPlatform_" + StringUtils::format("%d", i + 1));
 		movingPlats->SetSprite(_movingPlatformVertSprites.at(i));
-		movingPlats->setZoneSprite();
+		movingPlats->SetZoneSprite();
 
 		_movingPlatformsVert.push_back(movingPlats);
 
@@ -680,10 +699,13 @@ void SceneManager::SetupClasses(Node* root)
 	// MOVING WALLS - HORIZONTAL
 	for (int i = 0; i < (int)_movingWallHorizSprites.size(); i++)
 	{
-		Wall* movingWall = Wall::create(_player, _woodBoxes, _metalBoxes);
+		ParticleModel* particle = new ParticleModel();
+		particle->SetMass(100.0f);
+
+		MovableWall* movingWall = new MovableWall(particle, _player, _woodBoxes, _metalBoxes);
 		movingWall->setName("MovingWall_" + StringUtils::format("%d", i + 1));
-		movingWall->setSprite(_movingWallHorizSprites[i]);
-		movingWall->setZoneSprite();
+		movingWall->SetSprite(_movingWallHorizSprites[i]);
+		movingWall->SetZoneSprite();
 
 		_movingWallsHoriz.push_back(movingWall);
 
@@ -693,10 +715,13 @@ void SceneManager::SetupClasses(Node* root)
 	// MOVING WALLS - VERTICAL
 	for (int i = 0; i < (int)_movingWallVertSprites.size(); i++)
 	{
-		Wall* movingWall = Wall::create(_player, _woodBoxes, _metalBoxes);
+		ParticleModel* particle = new ParticleModel();
+		particle->SetMass(100.0f);
+
+		MovableWall* movingWall = new MovableWall(particle, _player, _woodBoxes, _metalBoxes);
 		movingWall->setName("MovingWall_" + StringUtils::format("%d", i + 1));
-		movingWall->setSprite(_movingWallVertSprites[i]);
-		movingWall->setZoneSprite();
+		movingWall->SetSprite(_movingWallVertSprites[i]);
+		movingWall->SetZoneSprite();
 
 		_movingWallsVert.push_back(movingWall);
 
@@ -706,7 +731,11 @@ void SceneManager::SetupClasses(Node* root)
 	// FLOOR BUTTONS - DOWN
 	for (int i = 0; i < (int)_downButtons.size(); i++) 
 	{
-		FloorButton* button = FloorButton::create(0);
+		ParticleModel* particle = new ParticleModel();
+		particle->GetBoundingBox()->SetAdjustmentScaler(1.0f, 1.0f, 0.1f, 1.0f);
+		particle->SetMass(50.0f);
+
+		FloorButton* button = new FloorButton(particle, 0);
 		button->setName("Button_Down_" + StringUtils::format("%d", i + 1));
 		button->SetSprite(_downButtons[i]);
 		button->SetActive(false);
@@ -719,7 +748,11 @@ void SceneManager::SetupClasses(Node* root)
 	// FLOOR BUTTONS - LEFT
 	for (int i = 0; i < (int)_leftButtons.size(); i++) 
 	{
-		FloorButton* button = FloorButton::create(1);
+		ParticleModel* particle = new ParticleModel();
+		particle->GetBoundingBox()->SetAdjustmentScaler(0.1f, 1.0f, 1.0f, 1.0f);
+		particle->SetMass(50.0f);
+
+		FloorButton* button = new FloorButton(particle, 1);
 		button->setName("Button_Left_" + StringUtils::format("%d", i + 1));
 		button->SetSprite(_leftButtons[i]);
 		button->SetActive(false);
@@ -732,7 +765,11 @@ void SceneManager::SetupClasses(Node* root)
 	// FLOOR BUTTONS - UP
 	for (int i = 0; i < (int)_upButtons.size(); i++) 
 	{
-		FloorButton* button = FloorButton::create(2);
+		ParticleModel* particle = new ParticleModel();
+		particle->GetBoundingBox()->SetAdjustmentScaler(1.0f, 1.0f, 1.0f, 0.1f);
+		particle->SetMass(50.0f);
+
+		FloorButton* button = new FloorButton(particle, 2);
 		button->setName("Button_Up_" + StringUtils::format("%d", i + 1));
 		button->SetSprite(_upButtons[i]);
 		button->SetActive(false);
@@ -745,7 +782,11 @@ void SceneManager::SetupClasses(Node* root)
 	// FLOOR BUTTONS - RIGHT
 	for (int i = 0; i < (int)_rightButtons.size(); i++) 
 	{
-		FloorButton* button = FloorButton::create(3);
+		ParticleModel* particle = new ParticleModel();
+		particle->GetBoundingBox()->SetAdjustmentScaler(1.0f, 0.1f, 1.0f, 1.0f);
+		particle->SetMass(50.0f);
+
+		FloorButton* button = new FloorButton(particle, 3);
 		button->setName("Button_Right_" + StringUtils::format("%d", i + 1));
 		button->SetSprite(_rightButtons[i]);
 		button->SetActive(false);
@@ -919,75 +960,80 @@ void SceneManager::RevertGravity()
 void SceneManager::CheckCollisions()
 {
 	// PLATFORM COLLISIONS
-	for (int i = 0; i < (int)_platforms.size(); i++) {
+	for (int i = 0; i < (int)_platforms.size(); i++) 
+	{
 		_player->CheckCollision(_platforms.at(i), 0.1, true, false);
 
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
+		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+		{
 			_woodBoxes.at(i2)->CheckCollision(_platforms.at(i), 0.6, true, false);
-			//_woodBoxes[i2]->CheckPlatformCollisions(_platforms[i]);
 		}
 
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			_metalBoxes.at(i2)->CheckCollision(_platforms.at(i), 0.6, true, false);
-			//_metalBoxes[i2]->CheckPlatformCollisions(_platforms[i]);
+		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+		{
+			_metalBoxes.at(i2)->CheckCollision(_platforms.at(i), 0.4, true, false);
 		}
 	}
 
 	// WALL COLLISIONS
-	for (int i = 0; i < (int)_walls.size(); i++) {
-		//_player->CheckWallCollisions(_walls[i]);
+	for (int i = 0; i < (int)_walls.size(); i++) 
+	{
+		_player->CheckCollision(_walls.at(i), 0.1, true, false);
 
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			//_woodBoxes.at(i2)->CheckCollision(_walls.at(i), true, false);
-			//_woodBoxes[i2]->CheckWallCollisions(_walls[i]);
-		}
-
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			//_metalBoxes.at(i2)->CheckCollision(_walls.at(i), true, false);
-			//_metalBoxes[i2]->CheckWallCollisions(_walls[i]);
-		}
-
-		for (int i2 = 0; i2 < (int)_movingPlatformsHoriz.size(); i2++)
+		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
 		{
-			//_movingPlatformsHoriz[i2]->CheckCollision(_walls.at(i));
+			_woodBoxes.at(i2)->CheckCollision(_walls.at(i), 0.6, true, false);
 		}
 
-		for (int i2 = 0; i2 < (int)_movingPlatformsVert.size(); i2++)
+		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
 		{
-			//_movingPlatformsVert[i2]->CheckCollision(_walls.at(i));
+			_metalBoxes.at(i2)->CheckCollision(_walls.at(i), 0.4, true, false);
 		}
+
+		//for (int i2 = 0; i2 < (int)_movingPlatformsHoriz.size(); i2++)
+		//{
+		//	//_movingPlatformsHoriz[i2]->CheckCollision(_walls.at(i));
+		//}
+
+		//for (int i2 = 0; i2 < (int)_movingPlatformsVert.size(); i2++)
+		//{
+		//	//_movingPlatformsVert[i2]->CheckCollision(_walls.at(i));
+		//}
 	}
 
 	// DOOR COLLISIONS
-	for (int i = 0; i < (int)_doors.size(); i++) {
-		if (!_doors[i]->GetOpen()) {
-
+	for (int i = 0; i < (int)_doors.size(); i++) 
+	{
+		if (!_doors[i]->GetOpen()) 
+		{
 			//_player->CheckWallCollisions(_doors[i]->GetSprite());
 
-			for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
+			for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+			{
 				//_woodBoxes.at(i2)->CheckCollision(_doors.at(i)->GetParticleModel(), true, false);
 				//_woodBoxes[i2]->CheckWallCollisions(_doors[i]->GetSprite());
 			}
 
-			for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
+			for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+			{
 				//_metalBoxes.at(i2)->CheckCollision(_doors.at(i)->GetParticleModel(), true, false);
 				//_metalBoxes[i2]->CheckWallCollisions(_doors[i]->GetSprite());
 			}
 		}
-
 	}
 
-	for (int i = 0; i < (int)_solidDoorSprites.size(); i++) {
-
-
+	for (int i = 0; i < (int)_solidDoorSprites.size(); i++) 
+	{
 		//_player->CheckWallCollisions(_solidDoorSprites[i]);
 
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
+		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+		{
 			//_woodBoxes.at(i2)->CheckCollision(_solidDoorSprites.at(i)->GetParticleModel(), true, false);
 			//_woodBoxes[i2]->CheckWallCollisions(_solidDoorSprites[i]);
 		}
 
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
+		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+		{
 			//_metalBoxes.at(i2)->CheckCollision(_solidDoorSprites.at(i)->GetParticleModel(), true, false);
 			//_metalBoxes[i2]->CheckWallCollisions(_solidDoorSprites[i]);
 		}
@@ -996,18 +1042,22 @@ void SceneManager::CheckCollisions()
 	}
 
 	// Hatch Collisions
-	for (int i = 0; i < (int)_hatches.size(); i++) {
-		if (!_hatches[i]->GetOpen()) {
+	for (int i = 0; i < (int)_hatches.size(); i++) 
+	{
+		if (!_hatches[i]->GetOpen()) 
+		{
 			if (getName().find("Hatch"))
 			{
 				//_player->CheckPlatformCollisions(_hatches[i]->GetSprite());
 
-				for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
+				for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+				{
 					//_woodBoxes.at(i2)->CheckCollision(_hatches.at(i)->GetParticleModel(), true, false);
 					//_woodBoxes[i2]->CheckPlatformCollisions(_hatches[i]->GetSprite());
 				}
 
-				for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
+				for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+				{
 					//_metalBoxes.at(i2)->CheckCollision(_hatches.at(i)->GetParticleModel(), true, false);
 					//_metalBoxes[i2]->CheckPlatformCollisions(_hatches[i]->GetSprite());
 				}
@@ -1016,75 +1066,92 @@ void SceneManager::CheckCollisions()
 	}
 
 	// MOVING PLATFORM COLLISIONS
-	for (int i = 0; i < (int)_movingPlatformsHoriz.size(); i++) {
-		//_player->CheckPlatformCollisions(_movingPlatformsHoriz[i]->GetSprite());
+	for (int i = 0; i < (int)_movingPlatformsHoriz.size(); i++) 
+	{
+		_player->CheckCollision(_movingPlatformsHoriz.at(i), 0.1, true, false);
 
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			_woodBoxes.at(i2)->CheckCollision(_movingPlatformsHoriz.at(i), true, false);
-			//_woodBoxes[i2]->CheckPlatformCollisions(_movingPlatformsHoriz[i]->getSprite());
+		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+		{
+			_woodBoxes.at(i2)->CheckCollision(_movingPlatformsHoriz.at(i), 0.6, true, false);
 		}
 
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			_metalBoxes.at(i2)->CheckCollision(_movingPlatformsHoriz.at(i), true, false);
-			//_metalBoxes[i2]->CheckPlatformCollisions(_movingPlatformsHoriz[i]->getSprite());
+		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+		{
+			_metalBoxes.at(i2)->CheckCollision(_movingPlatformsHoriz.at(i), 0.4, true, false);
 		}
 	}
 
-	for (int i = 0; i < (int)_movingPlatformsVert.size(); i++) {
-		//_player->CheckPlatformCollisions(_movingPlatformsVert[i]->GetSprite());
+	for (int i = 0; i < (int)_movingPlatformsVert.size(); i++) 
+	{
+		_player->CheckCollision(_movingPlatformsVert.at(i), 0.1, true, false);
 
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			_woodBoxes.at(i2)->CheckCollision(_movingPlatformsVert.at(i), true, false);
-			//_woodBoxes[i2]->CheckPlatformCollisions(_movingPlatformsVert[i]->getSprite());
+		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+		{
+			_woodBoxes.at(i2)->CheckCollision(_movingPlatformsVert.at(i), 0.6, true, false);
 		}
 
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			//_metalBoxes.at(i2)->CheckCollision(_movingPlatformsVert.at(i)->GetParticleModel(), true, false);
-			//_metalBoxes[i2]->CheckPlatformCollisions(_movingPlatformsVert[i]->getSprite());
+		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+		{
+			_metalBoxes.at(i2)->CheckCollision(_movingPlatformsVert.at(i), 0.4, true, false);
 		}
 	}
 
 	// MOVING WALL COLLISIONS
-	for (int i = 0; i < (int)_movingWallsHoriz.size(); i++) {
-		//_player->CheckWallCollisions(_movingWallsHoriz[i]->getSprite());
+	for (int i = 0; i < (int)_movingWallsHoriz.size(); i++) 
+	{
+		_player->CheckCollision(_movingWallsHoriz.at(i), 0.1, true, false);
 
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			//_woodBoxes.at(i2)->CheckCollision(_movingWallsHoriz.at(i)->GetParticleModel(), true, false);
-			//_woodBoxes[i2]->CheckWallCollisions(_movingWallsHoriz[i]->getSprite());
+		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+		{
+			_woodBoxes.at(i2)->CheckCollision(_movingWallsHoriz.at(i), 0.6, true, false);
 		}
 
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			//_metalBoxes.at(i2)->CheckCollision(_movingWallsHoriz.at(i)->GetParticleModel(), true, false);
-			//_metalBoxes[i2]->CheckWallCollisions(_movingWallsHoriz[i]->getSprite());
+		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+		{
+			_metalBoxes.at(i2)->CheckCollision(_movingWallsHoriz.at(i), 0.4, true, false);
 		}
 	}
 
-	for (int i = 0; i < (int)_movingWallsVert.size(); i++) {
+	for (int i = 0; i < (int)_movingWallsVert.size(); i++) 
+	{
+		_player->CheckCollision(_movingWallsVert.at(i), 0.1, true, false);
 		//_player->CheckWallCollisions(_movingWallsVert[i]->getSprite());
 
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			//_woodBoxes.at(i2)->CheckCollision(_movingWallsVert.at(i)->GetParticleModel(), true, false);
-			//_woodBoxes[i2]->CheckWallCollisions(_movingWallsVert[i]->getSprite());
+		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+		{
+			_woodBoxes.at(i2)->CheckCollision(_movingWallsVert.at(i), 0.6, true, false);
 		}
 
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			//_metalBoxes.at(i2)->CheckCollision(_movingWallsVert.at(i)->GetParticleModel(), true, false);
-			//_metalBoxes[i2]->CheckWallCollisions(_movingWallsVert[i]->getSprite());
+		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+		{
+			_metalBoxes.at(i2)->CheckCollision(_movingWallsVert.at(i), 0.4, true, false);
 		}
 	}
 
 	// BUTTON COLLISIONS
-	for (int i = 0; i < (int)_buttons.size(); i++) {
+	for (int i = 0; i < (int)_buttons.size(); i++) 
+	{
 		_buttons.at(i)->SetActive(false);
 
-		_buttons.at(i)->CheckPlayerCollisions(_player);
-
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) {
-			_buttons.at(i)->CheckBoxCollisions(_woodBoxes.at(i2));
+		if (_buttons.at(i)->CheckCollision(_player, 0.0f, false, true))
+		{
+			_player->FixCollision(_buttons.at(i));
 		}
 
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) {
-			_buttons.at(i)->CheckBoxCollisions(_metalBoxes.at(i2));
+		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+		{
+			if (_buttons.at(i)->CheckCollision(_woodBoxes.at(i2), 0.2f, false, true))
+			{
+				_woodBoxes.at(i2)->FixCollision(_buttons.at(i));
+			}
+		}
+
+		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+		{
+			if (_buttons.at(i)->CheckCollision(_metalBoxes.at(i2), 0.2f, false, true))
+			{
+				_metalBoxes.at(i2)->FixCollision(_buttons.at(i));
+			}
 		}
 	}
 }
@@ -1110,7 +1177,7 @@ bool SceneManager::onTouchBegan(Touch* touch, Event* event)
 		for (int i = 0; i < (int)_movingPlatformsHoriz.size(); i++)
 		{
 			currPlatform = _movingPlatformsHoriz[i]->GetSprite()->getBoundingBox();
-			currTouchZone = _movingPlatformsHoriz[i]->getTouchZone()->getBoundingBox();
+			currTouchZone = _movingPlatformsHoriz[i]->GetTouchZone()->getBoundingBox();
 			if (currPlatform.containsPoint(_initialTouchPos) || currTouchZone.containsPoint(_initialTouchPos))
 			{
 				GameManager::sharedGameManager()->setIsObjectTouched(true);
@@ -1125,7 +1192,7 @@ bool SceneManager::onTouchBegan(Touch* touch, Event* event)
 		for (int i = 0; i < (int)_movingPlatformsVert.size(); i++)
 		{
 			currPlatform = _movingPlatformsVert[i]->GetSprite()->getBoundingBox();
-			currTouchZone = _movingPlatformsVert[i]->getTouchZone()->getBoundingBox();
+			currTouchZone = _movingPlatformsVert[i]->GetTouchZone()->getBoundingBox();
 			if (currPlatform.containsPoint(_initialTouchPos) || currTouchZone.containsPoint(_initialTouchPos))
 			{
 				GameManager::sharedGameManager()->setIsObjectTouched(true);
@@ -1139,8 +1206,8 @@ bool SceneManager::onTouchBegan(Touch* touch, Event* event)
 		// Touch detection for horizontal moving walls
 		for (int i = 0; i < (int)_movingWallsHoriz.size(); i++)
 		{
-			currPlatform = _movingWallsHoriz[i]->getSprite()->getBoundingBox();
-			currTouchZone = _movingWallsHoriz[i]->getTouchZone()->getBoundingBox();
+			currPlatform = _movingWallsHoriz[i]->GetSprite()->getBoundingBox();
+			currTouchZone = _movingWallsHoriz[i]->GetTouchZone()->getBoundingBox();
 			if (currPlatform.containsPoint(_initialTouchPos) || currTouchZone.containsPoint(_initialTouchPos))
 			{
 				GameManager::sharedGameManager()->setIsObjectTouched(true);
@@ -1154,8 +1221,8 @@ bool SceneManager::onTouchBegan(Touch* touch, Event* event)
 		// Touch detection for vertical moving walls
 		for (int i = 0; i < (int)_movingWallsVert.size(); i++)
 		{
-			currPlatform = _movingWallsVert[i]->getSprite()->getBoundingBox();
-			currTouchZone = _movingWallsVert[i]->getTouchZone()->getBoundingBox();
+			currPlatform = _movingWallsVert[i]->GetSprite()->getBoundingBox();
+			currTouchZone = _movingWallsVert[i]->GetTouchZone()->getBoundingBox();
 			if (currPlatform.containsPoint(_initialTouchPos) || currTouchZone.containsPoint(_initialTouchPos))
 			{
 				GameManager::sharedGameManager()->setIsObjectTouched(true);

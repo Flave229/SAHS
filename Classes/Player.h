@@ -15,7 +15,7 @@ private:
 	int _frame;
 	bool _running;
 	float _spriteTimer;
-	float _spriteTimerDefault = 1.0f / 12.0f;
+	float _spriteTimerDefault;
 
 	// Move to
 	Vec2	_targetPos;
@@ -26,8 +26,6 @@ public:
 	Player();
 	Player(ParticleModel* particle);
 	~Player();
-
-	virtual bool init() override;
 	
 	void Update(float delta);
 

@@ -42,7 +42,9 @@ public:
 	cocos2d::Vec2 GetAcceleration()				{ return _acceleration; };
 
 	void SetVelocity(cocos2d::Vec2 vel)	{ _velocity = vel; };
-	cocos2d::Vec2 GetVelocity() { return _velocity; };
+	void SetVelocityX(float x)			{ _velocity.x = x; };
+	void SetVelocityY(float y)			{ _velocity.y = y; };
+	cocos2d::Vec2 GetVelocity()			{ return _velocity; };
 
 	void SetDisplacement(cocos2d::Vec2 dis)		{ _displacement = dis; };
 	void SetDisplacementX(float disX)			{ _displacement.x = disX; };
@@ -52,7 +54,11 @@ public:
 	float GetDisplacementY()					{ return _displacement.y; };
 
 	void SetFutureDisplacement(cocos2d::Vec2 dis)	{ _displacementFuture = dis; };
+	void SetFutureDisplacementX(float disX)			{ _displacementFuture.x = disX; };
+	void SetFutureDisplacementY(float disY)			{ _displacementFuture.y = disY; };
 	cocos2d::Vec2 GetFutureDisplacement()			{ return _displacementFuture; };
+	float GetFutureDisplacementX()					{ return _displacementFuture.x; };
+	float GetFutureDisplacementY()					{ return _displacementFuture.y; };
 
 	cocos2d::Vec2 GetNetForce() { return _netForce; };
 

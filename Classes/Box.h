@@ -33,14 +33,10 @@ public:
 	Box(ParticleModel* particle, float startingWeight);
 	~Box();
 
-	virtual bool init() override;
 	void Update(float delta);
 
 	// Overload SetSprite from GameObject
 	void SetSprite(cocos2d::Sprite* sprite);
-
-	// Physics
-	void Flip();
 
 	// Scaling
 	void SetTotalDiff(float totalDiffNew);

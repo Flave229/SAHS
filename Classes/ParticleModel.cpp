@@ -16,8 +16,6 @@ ParticleModel::~ParticleModel()
 
 void ParticleModel::Update(float delta, cocos2d::Sprite* sprite)
 {
-	SetFutureDisplacement(GetDisplacement() + (GetVelocity() * delta));
-
 	// Update Bounding Box
 	GetBoundingBox()->Update(delta, (sprite->getContentSize().width * sprite->getScaleX()), (sprite->getContentSize().height * sprite->getScaleY()),
 		GetDisplacement().x, GetDisplacement().y,
@@ -26,6 +24,8 @@ void ParticleModel::Update(float delta, cocos2d::Sprite* sprite)
 	UpdateNetForce(delta);
 	UpdateAcceleration(delta);
 	Move(delta);
+
+	SetFutureDisplacement(GetDisplacement() + (GetVelocity() * delta));
 }
 
 void ParticleModel::UpdateNetForce(float delta)

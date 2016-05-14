@@ -14,9 +14,9 @@
 #include "Switch.h"
 #include "FloorButton.h"
 #include "TouchManager.h"
-#include "MovingPlatform.h"
+#include "MovablePlatform.h"
 #include "Door.h"
-#include "Wall.h"
+#include "MovableWall.h"
 #include "SwitchTimer.h"
 #include "MenuScene.h"
 
@@ -39,6 +39,7 @@ private:
 
 	// Sprites that need to be passed to classes
 	std::vector<cocos2d::Sprite*>		_platformSprites;
+	std::vector<cocos2d::Sprite*>		_wallSprites;
 
 	Sprite*								_playerSprite;
 	std::vector<cocos2d::Sprite*>		_woodenSprites;
@@ -95,7 +96,6 @@ private:
 	bool	_leftHighlightEnabled;
 
 	// SCENE ELEMENTS
-	std::vector<cocos2d::Sprite*>		_walls;
 	std::vector<cocos2d::ui::CheckBox*> _exit;
 
 	std::vector<bool>					_flipped;
@@ -107,6 +107,7 @@ private:
 	// SCENE CLASSES
 	Player* _player;
 	std::vector<GameObject*>		_platforms;
+	std::vector<GameObject*>		_walls;
 	std::vector<Box*>				_woodBoxes;
 	std::vector<Box*>				_metalBoxes;
 	std::vector<Switch*>			_switches;
@@ -114,10 +115,10 @@ private:
 	std::vector<FloorButton*>		_buttons;
 	std::vector<Door*>				_doors;
 	std::vector<Door*>				_hatches;
-	std::vector<MovingPlatform*>	_movingPlatformsVert;
-	std::vector<MovingPlatform*>	_movingPlatformsHoriz;
-	std::vector<Wall*>				_movingWallsVert;
-	std::vector<Wall*>				_movingWallsHoriz;
+	std::vector<MovablePlatform*>	_movingPlatformsVert;
+	std::vector<MovablePlatform*>	_movingPlatformsHoriz;
+	std::vector<MovableWall*>		_movingWallsVert;
+	std::vector<MovableWall*>		_movingWallsHoriz;
 
 	// GRAVITY
 	// Gravity Orientation: 0 = Down; 1 = Left; 2 = Up; 3 = Right;

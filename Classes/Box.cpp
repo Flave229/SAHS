@@ -33,17 +33,6 @@ Box::~Box()
 {
 }
 
-bool Box::init()
-{
-	if (!Node::init()) {
-		return false;
-	}
-
-	this->scheduleUpdate();
-
-	return true;
-}
-
 void Box::Update(float delta)
 {
 	if (!GameManager::sharedGameManager()->getIsGamePaused())
@@ -52,17 +41,10 @@ void Box::Update(float delta)
 			_touchTimer -= delta;
 		}
 
-		//_box->setScale(scaler2);
-		//_weight = 2.0f;
 		Scaling();
 		//UpdateBoxScale();
 	}
 
-	//float TotalDiff = TouchManager().totalDiff;
-
-	//ScalingObject().update(delta, TotalDiff);
-
-	// Add box movement when pushed by player
 	GameObject::Update(delta);
 }
 
@@ -136,109 +118,6 @@ void Box::Collision(cocos2d::Touch* touch)
 	//	}
 
 	//}
-}
-
-//void Box::CheckPlatformCollisions(cocos2d::Sprite* collider)
-//{
-//	auto winSize = Director::getInstance()->getVisibleSize();
-//
-//	float scaledWidth = collider->getContentSize().width * collider->getScaleX();
-//	float scaledHeight = collider->getContentSize().height * collider->getScaleY();
-//	float scaledPlayerWidth = GetSprite()->getContentSize().width * GetSprite()->getScaleX();
-//
-//	float boxScaledWidth = GetSprite()->getContentSize().width * GetSprite()->getScaleX();
-//	float boxScaledHeight = GetSprite()->getContentSize().height * GetSprite()->getScaleY();
-//
-//	if (_orientationVertical) {
-//		if (GetSprite()->getPositionX() - (boxScaledWidth / 2) < collider->getPositionX() + (scaledWidth / 2)
-//			&& GetSprite()->getPositionX() + (boxScaledWidth / 2) > collider->getPositionX() - (scaledWidth / 2)
-//			&& GetSprite()->getPositionY() - (boxScaledHeight / 2) < collider->getPositionY() + (scaledHeight / 2)
-//			&& GetSprite()->getPositionY() + (boxScaledHeight / 2) > collider->getPositionY() - (scaledHeight / 2))
-//		{
-//			Land(collider);
-//		}
-//		else {
-//			_fallingVertical = true;
-//		}
-//	}
-//	else if (_orientationHorizontal) {
-//		if (GetSprite()->getPositionX() - (boxScaledHeight / 2) < collider->getPositionX() + (scaledWidth / 2)
-//			&& GetSprite()->getPositionX() + (boxScaledHeight / 2) > collider->getPositionX() - (scaledWidth / 2)
-//			&& GetSprite()->getPositionY() - (boxScaledWidth / 2) < collider->getPositionY() + (scaledHeight / 2)
-//			&& GetSprite()->getPositionY() + (boxScaledWidth / 2) > collider->getPositionY() - (scaledHeight / 2))
-//		{
-//			if (GetSprite()->getPositionY() < collider->getPositionY()) {
-//				GetSprite()->setPositionY(collider->getPositionY() - (scaledHeight / 2) - (scaledPlayerWidth / 2));
-//			}
-//			else {
-//				GetSprite()->setPositionY(collider->getPositionY() + (scaledHeight / 2) + (scaledPlayerWidth / 2));
-//			}
-//		}
-//	}
-//}
-//
-//void Box::CheckWallCollisions(cocos2d::Sprite* collider)
-//{
-//	auto winSize = Director::getInstance()->getVisibleSize();
-//
-//	float scaledWidth = collider->getContentSize().width * collider->getScaleX();
-//	float scaledHeight = collider->getContentSize().height * collider->getScaleY();
-//	float scaledPlayerWidth = GetSprite()->getContentSize().width * GetSprite()->getScaleX();
-//
-//	float boxScaledWidth = GetSprite()->getContentSize().width * GetSprite()->getScaleX();
-//	float boxScaledHeight = GetSprite()->getContentSize().height * GetSprite()->getScaleY();
-//
-//
-//	if (_orientationVertical) {
-//		if (GetSprite()->getPositionX() - (boxScaledWidth / 2) < collider->getPositionX() + (scaledWidth / 2)
-//			&& GetSprite()->getPositionX() + (boxScaledWidth / 2) > collider->getPositionX() - (scaledWidth / 2)
-//			&& GetSprite()->getPositionY() - (boxScaledHeight / 2) < collider->getPositionY() + (scaledHeight / 2)
-//			&& GetSprite()->getPositionY() + (boxScaledHeight / 2) > collider->getPositionY() - (scaledHeight / 2))
-//		{
-//			if (GetSprite()->getPositionX() < collider->getPositionX()) {
-//				GetSprite()->setPositionX(collider->getPositionX() - (scaledWidth / 2) - (scaledPlayerWidth / 2));
-//			}
-//			else {
-//				GetSprite()->setPositionX(collider->getPositionX() + (scaledWidth / 2) + (scaledPlayerWidth / 2));
-//			}
-//		}
-//	}
-//	else if (_orientationHorizontal) {
-//		if (GetSprite()->getPositionX() - (boxScaledHeight / 2) < collider->getPositionX() + (scaledWidth / 2)
-//			&& GetSprite()->getPositionX() + (boxScaledHeight / 2) > collider->getPositionX() - (scaledWidth / 2)
-//			&& GetSprite()->getPositionY() - (boxScaledWidth / 2) < collider->getPositionY() + (scaledHeight / 2)
-//			&& GetSprite()->getPositionY() + (boxScaledWidth / 2) > collider->getPositionY() - (scaledHeight / 2))
-//		{
-//			Land(collider);
-//		}
-//		else {
-//			_fallingHorizontal = true;
-//		}
-//	}
-//}
-
-void Box::Flip()
-{
-	if (GetParticleModel()->GetForce("Gravity")->GetForce().x > 0.0f)
-	{
-		auto rotateTo = RotateTo::create(0.5f, 270.0f);
-		GetSprite()->runAction(rotateTo);
-	}
-	else if (GetParticleModel()->GetForce("Gravity")->GetForce().x < 0.0f)
-	{
-		auto rotateTo = RotateTo::create(0.5f, 90.0f);
-		GetSprite()->runAction(rotateTo);
-	}
-	else if (GetParticleModel()->GetForce("Gravity")->GetForce().y > 0.0f)
-	{
-		auto rotateTo = RotateTo::create(0.5f, 180.0f);
-		GetSprite()->runAction(rotateTo);
-	}
-	else if (GetParticleModel()->GetForce("Gravity")->GetForce().y < 0.0f)
-	{
-		auto rotateTo = RotateTo::create(0.5f, 0.0f);
-		GetSprite()->runAction(rotateTo);
-	}
 }
 
 void Box::SetSprite(Sprite* newSprite) {
