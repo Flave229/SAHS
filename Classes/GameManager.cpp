@@ -83,7 +83,7 @@ void GameManager::updateLevelTimer()
 {
 	mil++;
 
-	if (mil > 1000)
+	if (mil >= 1000)
 	{
 		sec++;
 		mil = 0;
@@ -103,7 +103,6 @@ int GameManager::getTimer()
 	return 0;
 }
 
-
 int GameManager::getMil()
 {
 	return mil;
@@ -114,12 +113,10 @@ int GameManager::getSec()
 	return sec;
 }
 
-
 int GameManager::getMin()
 {
 	return min;
 }
-
 
 GameManager::~GameManager()
 {

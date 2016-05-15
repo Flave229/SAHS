@@ -896,6 +896,7 @@ void SceneManager::update(float delta)
 					_flipGravityCooldown = 0.0f;
 				}
 			}
+			CheckCollisions();
 
 			_player->Update(delta);
 
@@ -922,14 +923,14 @@ void SceneManager::update(float delta)
 			int sec = GameManager::sharedGameManager()->getSec();
 			int min = GameManager::sharedGameManager()->getMin();
 
-			std::string X = "X";
-			std::string Y = "Y";
+			//std::string X = "X";
+			//std::string Y = "Y";
 			/*int playerPosXFl = _player->GetSprite()->getPositionX();
 			int playerPosYFl = _player->GetSprite()->getPositionY();*/
 
-			_timeLabel->setString(StringUtils::format("%d:%d:%d", min, sec, mil));
+			_timeLabel->setString(StringUtils::format("%d:%2d:%3d", min, sec, mil));
 
-			CheckCollisions();
+			//CheckCollisions();
 			CheckNearTimer(delta);
 			RevertGravity();
 			CheckNear(delta);
@@ -975,185 +976,184 @@ void SceneManager::CheckCollisions()
 		}
 	}
 
-	// WALL COLLISIONS
-	for (int i = 0; i < (int)_walls.size(); i++) 
-	{
-		_player->CheckCollision(_walls.at(i), 0.1, true, false);
-
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
-		{
-			_woodBoxes.at(i2)->CheckCollision(_walls.at(i), 0.6, true, false);
-		}
-
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
-		{
-			_metalBoxes.at(i2)->CheckCollision(_walls.at(i), 0.4, true, false);
-		}
-
-		//for (int i2 = 0; i2 < (int)_movingPlatformsHoriz.size(); i2++)
-		//{
-		//	//_movingPlatformsHoriz[i2]->CheckCollision(_walls.at(i));
-		//}
-
-		//for (int i2 = 0; i2 < (int)_movingPlatformsVert.size(); i2++)
-		//{
-		//	//_movingPlatformsVert[i2]->CheckCollision(_walls.at(i));
-		//}
-	}
-
-	// DOOR COLLISIONS
-	for (int i = 0; i < (int)_doors.size(); i++) 
-	{
-		if (!_doors[i]->GetOpen()) 
-		{
-			//_player->CheckWallCollisions(_doors[i]->GetSprite());
-
-			for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
-			{
-				//_woodBoxes.at(i2)->CheckCollision(_doors.at(i)->GetParticleModel(), true, false);
-				//_woodBoxes[i2]->CheckWallCollisions(_doors[i]->GetSprite());
-			}
-
-			for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
-			{
-				//_metalBoxes.at(i2)->CheckCollision(_doors.at(i)->GetParticleModel(), true, false);
-				//_metalBoxes[i2]->CheckWallCollisions(_doors[i]->GetSprite());
-			}
-		}
-	}
-
-	for (int i = 0; i < (int)_solidDoorSprites.size(); i++) 
-	{
-		//_player->CheckWallCollisions(_solidDoorSprites[i]);
-
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
-		{
-			//_woodBoxes.at(i2)->CheckCollision(_solidDoorSprites.at(i)->GetParticleModel(), true, false);
-			//_woodBoxes[i2]->CheckWallCollisions(_solidDoorSprites[i]);
-		}
-
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
-		{
-			//_metalBoxes.at(i2)->CheckCollision(_solidDoorSprites.at(i)->GetParticleModel(), true, false);
-			//_metalBoxes[i2]->CheckWallCollisions(_solidDoorSprites[i]);
-		}
-
-
-	}
-
-	// Hatch Collisions
-	for (int i = 0; i < (int)_hatches.size(); i++) 
-	{
-		if (!_hatches[i]->GetOpen()) 
-		{
-			if (getName().find("Hatch"))
-			{
-				//_player->CheckPlatformCollisions(_hatches[i]->GetSprite());
-
-				for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
-				{
-					//_woodBoxes.at(i2)->CheckCollision(_hatches.at(i)->GetParticleModel(), true, false);
-					//_woodBoxes[i2]->CheckPlatformCollisions(_hatches[i]->GetSprite());
-				}
-
-				for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
-				{
-					//_metalBoxes.at(i2)->CheckCollision(_hatches.at(i)->GetParticleModel(), true, false);
-					//_metalBoxes[i2]->CheckPlatformCollisions(_hatches[i]->GetSprite());
-				}
-			}
-		}
-	}
-
-	// MOVING PLATFORM COLLISIONS
-	for (int i = 0; i < (int)_movingPlatformsHoriz.size(); i++) 
-	{
-		_player->CheckCollision(_movingPlatformsHoriz.at(i), 0.1, true, false);
-
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
-		{
-			_woodBoxes.at(i2)->CheckCollision(_movingPlatformsHoriz.at(i), 0.6, true, false);
-		}
-
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
-		{
-			_metalBoxes.at(i2)->CheckCollision(_movingPlatformsHoriz.at(i), 0.4, true, false);
-		}
-	}
-
-	for (int i = 0; i < (int)_movingPlatformsVert.size(); i++) 
-	{
-		_player->CheckCollision(_movingPlatformsVert.at(i), 0.1, true, false);
-
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
-		{
-			_woodBoxes.at(i2)->CheckCollision(_movingPlatformsVert.at(i), 0.6, true, false);
-		}
-
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
-		{
-			_metalBoxes.at(i2)->CheckCollision(_movingPlatformsVert.at(i), 0.4, true, false);
-		}
-	}
-
-	// MOVING WALL COLLISIONS
-	for (int i = 0; i < (int)_movingWallsHoriz.size(); i++) 
-	{
-		_player->CheckCollision(_movingWallsHoriz.at(i), 0.1, true, false);
-
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
-		{
-			_woodBoxes.at(i2)->CheckCollision(_movingWallsHoriz.at(i), 0.6, true, false);
-		}
-
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
-		{
-			_metalBoxes.at(i2)->CheckCollision(_movingWallsHoriz.at(i), 0.4, true, false);
-		}
-	}
-
-	for (int i = 0; i < (int)_movingWallsVert.size(); i++) 
-	{
-		_player->CheckCollision(_movingWallsVert.at(i), 0.1, true, false);
-		//_player->CheckWallCollisions(_movingWallsVert[i]->getSprite());
-
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
-		{
-			_woodBoxes.at(i2)->CheckCollision(_movingWallsVert.at(i), 0.6, true, false);
-		}
-
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
-		{
-			_metalBoxes.at(i2)->CheckCollision(_movingWallsVert.at(i), 0.4, true, false);
-		}
-	}
-
-	// BUTTON COLLISIONS
-	for (int i = 0; i < (int)_buttons.size(); i++) 
-	{
-		_buttons.at(i)->SetActive(false);
-
-		if (_buttons.at(i)->CheckCollision(_player, 0.0f, false, true))
-		{
-			_player->FixCollision(_buttons.at(i));
-		}
-
-		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
-		{
-			if (_buttons.at(i)->CheckCollision(_woodBoxes.at(i2), 0.2f, false, true))
-			{
-				_woodBoxes.at(i2)->FixCollision(_buttons.at(i));
-			}
-		}
-
-		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
-		{
-			if (_buttons.at(i)->CheckCollision(_metalBoxes.at(i2), 0.2f, false, true))
-			{
-				_metalBoxes.at(i2)->FixCollision(_buttons.at(i));
-			}
-		}
-	}
+	//// WALL COLLISIONS
+	//for (int i = 0; i < (int)_walls.size(); i++) 
+	//{
+	//	_player->CheckCollision(_walls.at(i), 0.1, true, false);
+	//
+	//	for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+	//	{
+	//		_woodBoxes.at(i2)->CheckCollision(_walls.at(i), 0.6, true, false);
+	//	}
+	//
+	//	for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+	//	{
+	//		_metalBoxes.at(i2)->CheckCollision(_walls.at(i), 0.4, true, false);
+	//	}
+	//
+	//	//for (int i2 = 0; i2 < (int)_movingPlatformsHoriz.size(); i2++)
+	//	//{
+	//	//	//_movingPlatformsHoriz[i2]->CheckCollision(_walls.at(i));
+	//	//}
+	//
+	//	//for (int i2 = 0; i2 < (int)_movingPlatformsVert.size(); i2++)
+	//	//{
+	//	//	//_movingPlatformsVert[i2]->CheckCollision(_walls.at(i));
+	//	//}
+	//}
+	//
+	//// DOOR COLLISIONS
+	//for (int i = 0; i < (int)_doors.size(); i++) 
+	//{
+	//	if (!_doors[i]->GetOpen()) 
+	//	{
+	//		//_player->CheckWallCollisions(_doors[i]->GetSprite());
+	//
+	//		for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+	//		{
+	//			//_woodBoxes.at(i2)->CheckCollision(_doors.at(i)->GetParticleModel(), true, false);
+	//			//_woodBoxes[i2]->CheckWallCollisions(_doors[i]->GetSprite());
+	//		}
+	//
+	//		for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+	//		{
+	//			//_metalBoxes.at(i2)->CheckCollision(_doors.at(i)->GetParticleModel(), true, false);
+	//			//_metalBoxes[i2]->CheckWallCollisions(_doors[i]->GetSprite());
+	//		}
+	//	}
+	//}
+	//
+	//for (int i = 0; i < (int)_solidDoorSprites.size(); i++) 
+	//{
+	//	//_player->CheckWallCollisions(_solidDoorSprites[i]);
+	//
+	//	for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+	//	{
+	//		//_woodBoxes.at(i2)->CheckCollision(_solidDoorSprites.at(i)->GetParticleModel(), true, false);
+	//		//_woodBoxes[i2]->CheckWallCollisions(_solidDoorSprites[i]);
+	//	}
+	//
+	//	for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+	//	{
+	//		//_metalBoxes.at(i2)->CheckCollision(_solidDoorSprites.at(i)->GetParticleModel(), true, false);
+	//		//_metalBoxes[i2]->CheckWallCollisions(_solidDoorSprites[i]);
+	//	}
+	//
+	//}
+	//
+	//// Hatch Collisions
+	//for (int i = 0; i < (int)_hatches.size(); i++) 
+	//{
+	//	if (!_hatches[i]->GetOpen()) 
+	//	{
+	//		if (getName().find("Hatch"))
+	//		{
+	//			//_player->CheckPlatformCollisions(_hatches[i]->GetSprite());
+	//
+	//			for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+	//			{
+	//				//_woodBoxes.at(i2)->CheckCollision(_hatches.at(i)->GetParticleModel(), true, false);
+	//				//_woodBoxes[i2]->CheckPlatformCollisions(_hatches[i]->GetSprite());
+	//			}
+	//
+	//			for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+	//			{
+	//				//_metalBoxes.at(i2)->CheckCollision(_hatches.at(i)->GetParticleModel(), true, false);
+	//				//_metalBoxes[i2]->CheckPlatformCollisions(_hatches[i]->GetSprite());
+	//			}
+	//		}
+	//	}
+	//}
+	//
+	//// MOVING PLATFORM COLLISIONS
+	//for (int i = 0; i < (int)_movingPlatformsHoriz.size(); i++) 
+	//{
+	//	_player->CheckCollision(_movingPlatformsHoriz.at(i), 0.1, true, false);
+	//
+	//	for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+	//	{
+	//		_woodBoxes.at(i2)->CheckCollision(_movingPlatformsHoriz.at(i), 0.6, true, false);
+	//	}
+	//
+	//	for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+	//	{
+	//		_metalBoxes.at(i2)->CheckCollision(_movingPlatformsHoriz.at(i), 0.4, true, false);
+	//	}
+	//}
+	//
+	//for (int i = 0; i < (int)_movingPlatformsVert.size(); i++) 
+	//{
+	//	_player->CheckCollision(_movingPlatformsVert.at(i), 0.1, true, false);
+	//
+	//	for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+	//	{
+	//		_woodBoxes.at(i2)->CheckCollision(_movingPlatformsVert.at(i), 0.6, true, false);
+	//	}
+	//
+	//	for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+	//	{
+	//		_metalBoxes.at(i2)->CheckCollision(_movingPlatformsVert.at(i), 0.4, true, false);
+	//	}
+	//}
+	//
+	//// MOVING WALL COLLISIONS
+	//for (int i = 0; i < (int)_movingWallsHoriz.size(); i++) 
+	//{
+	//	_player->CheckCollision(_movingWallsHoriz.at(i), 0.1, true, false);
+	//
+	//	for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+	//	{
+	//		_woodBoxes.at(i2)->CheckCollision(_movingWallsHoriz.at(i), 0.6, true, false);
+	//	}
+	//
+	//	for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+	//	{
+	//		_metalBoxes.at(i2)->CheckCollision(_movingWallsHoriz.at(i), 0.4, true, false);
+	//	}
+	//}
+	//
+	//for (int i = 0; i < (int)_movingWallsVert.size(); i++) 
+	//{
+	//	_player->CheckCollision(_movingWallsVert.at(i), 0.1, true, false);
+	//	//_player->CheckWallCollisions(_movingWallsVert[i]->getSprite());
+	//
+	//	for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+	//	{
+	//		_woodBoxes.at(i2)->CheckCollision(_movingWallsVert.at(i), 0.6, true, false);
+	//	}
+	//
+	//	for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+	//	{
+	//		_metalBoxes.at(i2)->CheckCollision(_movingWallsVert.at(i), 0.4, true, false);
+	//	}
+	//}
+	//
+	//// BUTTON COLLISIONS
+	//for (int i = 0; i < (int)_buttons.size(); i++) 
+	//{
+	//	_buttons.at(i)->SetActive(false);
+	//
+	//	if (_buttons.at(i)->CheckCollision(_player, 0.0f, false, true))
+	//	{
+	//		_player->FixCollision(_buttons.at(i));
+	//	}
+	//
+	//	for (int i2 = 0; i2 < (int)_woodBoxes.size(); i2++) 
+	//	{
+	//		if (_buttons.at(i)->CheckCollision(_woodBoxes.at(i2), 0.2f, false, true))
+	//		{
+	//			_woodBoxes.at(i2)->FixCollision(_buttons.at(i));
+	//		}
+	//	}
+	//
+	//	for (int i2 = 0; i2 < (int)_metalBoxes.size(); i2++) 
+	//	{
+	//		if (_buttons.at(i)->CheckCollision(_metalBoxes.at(i2), 0.2f, false, true))
+	//		{
+	//			_metalBoxes.at(i2)->FixCollision(_buttons.at(i));
+	//		}
+	//	}
+	//}
 }
 
 //Touch Functions

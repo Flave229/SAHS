@@ -65,6 +65,7 @@ public:
 	// FORCES
 	void AddForce(std::string name, cocos2d::Vec2 force);
 	void AddForce(Force* force);
+	void RemoveForce(std::string name);
 	std::vector<Force*> GetForces() { return _forces; };
 	Force* GetForce(std::string name);
 

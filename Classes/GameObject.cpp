@@ -89,27 +89,27 @@ bool GameObject::CheckCollision(GameObject* collider, float cR, bool moveThis, b
 		&& midpointThis.y + GetParticleModel()->GetBoundingBox()->GetMinY() < midpointCollider.y + collider->GetParticleModel()->GetBoundingBox()->GetMaxY()
 		&& midpointThis.y + GetParticleModel()->GetBoundingBox()->GetMaxX() > midpointCollider.y + collider->GetParticleModel()->GetBoundingBox()->GetMinY())
 	{
-		FixCollision(collider);
+		//FixCollision(collider);
 		DealWithCollision(collider, cR, moveThis, moveCollider);
 
 		return true;
 	}
+	//else
+		//GetParticleModel()->RemoveForce("Collision"); // this should stop them floating off but for some reason it kills collisions altogether
 
 	return false;
 }
 
-void GameObject::FixCollision(GameObject* collider)
-{
+//void GameObject::FixCollision(GameObject* collider)
+//{
 	//// Get the difference in between current and future displacement
 	//float diffX = GetParticleModel()->GetFutureDisplacementX() - GetParticleModel()->GetDisplacementX();
 	//float diffY = GetParticleModel()->GetFutureDisplacementY() - GetParticleModel()->GetDisplacementY();
-
+//
 	//// Get distance between current position and collision object
 	//float toColliderX = collider->GetParticleModel()->GetDisplacementX() - GetParticleModel()->GetDisplacementX();
 	//float toColliderY = collider->GetParticleModel()->GetDisplacementY() - GetParticleModel()->GetDisplacementY();
-
-
-
+//
 	//// Check which way gravity is going
 	//if (GetParticleModel()->GetForce("Gravity") != nullptr && GetParticleModel()->GetForce("Gravity")->GetForce().x > 0.0f)
 	//{
@@ -147,7 +147,7 @@ void GameObject::FixCollision(GameObject* collider)
 	//		GetParticleModel()->SetDisplacementY(collider->GetParticleModel()->GetDisplacementY() + collider->GetParticleModel()->GetBoundingBox()->GetMaxY() - GetParticleModel()->GetBoundingBox()->GetMinY());
 	//	}
 	//}
-}
+//}
 
 void GameObject::DealWithCollision(GameObject* collider, float cR, bool moveThis, bool moveCollider)
 {
@@ -169,6 +169,12 @@ void GameObject::DealWithCollision(GameObject* collider, float cR, bool moveThis
 		newVelocityCollider.y = ((newVelocityCollider.y * (collider->GetParticleModel()->GetMass() - GetParticleModel()->GetMass()) + (2 * (GetParticleModel()->GetMass() * GetParticleModel()->GetVelocity().y))) * cR) / (GetParticleModel()->GetMass() + GetParticleModel()->GetMass());
 		//newVelocityCollider.x = (((collider->GetParticleModel()->GetMass() * collider->GetParticleModel()->GetVelocity().x) + (GetParticleModel()->GetMass() * GetParticleModel()->GetVelocity().x) + (GetParticleModel()->GetMass() * cR * (GetParticleModel()->GetVelocity().x - collider->GetParticleModel()->GetVelocity().x))) / (GetParticleModel()->GetMass() + collider->GetParticleModel()->GetMass()));
 		//newVelocityCollider.y = (((collider->GetParticleModel()->GetMass() * collider->GetParticleModel()->GetVelocity().y) + (GetParticleModel()->GetMass() * GetParticleModel()->GetVelocity().y) + (GetParticleModel()->GetMass() * cR * (GetParticleModel()->GetVelocity().y - collider->GetParticleModel()->GetVelocity().y))) / (GetParticleModel()->GetMass() + collider->GetParticleModel()->GetMass()));
+	}
+
+	if (!moveCollider) // for now, use this to assume it's a floor
+	{
+		newVelocityThis = -GetParticleModel()->GetVelocity() / GetParticleModel()->GetMass();
+		GetParticleModel()->AddForce("Collision", -GetParticleModel()->GetNetForce());
 	}
 
 	GetParticleModel()->SetVelocity(newVelocityThis);

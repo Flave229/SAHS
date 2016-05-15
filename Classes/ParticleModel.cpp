@@ -81,6 +81,18 @@ void ParticleModel::AddForce(Force* force)
 	_forces.push_back(force);
 }
 
+void ParticleModel::RemoveForce(std::string name)
+{
+	for (int i = 0; i < _forces.size(); i++)
+	{
+		// Force class does not have access to weight, so force must be applied per kilogram
+		if (_forces.at(i)->GetName().find(name) != -1)
+		{
+			_forces.erase(_forces.begin() + i);
+		}
+	}
+}
+
 Force* ParticleModel::GetForce(std::string name)
 {
 	for (int i = 0; i < _forces.size(); i++)
