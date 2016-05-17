@@ -167,6 +167,8 @@
               <Image Name="Platform_Holder.png" />
               <Image Name="Platform_Cup.png" />
               <Image Name="Wall_1.png" />
+              <Image Name="Border_Platform_1.png" />
+              <Image Name="Border_Wall_1.png" />
             </Folder>
           </Folder>
           <Folder Name="Level_UI">
@@ -245,6 +247,9 @@
             <Project Name="Scene3.csd" Type="Scene" />
             <Project Name="Scene4.csd" Type="Scene" />
             <Project Name="Scene2.csd" Type="Scene" />
+            <Folder Name="Tutorial Tests">
+              <Project Name="Scene10.csd" Type="Scene" />
+            </Folder>
           </Folder>
           <Project Name="Credits.csd" Type="Scene" />
           <Project Name="GameOver.csd" Type="Scene" />
