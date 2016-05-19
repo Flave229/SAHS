@@ -116,58 +116,58 @@
             <FileData Type="Normal" Path="Art/Level_Background_Assets/Clone.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Platform_1" ActionTag="-1500330469" Tag="49" IconVisible="False" LeftMargin="747.0372" RightMargin="1254.9629" TopMargin="1032.1527" BottomMargin="457.8473" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Platform_1" ActionTag="-1500330469" Tag="49" IconVisible="False" LeftMargin="706.0372" RightMargin="1213.9629" TopMargin="1051.1527" BottomMargin="476.8473" ctype="SpriteObjectData">
             <Size X="128.0000" Y="8.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="770.0372" Y="480.8473" />
             <Scale ScaleX="12.0286" ScaleY="2.0100" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.3760" Y="0.3131" />
-            <PreSize X="0.0225" Y="0.0299" />
+            <PreSize X="0.0625" Y="0.0052" />
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Platform_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Platform_2" ActionTag="-397229837" Tag="51" IconVisible="False" LeftMargin="1022.0162" RightMargin="979.9838" TopMargin="429.1857" BottomMargin="1060.8143" FlipY="True" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Platform_2" ActionTag="-397229837" Tag="51" IconVisible="False" LeftMargin="981.0162" RightMargin="938.9838" TopMargin="448.1857" BottomMargin="1079.8143" FlipY="True" ctype="SpriteObjectData">
             <Size X="128.0000" Y="8.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="1045.0162" Y="1083.8143" />
             <Scale ScaleX="13.4093" ScaleY="2.0100" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.5103" Y="0.7056" />
-            <PreSize X="0.0225" Y="0.0299" />
+            <PreSize X="0.0625" Y="0.0052" />
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Platform_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Platform_3" ActionTag="-2085264092" Tag="52" IconVisible="False" LeftMargin="280.9683" RightMargin="1721.0317" TopMargin="789.3885" BottomMargin="700.6115" FlipY="True" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Platform_3" ActionTag="-2085264092" Tag="52" IconVisible="False" LeftMargin="239.9683" RightMargin="1680.0317" TopMargin="808.3885" BottomMargin="719.6115" FlipY="True" ctype="SpriteObjectData">
             <Size X="128.0000" Y="8.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="303.9683" Y="723.6115" />
             <Scale ScaleX="4.7557" ScaleY="2.0100" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.1484" Y="0.4711" />
-            <PreSize X="0.0225" Y="0.0299" />
+            <PreSize X="0.0625" Y="0.0052" />
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Platform_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Platform_4" ActionTag="-67685947" Tag="55" IconVisible="False" LeftMargin="1061.4875" RightMargin="940.5125" TopMargin="789.3937" BottomMargin="700.6063" FlipY="True" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Platform_4" ActionTag="-67685947" Tag="55" IconVisible="False" LeftMargin="1020.4875" RightMargin="899.5125" TopMargin="808.3937" BottomMargin="719.6063" FlipY="True" ctype="SpriteObjectData">
             <Size X="128.0000" Y="8.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="1084.4875" Y="723.6063" />
             <Scale ScaleX="4.4861" ScaleY="2.0100" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.5295" Y="0.4711" />
-            <PreSize X="0.0225" Y="0.0299" />
+            <PreSize X="0.0625" Y="0.0052" />
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Platform_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Platform_9" ActionTag="-176606223" Tag="151" IconVisible="False" LeftMargin="1589.5048" RightMargin="412.4952" TopMargin="670.7524" BottomMargin="819.2476" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Platform_9" ActionTag="-176606223" Tag="151" IconVisible="False" LeftMargin="1548.5048" RightMargin="371.4952" TopMargin="689.7524" BottomMargin="838.2476" ctype="SpriteObjectData">
             <Size X="128.0000" Y="8.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="1612.5048" Y="842.2476" />
             <Scale ScaleX="1.3435" ScaleY="2.0100" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.7874" Y="0.5483" />
-            <PreSize X="0.0225" Y="0.0299" />
+            <PreSize X="0.0625" Y="0.0052" />
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Platform_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
@@ -193,14 +193,14 @@
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Wall_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Time" ActionTag="-334210610" Tag="88" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="979.5000" RightMargin="979.5000" TopMargin="21.3704" BottomMargin="1491.6296" FontSize="20" LabelText="00:00:000" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="TextObjectData">
-            <Size X="89.0000" Y="23.0000" />
+          <AbstractNodeData Name="Time" ActionTag="-334210610" Tag="88" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="985.0000" RightMargin="985.0000" TopMargin="22.8704" BottomMargin="1493.1296" FontSize="20" LabelText="00:00:000" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="TextObjectData">
+            <Size X="78.0000" Y="20.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="1024.0000" Y="1503.1296" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.5000" Y="0.9786" />
-            <PreSize X="0.0435" Y="0.0150" />
+            <PreSize X="0.0381" Y="0.0130" />
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
@@ -730,36 +730,36 @@
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Doors/Door_Solid.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Platform_6" ActionTag="171825881" Tag="148" IconVisible="False" LeftMargin="1949.6931" RightMargin="52.3069" TopMargin="792.2897" BottomMargin="697.7103" FlipY="True" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Platform_6" ActionTag="171825881" Tag="148" IconVisible="False" LeftMargin="1908.6931" RightMargin="11.3069" TopMargin="811.2897" BottomMargin="716.7103" FlipY="True" ctype="SpriteObjectData">
             <Size X="128.0000" Y="8.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="1972.6931" Y="720.7103" />
             <Scale ScaleX="1.2224" ScaleY="2.0100" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.9632" Y="0.4692" />
-            <PreSize X="0.0225" Y="0.0299" />
+            <PreSize X="0.0625" Y="0.0052" />
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Platform_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Platform_7" ActionTag="1816194920" Tag="149" IconVisible="False" LeftMargin="377.9653" RightMargin="1624.0347" TopMargin="670.3959" BottomMargin="819.6041" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Platform_7" ActionTag="1816194920" Tag="149" IconVisible="False" LeftMargin="336.9653" RightMargin="1583.0347" TopMargin="689.3959" BottomMargin="838.6041" ctype="SpriteObjectData">
             <Size X="128.0000" Y="8.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="400.9653" Y="842.6041" />
             <Scale ScaleX="3.2519" ScaleY="2.0100" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.1958" Y="0.5486" />
-            <PreSize X="0.0225" Y="0.0299" />
+            <PreSize X="0.0625" Y="0.0052" />
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Platform_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Platform_8" ActionTag="368304160" Tag="150" IconVisible="False" LeftMargin="1062.1404" RightMargin="939.8596" TopMargin="671.0463" BottomMargin="818.9537" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Platform_8" ActionTag="368304160" Tag="150" IconVisible="False" LeftMargin="1021.1404" RightMargin="898.8596" TopMargin="690.0463" BottomMargin="837.9537" ctype="SpriteObjectData">
             <Size X="128.0000" Y="8.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="1085.1404" Y="841.9537" />
             <Scale ScaleX="4.4861" ScaleY="2.0100" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.5299" Y="0.5481" />
-            <PreSize X="0.0225" Y="0.0299" />
+            <PreSize X="0.0625" Y="0.0052" />
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Platform_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
@@ -807,14 +807,14 @@
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Button/Button_Down_Unpressed.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Platform_5" ActionTag="-1208470466" Tag="163" RotationSkewX="0.0104" RotationSkewY="0.0104" IconVisible="False" LeftMargin="1843.6831" RightMargin="158.3169" TopMargin="1030.2954" BottomMargin="459.7046" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Platform_5" ActionTag="-1208470466" Tag="163" RotationSkewX="0.0104" RotationSkewY="0.0104" IconVisible="False" LeftMargin="1802.6831" RightMargin="117.3169" TopMargin="1049.2954" BottomMargin="478.7046" ctype="SpriteObjectData">
             <Size X="128.0000" Y="8.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="1866.6831" Y="482.7046" />
             <Scale ScaleX="2.8613" ScaleY="2.0100" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.9115" Y="0.3143" />
-            <PreSize X="0.0225" Y="0.0299" />
+            <PreSize X="0.0625" Y="0.0052" />
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Platform_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>

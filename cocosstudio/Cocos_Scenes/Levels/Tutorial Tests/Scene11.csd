@@ -1,5 +1,5 @@
 <GameFile>
-  <PropertyGroup Name="Scene11_0" Type="Scene" ID="90e6364d-6d5e-4ee9-8fa4-de8049b8c8de" Version="2.3.3.0" />
+  <PropertyGroup Name="Scene11" Type="Scene" ID="90e6364d-6d5e-4ee9-8fa4-de8049b8c8de" Version="2.3.3.0" />
   <Content ctype="GameProjectContent">
     <Content>
       <Animation Duration="0" Speed="1.0000" />
@@ -17,7 +17,7 @@
             <FileData Type="Normal" Path="Art/Scene_Backgrounds/Bg_2.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="BG Panel 1" ActionTag="651321290" Tag="64" IconVisible="False" LeftMargin="26.9060" RightMargin="21.0940" TopMargin="101.4668" BottomMargin="101.5331" ctype="SpriteObjectData">
+          <AbstractNodeData Name="BG Panel 1" ActionTag="651321290" Tag="64" IconVisible="False" LeftMargin="26.9060" RightMargin="21.0940" TopMargin="101.4669" BottomMargin="101.5331" ctype="SpriteObjectData">
             <Size X="2000.0000" Y="1333.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="1026.9060" Y="768.0331" />
@@ -138,7 +138,7 @@
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Border_Wall_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Wall_3" ActionTag="1108735032" Tag="446" RotationSkewX="180.0000" RotationSkewY="180.0000" IconVisible="False" LeftMargin="641.2601" RightMargin="1398.7399" TopMargin="702.8587" BottomMargin="705.1413" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Wall_3" ActionTag="1108735032" Tag="446" RotationSkewX="180.0000" RotationSkewY="180.0000" IconVisible="False" LeftMargin="641.2601" RightMargin="1398.7400" TopMargin="702.8587" BottomMargin="705.1413" ctype="SpriteObjectData">
             <Size X="8.0000" Y="128.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="645.2601" Y="769.1413" />
@@ -182,7 +182,7 @@
             <FileData Type="Normal" Path="Art/Level_Main_Assets/Platforms/Wall_1.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Player" ActionTag="1267585565" Tag="450" IconVisible="False" LeftMargin="484.8759" RightMargin="1455.1241" TopMargin="573.5100" BottomMargin="828.4900" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Player" ActionTag="1267585565" Tag="450" IconVisible="False" LeftMargin="484.8759" RightMargin="1455.1240" TopMargin="573.5100" BottomMargin="828.4900" ctype="SpriteObjectData">
             <Size X="108.0000" Y="134.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="538.8759" Y="895.4900" />
