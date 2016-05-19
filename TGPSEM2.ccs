@@ -249,6 +249,8 @@
             <Project Name="Scene2.csd" Type="Scene" />
             <Folder Name="Tutorial Tests">
               <Project Name="Scene10.csd" Type="Scene" />
+              <Project Name="Scene12.csd" Type="Scene" />
+              <Project Name="Scene11.csd" Type="Scene" />
             </Folder>
           </Folder>
           <Project Name="Credits.csd" Type="Scene" />
